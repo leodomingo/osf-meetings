@@ -31,7 +31,6 @@ class Migration(migrations.Migration):
                 ('closeDate', models.DateField()),
                 ('logo', models.ImageField(upload_to='logo_folder/')),
                 ('tags', models.CharField(max_length=500)),
-                #('sponsors', models.CharField(max_length=500)),
                 ('description', models.TextField()),
             ],
             options={
