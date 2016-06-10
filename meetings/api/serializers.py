@@ -30,4 +30,4 @@ class MeetingSerializer(serializers.ModelSerializer):
 		model = Meeting
 		fields = ('id', 'title', 'website', 'city', 
 			'state', 'country', 'startDate', 'endDate', 
-			'submissionDate', 'closeDate', 'logo', 'tags', 'description')
+			'submissionDate', 'closeDate', 'logo', 'tags', 'sponsors', 'description')
