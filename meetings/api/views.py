@@ -7,6 +7,9 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.parsers import JSONParser
 from api.models import Node, SubmissionEval, Meeting
 from api.serializers import NodeSerializer, SubmissionEvalSerializer, MeetingSerializer
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
 
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -30,6 +33,19 @@ class NodeViewSet(viewsets.ModelViewSet):
     """
     queryset = Node.objects.all()
     serializer_class = NodeSerializer
+
+@api_view(['GET', 'POST'])
+def node_list(request):
+    if request.method == 'GET':
+        nodes = Node.objects.all()
+        serializers = NodeSerializer(nodes, many=True)
+        return Response(serializer.data)
+
+    elif request.method == 'POST':
+        serializer = NodeSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class SubmissionEvalViewSet(viewsets.ModelViewSet):
