@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'api',
+    'oauth2_provider',
 ]
 
 REST_FRAMEWORK = {
@@ -132,7 +133,7 @@ AUTHENTICATION_BACKENDS = (
 
 # django cors headers
 # http://blog.hugethoughts.com/allow-cors-specific-domain-django/
-CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ORIGIN_WHITELIST = (

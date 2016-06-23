@@ -1,63 +1,40 @@
 from django.contrib.auth.models import User, Group
-from rest_framework import viewsets
+from rest_framework import generics
 from api.serializers import UserSerializer, GroupSerializer
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
-from rest_framework.renderers import JSONRenderer
-from rest_framework.parsers import JSONParser
 from api.models import Node, SubmissionEval, Meeting
 from api.serializers import NodeSerializer, SubmissionEvalSerializer, MeetingSerializer
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import generics
+import requests
+from requests_oauth2 import OAuth2
 
-
-class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
-    queryset = User.objects.all().order_by('-date_joined')
-    serializer_class = UserSerializer
-
-
-class GroupViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows groups to be viewed or edited.
-    """
-    queryset = Group.objects.all()
-    serializer_class = GroupSerializer
-
-class NodeViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows nodes to be viewed or edited.
-    """
-    queryset = Node.objects.all()
-    serializer_class = NodeSerializer
-
-@api_view(['GET', 'POST'])
-def node_list(request):
-    if request.method == 'GET':
-        nodes = Node.objects.all()
-        serializers = NodeSerializer(nodes, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = NodeSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class SubmissionEvalViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows submission-evals to be viewed or edited.
-    """
-    queryset = SubmissionEval.objects.all()
-    serializer_class = SubmissionEvalSerializer
-
-class MeetingViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows submission-evals to be viewed or edited.
-    """
+class MeetingList(generics.ListCreateAPIView):
     queryset = Meeting.objects.all()
     serializer_class = MeetingSerializer
+
+class MeetingDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Meeting.objects.all()
+    serializer_class = MeetingSerializer
+
+def NodeList(self):
+	client_id  = '8bce2d2ed769427dbfbf3d3ca29f78b6'
+	client_secret = '2ZKQkpjcR23k3ECZME83jfxZ5wnoO3vo3uqQjRA3'
+
+	oauth2_handler = OAuth2(client_id, client_secret, "https://staging.osf.io", "localhost:4200/login")
+
+	authorization_url = oauth2_handler.authorize_url('osf.full_read, osf.full_write')
+
+	response = oauth2_handler.get_token(authorization_url)
+
+	print(response)
+
+	# oauth2_client = requests.session(params={'access_token': response['access_token']})
+	# osf_response = oauth2_client.get('https://staging-api.osf.io/v2/nodes')
+	return osf_response
+
+
+def NodeDetail(self):
+	client_key  = ''
+	client_secret = ''
+	resource_owner_key = ''
+	resource_owner_secret = ''
+	url = 'http://?'
