@@ -1,8 +1,8 @@
-Django==1.9.7
-django-cors-headers==1.1.0
-django-guardian==1.4.4
-djangorestframework==3.3.3
-djangorestframework-jsonapi==2.0.1
-inflection==0.3.1
-Pillow==3.2.0
+pbr==1.9.1
 six==1.10.0
+stevedore==1.13.0
+vboxapi==1.0
+virtualenv==15.0.1
+virtualenv-clone==0.2.6
+virtualenvwrapper==4.7.1
+wheel==0.26.0
