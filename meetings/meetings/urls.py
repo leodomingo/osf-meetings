@@ -8,9 +8,11 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^meetings/$', views.MeetingList.as_view()),
     url(r'^meetings/(?P<pk>[0-9]+)/$', views.MeetingDetail),
-    url(r'^nodes/$', views.NodeList),
-    url(r'^nodes/(?P<pk>[0-9]+)/$', views.NodeDetail),
+    url(r'^nodes/$', views.NodeList.as_view()),
+    url(r'^nodes/(?P<pk>[0-9]+)/$', views.NodeDetail.as_view()),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+    url(r'^auth/', views.OsfAuthorizationUrl.as_view()),
+    url(r'^login/', views.OsfAuthorizationCode.as_view()),
     url(r'^admin/', admin.site.urls),
 ]
 
