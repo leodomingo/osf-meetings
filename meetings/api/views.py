@@ -50,9 +50,9 @@ class NodeList(APIView):
 		CLIENT_SECRET = 'Pxsc1AeBDHBNK5dNCrqjvYkonBKMXXSvNSoDyK84'
 		client_auth = requests.auth.HTTPBasicAuth(CLIENT_ID, CLIENT_SECRET)
 		REDIRECT_URI = "http://localhost:8000/login"
-		post_data = { "grant_type": "authorization_code", "code": USER_STORAGE[user], "redirect_uri": REDIRECT_URI }
+		post_data = { "grant_type": "authorization_code", "code": USER_STORAGE[user], "redirect_uri": REDIRECT_URI, "client_id": CLIENT_ID, "client_secret": CLIENT_SECRET}
 		headers = {"Authorization" : "Bearer " + USER_STORAGE[user]}
-		response = requests.get("https://staging-accounts.osf.io/oauth2/authorize", auth=client_auth, headers=headers)
+		response = requests.post("https://staging-accounts.osf.io/oauth2/authorize", data=post_data)
 		return Response(response)
 
 
