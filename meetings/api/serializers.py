@@ -29,5 +29,5 @@ class MeetingSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Meeting
 		fields = ('id', 'title', 'website', 'city', 
-			'state', 'country', 'startDate', 'endDate', 
-			'submissionDate', 'closeDate', 'logo', 'tags', 'sponsors', 'description')
+			'state', 'country', 'start_date', 'end_date', 
+			'submission_date', 'close_date', 'logo_url', 'tags', 'sponsors', 'description')
