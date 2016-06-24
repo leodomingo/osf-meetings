@@ -8,8 +8,6 @@ import requests
 from requests_oauth2 import OAuth2
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.http import HttpResponse
-
 
 
 USER_STORAGE = {}
@@ -43,16 +41,13 @@ class OsfAuthorizationCode(APIView):
 		REDIRECT_URI = "http://localhost:8000/login"
 		code = request.GET.get('code')
 		post_data = { "grant_type": "authorization_code", "code": code, "redirect_uri": REDIRECT_URI, "client_id": CLIENT_ID, "client_secret": CLIENT_SECRET}
-		headers = {"Authorization" : "Bearer " + code}
 		response = requests.post("https://staging-accounts.osf.io/oauth2/token", data=post_data)
 		USER_STORAGE[uid] = response
 		return Response(USER_STORAGE[uid])
 
 class NodeList(APIView):
 	def get(self, request, format=None):
-		
-		
-		return Response(response)
+		return Response(request)
 
 
 class NodeDetail(APIView):
