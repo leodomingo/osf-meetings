@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from api.models import Submission, Conference
+from api.models import Submission, Conference, Tag
 from rest_framework import serializers
 
 
@@ -15,9 +15,11 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 		fields = ('url', 'name')
 
 class SubmissionSerializer(serializers.ModelSerializer):
+	conference = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
+	tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
 	class Meta:
 		model = Submission
-		fields = ('id', 'osf_id', 'title', 'contributors', 'description','tags', 'meeting')
+		fields = ('title', 'contributors', 'description', 'conference', 'tags')
 
 class ConferenceSerializer(serializers.ModelSerializer):
 	class Meta:

@@ -10,6 +10,7 @@ db.sqlite3
 *.egg-info
 *.pot
 *.py[co]
+00*
 __pycache__
 MANIFEST
 dist/

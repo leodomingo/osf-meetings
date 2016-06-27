@@ -4,6 +4,7 @@ from api.serializers import UserSerializer, GroupSerializer
 from api.models import Submission, Tag, Conference
 from api.serializers import SubmissionSerializer, ConferenceSerializer
 from rest_framework import generics
+from rest_framework_json_api.parsers import JSONParser as JSONAPIParser
 import requests
 from requests_oauth2 import OAuth2
 from rest_framework.views import APIView
@@ -47,9 +48,22 @@ class OsfAuthorizationCode(APIView):
 		return Response(USER_STORAGE[uid])
 
 class SubmissionList(APIView):
-	def get(self, conference_id, request, format=None):
+	serializer_class = SubmissionSerializer
+	def get(self, request, conference_id=None, format=None):
 		conferenceSubmissions = Submission.objects.filter(conference_id=conference_id)
-		return Response(conferenceSubmissions)
+		data = []
+		for submission in conferenceSubmissions:
+			# TODO: check permissions here
+			submissionSerializer = SubmissionSerializer(submission)
+			data.append(submissionSerializer.data)
+		return Response(data)
+	def post(self, request, conference_id=None, format=None):
+		data = JSONAPIParser().parse(request)
+		serializer = SubmissionSerializer(data=data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data, status=201)
+		return Response(data, status=400)
 
 class SubmissionDetail(APIView):
 	def get(self, request, format=None):

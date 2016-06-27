@@ -10,7 +10,7 @@ class Tag(models.Model):
 	lower = models.CharField(max_length=128)
 
 class Submission(models.Model):
-	osf_id = models.CharField(max_length=10)
+	node_id = models.CharField(max_length=10)
 	date_created = models.DateTimeField(auto_now_add=True)
 	title = models.CharField(max_length=100)
 	contributors = models.ForeignKey(Group)
@@ -23,7 +23,7 @@ class Submission(models.Model):
 
 class Conference(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
-        modified = models.DateTimeField(auto_now=True)
+	modified = models.DateTimeField(auto_now=True)
 	title = models.CharField(max_length=100)
 	website = models.CharField(max_length=100)
 	city = models.CharField(max_length=100)
@@ -34,7 +34,7 @@ class Conference(models.Model):
 	submission_date = models.DateField(null=True)
 	close_date = models.DateField(null=True)
 	logo_url = models.CharField(max_length=500)
-	tags = models.CharField(max_length=500)
+	tags = models.CharField(max_length=500) # change to ManyToManyField(Tag)
 	sponsors = models.CharField(max_length=500)
 	description = models.TextField()
 
