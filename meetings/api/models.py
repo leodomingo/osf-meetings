@@ -9,11 +9,13 @@ class Tag(models.Model):
 	lower = models.CharField(max_length=128)
 
 class Submission(models.Model):
+	osf_id = models.CharField(max_length=10)
 	date_created = models.DateTimeField(auto_now_add=True)
 	title = models.CharField(max_length=100)
 	contributors = models.ForeignKey(Group)
 	description = models.TextField()
 	tags = models.ManyToManyField(Tag)
+	meeting = models.ForeignKey('meeting')
 
 	class Meta:
 		ordering = ('date_created',)

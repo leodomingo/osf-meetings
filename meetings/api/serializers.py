@@ -17,7 +17,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class SubmissionSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Submission
-		fields = ('id', 'title', 'contributors', 'description','keywords')
+		fields = ('id', 'osf_id', 'title', 'contributors', 'description','tags', 'meeting')
 
 class MeetingSerializer(serializers.ModelSerializer):
 	class Meta:

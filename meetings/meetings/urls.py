@@ -8,8 +8,8 @@ from django.contrib import admin
 urlpatterns = [
     url(r'^meetings/$', views.MeetingList.as_view()),
     url(r'^meetings/(?P<pk>[0-9]+)/$', views.MeetingDetail),
-    url(r'^meetings/(?P<pk>[0-9]+)/submissions/$', views.SubmissionList.as_view()),
-    url(r'^nodes/(?P<pk>[0-9]+)/$', views.SubmissionDetail.as_view()),
+    url(r'^meetings/(?P<meeting_id>[0-9]+)/submissions/$', views.SubmissionList.as_view()),
+    url(r'^meetings/(?P<meeting_id>[0-9]+)/submissions/(?P<submission_id>[0-9]+)/$', views.SubmissionDetail.as_view()),
     url(r'^auth/', views.OsfAuthorizationUrl.as_view()),
     url(r'^login/', views.OsfAuthorizationCode.as_view()),
     url(r'^admin/', admin.site.urls),
