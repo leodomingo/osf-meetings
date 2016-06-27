@@ -15,7 +15,7 @@ class Submission(models.Model):
 	title = models.CharField(max_length=100)
 	contributors = models.ForeignKey(Group)
 	description = models.TextField()
-	tags = models.ManyToManyField(Tag)
+	tags = models.ManyToManyField(Tag, blank=True)
 	conference = models.ForeignKey('conference')
 
 	class Meta:

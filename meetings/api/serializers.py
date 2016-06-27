@@ -14,12 +14,19 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 		model = Group
 		fields = ('url', 'name')
 
+class TagSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = Tag
+		fields = ('id', 'lower',)
+
 class SubmissionSerializer(serializers.ModelSerializer):
-	conference = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
-	tags = serializers.PrimaryKeyRelatedField(many=True, queryset=Tag.objects.all())
+	conference = serializers.HyperlinkedRelatedField(many=False, read_only=True, view_name='conference-detail')
+	tags = TagSerializer(many=True)
+	contributors = serializers.PrimaryKeyRelatedField(many=False, queryset=Group.objects.all())
+	node_id = serializers.CharField(read_only=True)
 	class Meta:
 		model = Submission
-		fields = ('title', 'contributors', 'description', 'conference', 'tags')
+		fields = ('id', 'node_id', 'title', 'description', 'conference', 'tags', 'contributors')
 
 class ConferenceSerializer(serializers.ModelSerializer):
 	class Meta:

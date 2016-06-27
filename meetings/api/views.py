@@ -14,7 +14,7 @@ from rest_framework.response import Response
 USER_STORAGE = {}
 
 class ConferenceList(generics.ListCreateAPIView):
-    view_category = 'conference'
+    resource_name = 'conferences'
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
 
@@ -49,17 +49,15 @@ class OsfAuthorizationCode(APIView):
 
 class SubmissionList(APIView):
 	serializer_class = SubmissionSerializer
+	resource_name = 'submissions'
 	def get(self, request, conference_id=None, format=None):
 		conferenceSubmissions = Submission.objects.filter(conference_id=conference_id)
-		data = []
-		for submission in conferenceSubmissions:
-			# TODO: check permissions here
-			submissionSerializer = SubmissionSerializer(submission)
-			data.append(submissionSerializer.data)
-		return Response(data)
+		submissionsSerializer = SubmissionSerializer(conferenceSubmissions, context={'request': request}, many=True)
+		return Response(submissionsSerializer.data)
 	def post(self, request, conference_id=None, format=None):
+		# TODO: check permissions here
 		data = JSONAPIParser().parse(request)
-		serializer = SubmissionSerializer(data=data)
+		serializer = SubmissionSerializer(data=data, context={'request': request})
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data, status=201)
