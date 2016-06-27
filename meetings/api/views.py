@@ -1,15 +1,13 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import generics
 from api.serializers import UserSerializer, GroupSerializer
-from api.models import Node, SubmissionEval, Conference
-from api.serializers import NodeSerializer, SubmissionEvalSerializer, ConferenceSerializer
+from api.models import Submission, Tag, Conference
+from api.serializers import SubmissionSerializer, ConferenceSerializer
 from rest_framework import generics
 import requests
 from requests_oauth2 import OAuth2
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.http import HttpResponse
-
 
 
 USER_STORAGE = {}
@@ -44,19 +42,16 @@ class OsfAuthorizationCode(APIView):
 		REDIRECT_URI = "http://localhost:8000/login"
 		code = request.GET.get('code')
 		post_data = { "grant_type": "authorization_code", "code": code, "redirect_uri": REDIRECT_URI, "client_id": CLIENT_ID, "client_secret": CLIENT_SECRET}
-		headers = {"Authorization" : "Bearer " + code}
 		response = requests.post("https://staging-accounts.osf.io/oauth2/token", data=post_data)
 		USER_STORAGE[uid] = response
 		return Response(USER_STORAGE[uid])
 
-class NodeList(APIView):
-	def get(self, request, format=None):
-		
-		
-		return Response(response)
+class SubmissionList(APIView):
+	def get(self, conference_id, request, format=None):
+		conferenceSubmissions = Submission.objects.filter(conference_id=conference_id)
+		return Response(conferenceSubmissions)
 
-
-class NodeDetail(APIView):
+class SubmissionDetail(APIView):
 	def get(self, request, format=None):
 		pass
 
