@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User, Group
-from api.models import Node, SubmissionEval, Meeting
+from api.models import Submission, Meeting
 from rest_framework import serializers
 
 
@@ -14,16 +14,10 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 		model = Group
 		fields = ('url', 'name')
 
-class NodeSerializer(serializers.ModelSerializer):
+class SubmissionSerializer(serializers.ModelSerializer):
 	class Meta:
-		model = Node
+		model = Submission
 		fields = ('id', 'title', 'contributors', 'description','keywords')
-
-
-class SubmissionEvalSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = SubmissionEval
-		fields = ('id', 'created', 'premise', 'research','style', 'comment', 'total')
 
 class MeetingSerializer(serializers.ModelSerializer):
 	class Meta:

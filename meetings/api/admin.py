@@ -1,7 +1,6 @@
 from django.contrib import admin
 
-from .models import Node, SubmissionEval, Meeting
+from .models import Submission, Meeting
 
-admin.site.register(Node)
-admin.site.register(SubmissionEval)
+admin.site.register(Submission)
 admin.site.register(Meeting)

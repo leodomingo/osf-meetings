@@ -5,26 +5,18 @@ from django.db import models
 
 # Create your models here.
 
-class Node(models.Model):
-	created = models.DateTimeField(auto_now_add=True)
+class Tag(models.Model):
+	lower = models.CharField(max_length=128)
+
+class Submission(models.Model):
+	date_created = models.DateTimeField(auto_now_add=True)
 	title = models.CharField(max_length=100)
 	contributors = models.ForeignKey(Group)
 	description = models.TextField()
-	keywords = models.CharField(max_length=500)
+	tags = models.ManyToManyField(Tag)
 
 	class Meta:
-		ordering = ('created',)
-
-class SubmissionEval(models.Model):
-	created = models.DateTimeField(auto_now_add=True)
-	premise = models.IntegerField()
-	research = models.IntegerField()
-	style = models.IntegerField()
-	comment = models.TextField()
-	total = models.IntegerField()
-	
-	class Meta:
-		ordering = ('created',)
+		ordering = ('date_created',)
 
 class Meeting(models.Model):
 	created = models.DateTimeField(auto_now_add=True)

@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import generics
 from api.serializers import UserSerializer, GroupSerializer
-from api.models import Node, SubmissionEval, Meeting
-from api.serializers import NodeSerializer, SubmissionEvalSerializer, MeetingSerializer
+from api.models import Submission, Meeting, Tag
+from api.serializers import SubmissionSerializer, MeetingSerializer
 from rest_framework import generics
 import requests
 from requests_oauth2 import OAuth2
@@ -45,12 +45,11 @@ class OsfAuthorizationCode(APIView):
 		USER_STORAGE[uid] = response
 		return Response(USER_STORAGE[uid])
 
-class NodeList(APIView):
-	def get(self, request, format=None):
-		return Response(request)
+class SubmissionList(APIView):
+	queryset = Submission.objects.all()
+	serializer_class = SubmissionSerializer
 
-
-class NodeDetail(APIView):
+class SubmissionDetail(APIView):
 	def get(self, request, format=None):
 		pass
 
