@@ -6,13 +6,13 @@ from rest_framework import serializers
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = User
-		fields = ('url', 'username', 'email', 'groups')
+		fields = ('username', 'email', 'groups')
 
 
 class GroupSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Group
-		fields = ('url', 'name')
+		fields = ('id', 'name')
 
 class TagSerializer(serializers.ModelSerializer):
 	class Meta:
@@ -28,7 +28,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
 class SubmissionSerializer(serializers.ModelSerializer):
 	conference = ConferenceSerializer()
 	tags = TagSerializer(many=True)
-	contributors = serializers.PrimaryKeyRelatedField(many=False, queryset=Group.objects.all())
+	contributors = GroupSerializer()
 	node_id = serializers.CharField(read_only=True)
 	class Meta:
 		model = Submission
