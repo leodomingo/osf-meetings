@@ -46,8 +46,10 @@ class OsfAuthorizationCode(APIView):
 		return Response(USER_STORAGE[uid])
 
 class SubmissionList(APIView):
-	queryset = Submission.objects.all()
-	serializer_class = SubmissionSerializer
+	def get(self, meeting_id, request, format=None):
+		meetingSubmissions = Submission.objects.filter(meeting_id=meeting_id)
+
+		return Response(meetingSubmissions)
 
 class SubmissionDetail(APIView):
 	def get(self, request, format=None):
