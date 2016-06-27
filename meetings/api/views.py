@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import generics
 from api.serializers import UserSerializer, GroupSerializer
-from api.models import Node, SubmissionEval, Meeting
-from api.serializers import NodeSerializer, SubmissionEvalSerializer, MeetingSerializer
+from api.models import Node, SubmissionEval, Conference
+from api.serializers import NodeSerializer, SubmissionEvalSerializer, ConferenceSerializer
 from rest_framework import generics
 import requests
 from requests_oauth2 import OAuth2
@@ -14,17 +14,18 @@ from django.http import HttpResponse
 
 USER_STORAGE = {}
 
-class MeetingList(generics.ListCreateAPIView):
-    queryset = Meeting.objects.all()
-    serializer_class = MeetingSerializer
+class ConferenceList(generics.ListCreateAPIView):
+    view_category = 'conference'
+    queryset = Conference.objects.all()
+    serializer_class = ConferenceSerializer
 
-class MeetingDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Meeting.objects.all()
-    serializer_class = MeetingSerializer
+class ConferenceDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Conference.objects.all()
+    serializer_class = ConferenceSerializer
 
     def get(self, pk, request, format=None):
-    	meeting = Meeting.objects.get(id=pk)
-    	return Response(meeting)
+    	conference = Conference.objects.get(id=pk)
+    	return Response(conference)
 
 class OsfAuthorizationUrl(APIView):
 	def get(self, request, format=None):
