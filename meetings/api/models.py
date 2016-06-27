@@ -1,5 +1,6 @@
 from __future__ import unicode_literals
 from django.contrib.auth.models import User, Group
+import datetime
 
 from django.db import models
 
@@ -15,22 +16,23 @@ class Submission(models.Model):
 	contributors = models.ForeignKey(Group)
 	description = models.TextField()
 	tags = models.ManyToManyField(Tag)
-	meeting = models.ForeignKey('meeting')
+	conference = models.ForeignKey('conference')
 
 	class Meta:
 		ordering = ('date_created',)
 
-class Meeting(models.Model):
+class Conference(models.Model):
 	created = models.DateTimeField(auto_now_add=True)
+        modified = models.DateTimeField(auto_now=True)
 	title = models.CharField(max_length=100)
 	website = models.CharField(max_length=100)
 	city = models.CharField(max_length=100)
 	state = models.CharField(max_length=100)
 	country = models.CharField(max_length=100)
-	start_date = models.DateField()
-	end_date = models.DateField()
-	submission_date = models.DateField()
-	close_date = models.DateField()
+	start_date = models.DateField(null=True)
+	end_date = models.DateField(null=True)
+	submission_date = models.DateField(null=True)
+	close_date = models.DateField(null=True)
 	logo_url = models.CharField(max_length=500)
 	tags = models.CharField(max_length=500)
 	sponsors = models.CharField(max_length=500)
