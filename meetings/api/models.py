@@ -6,18 +6,14 @@ from django.db import models
 
 # Create your models here.
 
-class Tag(models.Model):
-	lower = models.CharField(max_length=128)
-
 class Submission(models.Model):
 	node_id = models.CharField(max_length=10)
 	date_created = models.DateTimeField(auto_now_add=True)
 	title = models.CharField(max_length=100)
-	contributors = models.ForeignKey(Group)
+	contributors = models.ManyToManyField(User, blank=True)
 	description = models.TextField()
-	tags = models.ManyToManyField(Tag, blank=True)
 	conference = models.ForeignKey('conference')
-	approved = models.BooleanField()
+	approved = models.NullBooleanField(blank=True)
 
 	class Meta:
 		ordering = ('date_created',)

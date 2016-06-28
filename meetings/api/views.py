@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import generics
 from api.serializers import UserSerializer, GroupSerializer
-from api.models import Submission, Tag, Conference
+from api.models import Submission, Conference
 from api.serializers import SubmissionSerializer, ConferenceSerializer
 from rest_framework import generics
 from rest_framework_json_api.parsers import JSONParser as JSONAPIParser
@@ -49,29 +49,30 @@ class OsfAuthorizationCode(APIView):
 		USER_STORAGE[uid] = response
 		return Response(USER_STORAGE[uid])
 
-class SubmissionList(APIView):
+class SubmissionList(generics.ListCreateAPIView):
 	serializer_class = SubmissionSerializer
-	resource_name = 'submissions'
+	resource_name = 'Submission'
 	encoding = 'utf-8'
+	queryset= Submission.objects.all()
 	def get(self, request, conference_id=None, format=None):
 		conferenceSubmissions = Submission.objects.filter(conference_id=conference_id)
 		submissionsSerializer = SubmissionSerializer(conferenceSubmissions, context={'request': request}, many=True)
 		return Response(submissionsSerializer.data)
 
-	@api_view(['POST'])
 	def post(self, request, conference_id=None, format=None):
-		# TODO: check permissions here
-		serializer = SubmissionSerializer(data=data, context={'request': request})
+		serializer = SubmissionSerializer(data=request.data)
+		contributors = [request.user.id]
 		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data, status=201)
-		return Response(serializer.errors, status=400)
+			serializer.save(contributors=contributors)
+			return Response(serializer.data)
+		return Response(serializer.errors)
 
 class SubmissionDetail(APIView):
+	resource_name = 'Submission'
+	serializer_class = SubmissionSerializer
 	def get(self, request, conference_id=None, submission_id=None , format=None):
 		conferenceSubmission = Submission.objects.get(pk=submission_id)
 		submissionsSerializer = SubmissionSerializer(conferenceSubmission, context={'request': request}, many=False)
 		return Response(submissionsSerializer.data)
-
 
 
