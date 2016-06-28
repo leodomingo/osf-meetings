@@ -1,29 +1,33 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import generics
 from api.serializers import UserSerializer, GroupSerializer
-from api.models import Submission, Tag, Conference
+from api.models import Submission, Conference
 from api.serializers import SubmissionSerializer, ConferenceSerializer
 from rest_framework import generics
 import requests
 from requests_oauth2 import OAuth2
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
+from django.http import Http404
 
 USER_STORAGE = {}
 
 class ConferenceList(generics.ListCreateAPIView):
-    view_category = 'conference'
+    resource_name = 'Conferences'
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
 
-class ConferenceDetail(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Conference.objects.all()
-    serializer_class = ConferenceSerializer
+class ConferenceDetail(APIView):
+    def get_object(self, pk):
+        try:
+            return Conference.objects.get(pk=pk)
+        except Conference.DoesNotExist:
+            raise Http404
 
-    def get(self, pk, request, format=None):
-    	conference = Conference.objects.get(id=pk)
-    	return Response(conference)
+    def get(self, request, pk, format=None):
+        conference = self.get_object(pk)
+        serializer = ConferenceSerializer(conference)
+        return Response(serializer.data)
 
 class OsfAuthorizationUrl(APIView):
 	def get(self, request, format=None):
