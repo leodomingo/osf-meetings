@@ -1,7 +1,8 @@
+from __future__ import unicode_literals
+
 from django.contrib.auth.models import User, Group
 from django.db import models
 
-from __future__ import unicode_literals
 import datetime
 from django_countries.fields import CountryField
 

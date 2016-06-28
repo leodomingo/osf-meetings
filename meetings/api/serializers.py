@@ -31,10 +31,10 @@ class ConferenceSerializer(ser.ModelSerializer):
         model = Conference
         fields = ('created', 'modified', 'id', 'title', 'site_url', 'city', 'state', 'country', 'event_start', 'event_end', 'submission_start', 'submission_end', 'logo_url', 'description')
 
-class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
-    conference = serializers.PrimaryKeyRelatedField(queryset=Conference.objects.all())
+class SubmissionSerializer(ser.HyperlinkedModelSerializer):
+    conference = ser.PrimaryKeyRelatedField(queryset=Conference.objects.all())
     contributors = UserSerializer(many=True)
-    node_id = serializers.CharField(read_only=True)
+    node_id = ser.CharField(read_only=True)
 
     def create(self, validated_data):
         # look up contributors by ID
