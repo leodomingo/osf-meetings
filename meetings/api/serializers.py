@@ -2,7 +2,6 @@ from django.contrib.auth.models import User, Group
 from api.models import Submission, Conference, Tag
 from rest_framework import serializers
 
-
 class UserSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = User
@@ -25,8 +24,8 @@ class ConferenceSerializer(serializers.ModelSerializer):
 		fields = ('created', 'modified', 'id', 'title', 'website', 'city', 
 			'state', 'country', 'start_date', 'end_date', 'submission_date', 'close_date', 'logo_url', 'tags', 'sponsors', 'description')
 
-class SubmissionSerializer(serializers.ModelSerializer):
-	conference = ConferenceSerializer()
+class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
+	conference = serializers.HyperlinkedIdentityField(view_name='conference-detail')
 	tags = TagSerializer(many=True)
 	contributors = GroupSerializer()
 	node_id = serializers.CharField(read_only=True)

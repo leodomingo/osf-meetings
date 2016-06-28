@@ -17,6 +17,7 @@ class Submission(models.Model):
 	description = models.TextField()
 	tags = models.ManyToManyField(Tag, blank=True)
 	conference = models.ForeignKey('conference')
+	approved = models.BooleanField()
 
 	class Meta:
 		ordering = ('date_created',)
