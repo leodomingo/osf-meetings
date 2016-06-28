@@ -3,22 +3,15 @@ from api.models import Submission, Conference
 from rest_framework import serializers as ser
 from django_countries.fields import CountryField
 
-
 class UserSerializer(ser.HyperlinkedModelSerializer):
-	class Meta:
-		model = User
-		fields = ('url', 'username', 'email', 'groups')
-
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'groups')
 
 class GroupSerializer(ser.HyperlinkedModelSerializer):
-	class Meta:
-		model = Group
-		fields = ('url', 'name')
-
-class SubmissionSerializer(ser.ModelSerializer):
-	class Meta:
-		model = Submission
-		fields = ('id', 'osf_id', 'title', 'contributors', 'description','tags', 'meeting')
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
 
 class ConferenceSerializer(ser.ModelSerializer):
     title = ser.CharField(required=True)
@@ -33,6 +26,28 @@ class ConferenceSerializer(ser.ModelSerializer):
     description = ser.CharField(required=True)
     site_url = ser.URLField(required=False)
 
+    # Later on add tags and sponsors back
     class Meta:
         model = Conference
         fields = ('created', 'modified', 'id', 'title', 'site_url', 'city', 'state', 'country', 'event_start', 'event_end', 'submission_start', 'submission_end', 'logo_url', 'description')
+
+class SubmissionSerializer(serializers.HyperlinkedModelSerializer):
+    conference = serializers.PrimaryKeyRelatedField(queryset=Conference.objects.all())
+    contributors = UserSerializer(many=True)
+    node_id = serializers.CharField(read_only=True)
+
+    def create(self, validated_data):
+        # look up contributors by ID
+        contributors = validated_data['contributors']
+        title = validated_data['title']
+        description = validated_data['description']
+        conference = validated_data['conference']
+        submission = Submission.objects.create(title=title, description=description, conference=conference, approved=False)
+        for contributor in contributors:
+                submission.contributors.add(contributor)
+        return submission
+
+
+    class Meta:
+        model = Submission
+        fields = ('id', 'node_id', 'title', 'description', 'conference', 'contributors')
