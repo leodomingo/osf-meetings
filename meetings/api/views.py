@@ -91,3 +91,15 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
 
+class UserDetail(APIView):
+    resource_name = 'User'
+    serializer_class = UserSerializer
+
+    def get(self, request, user_id=None, format=None):
+        user = User.objects.get(pk=user_id)
+        userSerializer = UserSerializer(user, context={'request': request}, many=False)
+        return Response(userSerializer.data)
+
+
+
+
