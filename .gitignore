@@ -17,3 +17,23 @@ npm-debug.log
 testem.log
 config/local.yml
 **/.DS_Store
+
+# Django
+db.sqlite3
+
+.DS_Store
+
+*.egg-info
+*.pot
+*.py[co]
+00*
+__pycache__
+MANIFEST
+dist/
+docs/_build/
+docs/locale/
+node_modules/
+tests/coverage_html/
+tests/.coverage
+build/
+tests/report/
