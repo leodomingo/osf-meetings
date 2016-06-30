@@ -1,0 +1,100 @@
+@import "ember-modal-dialog/ember-modal-structure";
+@import "ember-modal-dialog/ember-modal-appearance";
+@import "breakpoints";
+@import "index";
+@import "register";
+@import "conference";
+
+h1,h2,h3,h4,h5,h6
+{
+  font-weight: 400;
+}
+h1
+{
+  font-size: 11.089em;
+}
+h2
+{
+  font-size: 6.854em;
+}
+h3
+{
+  font-size: 4.246em;
+}
+h4
+{
+  font-size: 2.618em;
+}
+h5
+{
+  font-size: 1.618em;
+}
+h6
+{
+  font-size: 1em;
+}
+p
+{
+  font-size: 0.618em;
+}
+
+.tile-view a, a:link, a:visited , a:hover, a:active
+{
+    color: white;
+    text-decoration: none;
+}
+
+.no-pad
+{
+  padding: 0;
+}
+.navbar
+{
+  background-color: transparent;
+  background: transparent;
+  border-color: transparent;
+  position: absolute;
+  left: 0;
+}
+.osf-light-background
+{
+  background-image: linear-gradient(to right, #4A8DB0, rgba(74, 141, 176, 0.26));
+  background-size: contain;
+  color: white;
+  min-height: 100%;
+}
+.osf-standard-background
+{
+  background-image: linear-gradient(to bottom left, #000305, #0E4364, #4A8DB0);
+  background-size: contain;
+  color: white;
+}
+.big
+{
+  height: 100vh;
+  overflow-y: hidden;
+}
+.big .background
+{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.3;
+  max-width: 95%;
+  z-index: 2;
+}
+.big .logo
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+textarea
+{
+    max-width: 100%;
+}
+
+html
+{
+  word-wrap: break-word;
+}

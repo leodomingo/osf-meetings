@@ -1,0 +1,248 @@
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+
+            <h3 class="text-center text-primary">
+            </h3>
+            <h2>
+                Peer Review Dashboard
+            </h2>
+
+            <div class="input-group"> <span class="input-group-addon">Filter</span>
+
+                <input id="filter" type="text" class="form-control" placeholder="Type here..." {{action 'filterdata'}}>
+            </div>
+
+            <div class="btn-group">
+                <a id="list" class="btn btn-default btn-sm" {{action 'showlist'}}><span class="glyphicon glyphicon-th-list">
+            </span>List</a> <a id="grid" class="btn btn-default btn-sm"{{action 'showgrid'}} ><span
+                    class="glyphicon glyphicon-th"></span>Grid</a>
+            </div>
+
+            {{#if islistview}}
+            <table class="table table-hover table-striped">
+                <thead>
+
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Title
+                    </th>
+                    <th>
+                        Conference
+                    </th>
+                    <th>
+                        Review Deadline
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+                </thead>
+                <tbody class="searchable">
+                {{#each model.reviewsdate as |d|}}
+
+                    <tr >
+                        <td>
+                          {{d.id}}
+                        </td>
+                        <td>
+                          {{d.title}}
+                        </td>
+                        <td>
+                          {{d.conference}}
+                        </td>
+                        <td>
+                          {{d.reviewdeadline}}
+                        </td>
+                        <td>
+                          {{d.status}}
+                        </td>
+
+                        <td>
+                            <a class="btn btn-primary" {{action 'showform'}} >View</a>
+
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" {{action 'showapprove' d.id}} >Approve</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" {{action 'showassign' d.id}} >Assign</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-primary" {{action 'showdata'}} >Contact Author</a>
+                        </td>
+
+
+
+
+
+                    </tr>
+                {{/each}}
+                </tbody>
+            </table>
+            {{/if}}
+
+          {{#if isgridview}}
+
+              <div id="reviews" class="row list-group">
+                {{#each model.reviewsdate as |d|}}
+                    <div class="searchable2  col-xs-4 col-lg-4">
+                        <div class="thumbnail">
+                            <img class="group list-group-image" src="http://placehold.it/400x250/000/fff" alt="" />
+                            <div class="caption">
+                                <h4 class="group inner list-group-item-heading">
+                                  {{d.title}}</h4>
+                                <p class="group inner list-group-item-text">
+                                  {{d.conference}}</p>
+                                <div class="row">
+                                    <div class="col-xs-12 col-md-6">
+                                        <p class="lead">
+                                          {{d.reviewdeadline}}</p>
+                                    </div>
+                                    <div class="col-xs-12 col-md-10">
+                                        <a class="btn btn-primary" {{action 'showform'}} >View</a>
+                                        <a class="btn btn-primary" {{action 'showapprove' d.id}} >Approve</a>
+                                        <a class="btn btn-primary" {{action 'showassign' d.id}} >Assign</a>
+                                        <a class="btn btn-primary" {{action 'showdata'}} >Contact Author</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+
+
+              </div>
+          {{/if}}
+
+        </div>
+    </div>
+
+
+</div>
+
+
+{{#if isshowingform}}
+  {{#modal-dialog close="hideform"
+  targetAttachment="center"
+  translucentOverlay=true}}
+      <form class="form-horizontal">
+          <fieldset>
+
+              <!-- Form Name -->
+              <legend>Submission Preview</legend>
+
+
+              <div class = "col-md-8 col-md-offset-3" style="width: 1300px">
+                  <iframe id="fred" style="border:1px solid #666CCC" title="Submission" src="http://reproducibility.cs.arizona.edu/v2/RepeatabilityTR.pdf" frameborder="1" scrolling="auto" height="850" width="850" ></iframe>
+              </div>
+
+
+              <!-- Button (Double) -->
+              <div class="form-group">
+                  <label class="col-md-4 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                      <button id="button1id" name="button1id" class="btn btn-success" {{action 'hideform'}}>Close</button>
+
+                  </div>
+              </div>
+
+          </fieldset>
+      </form>
+
+
+  {{/modal-dialog}}
+{{/if}}
+
+
+
+
+
+{{#if isshowingassign}}
+  {{#modal-dialog close="hideassign"
+  targetAttachment="center"
+  translucentOverlay=true}}
+      <form class="form-horizontal">
+          <fieldset>
+
+              <!-- Form Name -->
+              <legend>Review Assignment</legend>
+
+              <!-- Select Basic -->
+              <div class="form-group">
+                  <label class="col-md-4 control-label" for="selectbasic">Assign to</label>
+                  <div class="col-md-4">
+                      <select id="selectbasic" name="selectbasic" class="form-control" style="width: 170px">
+                          <option value="1">Any Available Reviewer</option>
+                          <option value="2">Specific Reviewer</option>
+                      </select>
+
+                  </div>
+              </div>
+
+              <!-- Button (Double) -->
+              <div class="form-group">
+                  <label class="col-md-4 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                      <button id="button1id" name="button1id" class="btn btn-success" {{action 'hideassign' 'ok'}}>Ok</button>
+                      <button id="button2id" name="button2id" class="btn btn-danger" {{action 'hideassign' 'cancel'}}>Cancel</button>
+                  </div>
+              </div>
+
+          </fieldset>
+      </form>
+
+
+  {{/modal-dialog}}
+{{/if}}
+
+
+
+{{#if isshowingcontact}}
+  {{#modal-dialog close="hidedata"
+  targetAttachment="center"
+  translucentOverlay=true}}
+      <form class="form-horizontal" style="width: 1000px">
+          <fieldset>
+
+              <!-- Form Name -->
+              <legend>Contact Author</legend>
+
+              <!-- Textarea -->
+              <div class="form-group" >
+                  <label class="col-md-4 control-label" for="textarea">Email Message</label>
+                  <div class="col-md-4">
+                      <textarea class="form-control" id="textarea" name="textarea" rows="10" style="width: 600px">{{msgtemplate}} </textarea>
+                  </div>
+              </div>
+
+                           <!-- Button (Double) -->
+              <div class="form-group">
+                  <label class="col-md-4 control-label" for="button1id"></label>
+                  <div class="col-md-8">
+                      <button id="button1id" name="button1id" class="btn btn-success" {{action 'hidedata'}}>Send</button>
+                      <button id="button2id" name="button2id" class="btn btn-danger" {{action 'hidedata'}}>Cancel</button>
+                  </div>
+                {{#bs-progress}}
+                  {{bs-progress-bar value=progressValue minValue=0 maxValue=10 showLabel=true type="danger"}}
+                {{/bs-progress}}
+              </div>
+
+          </fieldset>
+      </form>
+  {{/modal-dialog}}
+{{/if}}
+
+
+
+
+{{outlet}}
+
