@@ -1,9 +1,8 @@
 from django.contrib.auth.models import User, Group
 from api.models import Submission, Conference
 from api.serializers import UserSerializer, GroupSerializer
-from api.serializers import SubmissionSerializer, ConferenceSerializer, AuthenticationSerializer
-
-from rest_framework import generics
+from rest_framework import generics, viewsets
+from api.serializers import SubmissionSerializer, ConferenceSerializer, AuthenticationSerializer, UserSerializer
 from rest_framework_json_api.parsers import JSONParser as JSONAPIParser
 import requests
 from requests_oauth2 import OAuth2
@@ -12,6 +11,7 @@ from rest_framework.response import Response
 from django.http import Http404
 from django.contrib.auth import authenticate, login
 from rest_framework import status
+
 
 USER_STORAGE = {}
 
@@ -85,6 +85,24 @@ class SubmissionDetail(APIView):
         conferenceSubmission = Submission.objects.get(pk=submission_id)
         submissionsSerializer = SubmissionSerializer(conferenceSubmission, context={'request': request}, many=False)
         return Response(submissionsSerializer.data)
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = User.objects.all().order_by('-date_joined')
+    serializer_class = UserSerializer
+
+class UserDetail(APIView):
+    resource_name = 'User'
+    serializer_class = UserSerializer
+
+    def get(self, request, user_id=None, format=None):
+        user = User.objects.get(pk=user_id)
+        userSerializer = UserSerializer(user, context={'request': request}, many=False)
+        return Response(userSerializer.data)
+
+
 
 
 class AuthenticateUser(APIView):
