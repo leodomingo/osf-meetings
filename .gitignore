@@ -19,3 +19,4 @@ config/local.yml
 **/.DS_Store
 /meetings/db*
 /meetings/api/migrations/0*
+.editorconfig
