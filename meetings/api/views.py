@@ -2,7 +2,8 @@ from django.contrib.auth.models import User, Group
 from api.models import Submission, Conference
 from api.serializers import UserSerializer, GroupSerializer
 from rest_framework import generics, viewsets
-from api.serializers import SubmissionSerializer, ConferenceSerializer, AuthenticationSerializer, UserSerializer
+from api.serializers import SubmissionSerializer, ConferenceSerializer, AuthenticationSerializer
+
 from rest_framework_json_api.parsers import JSONParser as JSONAPIParser
 import requests
 from requests_oauth2 import OAuth2
@@ -11,7 +12,6 @@ from rest_framework.response import Response
 from django.http import Http404
 from django.contrib.auth import authenticate, login
 from rest_framework import status
-
 
 USER_STORAGE = {}
 
@@ -121,9 +121,6 @@ class AuthenticateUser(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
             else:
                 # the authentication system was unable to verify the username and password
-                return Response("The username and password were not found", status=status.HTTP_404_NOT_FOUND)     
+                return Response("The username and password were not found", status=status.HTTP_404_NOT_FOUND)
         else:
             return Response("Incorrect format for POST", status=status.HTTP_404_NOT_FOUND)
-
-
-
