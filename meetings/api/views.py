@@ -1,15 +1,14 @@
 from django.contrib.auth.models import User, Group
-from api.models import Submission, Conference
+from api.models import Submission
 from api.serializers import UserSerializer, GroupSerializer
 from rest_framework import generics, viewsets
-from api.serializers import SubmissionSerializer, ConferenceSerializer, AuthenticationSerializer
+from api.serializers import SubmissionSerializer, AuthenticationSerializer
 
 from rest_framework_json_api.parsers import JSONParser as JSONAPIParser
 import requests
 from requests_oauth2 import OAuth2
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.http import Http404
 from django.contrib.auth import authenticate, login
 from rest_framework import status
 
@@ -35,24 +34,6 @@ class OsfAuthorizationCode(APIView):
         USER_STORAGE[uid] = response
         return Response(USER_STORAGE[uid])
 
-## List of conferences
-class ConferenceList(generics.ListCreateAPIView):
-    resource_name = 'conferences'
-    queryset = Conference.objects.all()
-    serializer_class = ConferenceSerializer
-
-## Detail of a conference
-class ConferenceDetail(APIView):
-    def get_object(self, pk):
-        try:
-            return Conference.objects.get(pk=pk)
-        except Conference.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        conference = self.get_object(pk)
-        serializer = ConferenceSerializer(conference)
-        return Response(serializer.data)
 
 ## List of submissions
 class SubmissionList(generics.ListCreateAPIView):
