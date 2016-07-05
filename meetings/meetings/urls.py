@@ -15,8 +15,6 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^users/(?P<pk>[0-9]+)/$', views.UserDetail, name='user-detail'),
     url(r'^conferences/', include('conferences.urls', namespace='conferences')),
-    url(r'^auth/', views.OsfAuthorizationUrl.as_view(), name='auth'),
-    url(r'^login/', views.OsfAuthorizationCode.as_view(), name='login'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^authenticate/', views.AuthenticateUser.as_view(), name='authenticate'),
 ]
