@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'api',
     'conferences',
+    'submissions',
 ]
 
 REST_FRAMEWORK = {

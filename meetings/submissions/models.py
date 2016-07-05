@@ -1,12 +1,7 @@
 from __future__ import unicode_literals
-
-from django.contrib.auth.models import User, Group
 from django.db import models
+from django.contrib.auth.models import User
 
-import datetime
-from django_countries.fields import CountryField
-
-# Create your models here.
 
 class Submission(models.Model):
     node_id = models.CharField(max_length=10)
