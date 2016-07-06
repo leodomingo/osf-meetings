@@ -22,6 +22,7 @@ Router.map(function() {
   this.route('signup');
   this.route('evaluation-page');
   this.route('peerdashboard');
+  this.route('search');
 });
 
 export default Router;

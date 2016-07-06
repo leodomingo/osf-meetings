@@ -15,7 +15,7 @@ class ConferenceSerializer(ser.ModelSerializer):
     submissionEnd = ser.DateTimeField(source='submission_end', required=False)
     logoUrl = ser.URLField(source='logo_url', allow_blank=True)
     description = ser.CharField(allow_blank=True)
-    siteUrl = ser.URLField(source='site_url')
+    siteUrl = ser.URLField(source='site_url', allow_blank=True)
 
     # Later on add tags and sponsors back
     class Meta:
