@@ -25,7 +25,6 @@ export default Ember.Route.extend({
 			Ember.$.ajax({
 				url: "http://localhost:8000/login?code=" + code,
 				type: "GET",
-				//crossDomain: true
 				dataType: 'json',
 				contentType: 'text/plain',
 				xhrFields: {

@@ -34,6 +34,14 @@ class OsfAuthorizationCode(APIView):
         USER_STORAGE[uid] = response
         return Response(USER_STORAGE[uid])
 
+class checkLoggedIn(APIView):
+    def get(self, request, format=None):
+        print(request.user)
+        if request.user.is_authenticated():
+            return Response('true')
+        else:
+            return Response('false')     
+
 
 class UserViewSet(viewsets.ModelViewSet):
     """
