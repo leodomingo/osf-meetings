@@ -34,14 +34,12 @@ class OsfAuthorizationCode(APIView):
         USER_STORAGE[uid] = response
         return Response(USER_STORAGE[uid])
 
-
 class UserViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
-
 
 class UserDetail(APIView):
     resource_name = 'User'

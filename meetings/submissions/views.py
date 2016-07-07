@@ -9,7 +9,7 @@ from submissions.models import Submission
 # List of submissions
 class SubmissionList(ListCreateAPIView):
     serializer_class = SubmissionSerializer
-    resource_name = 'Submission'
+    resource_name = 'submission'
     encoding = 'utf-8'
     queryset= Submission.objects.all()
 
@@ -31,7 +31,7 @@ class SubmissionList(ListCreateAPIView):
 
 # Detail of a submission
 class SubmissionDetail(APIView):
-    resource_name = 'Submission'
+    resource_name = 'submission'
     serializer_class = SubmissionSerializer
 
     def get(self, request, conference_id=None, submission_id=None , format=None):
