@@ -17,7 +17,7 @@ class ConferenceList(ListCreateAPIView):
 
 # Detail of a conference
 class ConferenceDetail(APIView):
-    resourece_name = 'conference'
+    resource_name = 'conference'
 
     def get_object(self, pk):
         try:
