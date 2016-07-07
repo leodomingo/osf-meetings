@@ -1,12 +1,12 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('adapter:submission-eval', 'Unit | Adapter | submission eval', {
+moduleFor('transform:isodate', 'Unit | Transform | isodate', {
   // Specify the other units that are required for this test.
   // needs: ['serializer:foo']
 });
 
 // Replace this with your real tests.
 test('it exists', function(assert) {
-  let adapter = this.subject();
-  assert.ok(adapter);
+  let transform = this.subject();
+  assert.ok(transform);
 });
