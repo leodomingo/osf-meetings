@@ -20,6 +20,5 @@ class ConferenceSerializer(ser.ModelSerializer):
     # Later on add tags and sponsors back
     class Meta:
         model = Conference
-        fields = ('created', 'modified', 'title', 'siteUrl', 'city',
+        fields = ('created', 'modified', 'id', 'title', 'siteUrl', 'city',
                 'state', 'country', 'start', 'end', 'submissionStart', 'submissionEnd', 'logoUrl', 'description')
-        read_only_fields = ('id',)
