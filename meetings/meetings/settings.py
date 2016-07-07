@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_countries',
     'guardian',
     'rest_framework',
@@ -44,6 +45,12 @@ INSTALLED_APPS = [
     'api',
     'conferences',
     'submissions',
+    'oauth2_provider',
+    'osf_oauth2_adapter',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+
 ]
 
 REST_FRAMEWORK = {
@@ -88,6 +95,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -130,6 +139,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 
@@ -161,3 +171,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+SITE_ID = 1
+
+# Where users are redirected after login
+LOGIN_REDIRECT_URL = 'http://localhost:4200'
