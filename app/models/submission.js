@@ -4,5 +4,6 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
     conference : belongsTo('conference'),
-    title : attr('string')
+    title : attr('string'),
+    description : attr('string')
 });
