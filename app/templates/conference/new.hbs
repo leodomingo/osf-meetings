@@ -7,29 +7,33 @@
                     <div class="form-group row fade-background">
                         <div class="section-header">IDENTIFY</div>
                         <hr>
+                        <div class="col-lg-6">
+                            <label for="city" class="form-control-label">Conference Identifier</label>
+                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
+                        </div>
                         <div class="col-lg-6 {{"has-success"}}" id="titleScroll">
                             <label for="title" class="form-control-label">Title</label>
-                            {{input value=model.title class="form-control" placeholder="Conference Title" id="title"}}
+                            {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
                             <br>
                             {{#if this.displayErrors}}
-                                {{#each errors.model.title as |error|}}
+                                {{#each errors.model.newConf.title as |error|}}
                                     <div class="alert alert-danger" role="alert">{{error}}</div>
                                 {{/each}}
                             {{/if}}
                             <label for="website" class="form-control-label">Website</label>
-                            {{input value=model.website class="form-control form-spacing" placeholder="Conference Website" id="website"}}
+                            {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
                             <label for="city" class="form-control-label">Logo</label>
                             {{input type="file" accept="image/*" id="image"}}
 
                             <label for="description" class="form-control-label" id="descriptionScroll">
                                 Description:</label>
-                            {{textarea value=model.description class="form-control resize" id="description"}}
-                            {{#if this.displayErrors}}
-                                {{#each errors.model.description as |error|}}
+                            {{textarea value=model.newConf.description class="form-control resize" id="description"}}
+                            <!-- {{#if this.displayErrors}}
+                                {{#each errors.model.newConf.description as |error|}}
                                     <br><div class="alert alert-danger" role="alert">{{error}}</div>
                                 {{/each}}
-                            {{/if}}
+                            {{/if}} -->
                         </div>
                     </div>
 
@@ -42,39 +46,42 @@
                                 <label for="country" class="form-control-label" id="countryScroll">
                                     Country
                                 </label>
-                                <select class="form-control form-spacing" onchange={{action (mut model.country) value="target.value"}}>
-                                    {{#each countries as |countryChoice|}}
-                                        <option value={{countryChoice}} selected={{eq model.country countryChoice}}>
-                                            {{countryChoice}}
+                                <select class="form-control form-spacing"
+                                    onchange={{action (mut model.newConf.country) value="target.value"}}>
+                                    <option value=''>select a country</option>
+                                    {{#each model.meta.data.actions.POST.country.choices
+                                        as |countryChoice|}}
+                                        <option value={{countryChoice.value}}>
+                                            {{countryChoice.display_name}}
                                         </option>
                                     {{/each}}
                                 </select>
-                                {{#if this.displayErrors}}
-                                    {{#each errors.model.country as |error|}}
+                                <!-- {{#if this.displayErrors}}
+                                    {{#each errors.model.newConf.country as |error|}}
                                         <br><div class="alert alert-danger" role="alert">{{error}}</div>
                                     {{/each}}
-                                {{/if}}
+                                {{/if}} -->
                             </div>
 
                             <div class="{{"has-success"}}">
                                 <label for="state" class="form-control-label" id="stateScroll">
                                     State
                                 </label>
-                                {{input value=model.state class="form-control" id="state" placeholder="State"}}
-                                {{#if this.displayErrors}}
-                                    {{#each errors.model.state as |error|}}
+                                {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
+                                <!-- {{#if this.displayErrors}}
+                                    {{#each errors.model.newConf.state as |error|}}
                                         <br><div class="alert alert-danger" role="alert">{{error}}</div>
                                     {{/each}}
-                                {{/if}}
+                                {{/if}} -->
                             </div>
                             <div class="{{"has-success"}}">
                                 <label for="city" class=" form-control-label" id="cityScroll">City</label>
-                                {{input value=model.city class="form-control" id="city" placeholder="City"}}
-                                {{#if this.displayErrors}}
-                                    {{#each errors.model.city as |error|}}
+                                {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
+                                <!-- {{#if this.displayErrors}}
+                                    {{#each errors.model.newConf.city as |error|}}
                                         <br><div class="alert alert-danger" role="alert">{{error}}</div>
                                     {{/each}}
-                                {{/if}}
+                                {{/if}} -->
                             </div>
 
 
@@ -86,13 +93,13 @@
                         <hr>
                         <div class="col-lg-6">
                             <label for="city" class="form-control-label">Start</label>
-                            {{date-picker date=model.startDate class="form-control" valueFormat='date' id='startDate'}}
+                            {{bs-datetimepicker date=model.newConf.start class="form-control" id='startDate'}}
                         </div>
                         <div class="col-lg-6">
                             <label for="city" class="form-control-label">End</label>
-                            {{date-picker date=model.endDate class="form-control" valueFormat='date' id='endDate'}}
+                            {{bs-datetimepicker date=model.newConf.end class="form-control" id='endDate'}}
                             {{#if this.displayErrors}}
-                                {{#each errors.model.startDate as |error|}}
+                                {{#each errors.model.newConf.start as |error|}}
                                     <br><div class="alert alert-danger" role="alert">{{error}}</div>
                                 {{/each}}
                             {{/if}}
@@ -105,35 +112,26 @@
                         <hr>
                         <div class="col-lg-6">
                             <label for="city" class="form-control-label">Start</label>
-                            {{date-picker date=model.submissionDate class="form-control" valueFormat='date' id='submissionDate'}}
+                            {{bs-datetimepicker
+                            date=model.newConf.submissionstart
+                            class="form-control" id='submissionDate'}}
                         </div>
                         <div class="col-lg-6">
                             <label for="city" class="form-control-label">End</label>
-                            {{date-picker date=model.closeDate class="form-control" valueFormat='date' id='closeDate'}}
+                            {{bs-datetimepicker date=model.newConf.submissionend class="form-control" id='closeDate'}}
                             {{#if this.displayErrors}}
-                                {{#each errors.model.submissionDate as |error|}}
+                                {{#each errors.model.newConf.submissionstart as |error|}}
                                     <br><div class="alert alert-danger" role="alert">{{error}}</div>
                                 {{/each}}
                             {{/if}}
-                        </div>
-                    </div>
-                    <div class="form-group row fade-background">
-                        <div class="section-header">EXPAND</div>
-                        <hr>
-                        <div class="col-lg-6 {{"has-success"}}">
-                            <label for="city" class="form-control-label">Sponsors</label>
-                            {{input value=model.sponsors class="form-control form-spacing" id="sponsors" placeholder="sponsor 1, sponsor 2, sponsor 3, ..."}}
-                        </div>
-                        <div class="col-lg-6 {{"has-success"}}">
-                            <label for="tags" class="form-control-label">Tags</label>
-                            {{input value=model.tags class="form-control form-spacing" id="tags" placeholder="tag 1, tag 2, tag 3, ..."}}
                         </div>
                     </div>
 
                     <div class="form-group row fade-background" >
                         <div class="col-md-4">
                             <button class="btn btn-danger" {{action "back"}}>Cancel</button>
-                            <button class="btn btn-success" {{action "create" model}}>Create</button>
+                            <button class="btn btn-success" {{action "saveNode"
+                                model.newConf}}>Create</button>
                         </div>
                         <div class="col-md-4">
                             <button class="btn btn-primary" {{action "preview"}}>Preview</button>
@@ -145,28 +143,35 @@
                                                 <div class="conferenceTopContainer col-md-12">
                                                     <div class="col-md-8 col-md-offset-2">
                                                         <div class="conferenceInfo">
-                                                            <h1> {{model.title}}</h1>
-                                                            <h4> {{model.startDate}} - {{model.endDate}} </h4>
-                                                            <h4>{{model.city}}, {{model.state}}, {{model.country}} </h4>
+                                                            <h1>
+                                                                {{model.newConf.title}}</h1>
+                                                            <h4>
+                                                                {{model.newConf.start}} - {{model.end}} </h4>
+                                                            <h4>{{model.newConf.city}},
+                                                                {{model.newConf.state}},
+                                                                {{model.newConf.country}} </h4>
                                                             <div class="logos"></div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-8 col-offset-2 conferencePhoto">
                                                         {{!--TODO: THIS WILL PROBABLY REQUIRE EDITING ONCE FILE UPLOAD IS WORKING CORREFTLY--}}
-                                                        <img src={{model.logo}}>
+                                                        <img
+                                                        src={{model.newConf.logo}}>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row ">
                                                 <div class="col-lg-12">
                                                     <div class="col-lg-8 col-lg-offset-2">
-                                                        <p class="conference-description">{{model.conference.description}}</p>
+                                                        <p
+                                                        class="conference-description">{{model.newConf.description}}</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         <button class="btn btn-danger" {{action "previewOff"}}>Close
                                         </button>
-                                        <button class="btn btn-success" {{action "create" model}}>Submit
+                                        <button class="btn btn-success" {{action
+                                            "create" model.newConf}}>Submit
                                         </button>
                                         </div>
                                     </div>
@@ -179,4 +184,3 @@
         </div>
     </div>
 </div>
-

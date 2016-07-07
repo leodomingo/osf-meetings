@@ -3,7 +3,6 @@ import EmberValidations from 'ember-validations';
 
 export default Ember.Controller.extend(EmberValidations, {
 
-
 	editing: false,
 	navModal: false,
 	displayErrors: false,
