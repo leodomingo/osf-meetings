@@ -43,6 +43,7 @@ class ConferenceList(generics.ListCreateAPIView):
 
 ## Detail of a conference
 class ConferenceDetail(APIView):
+    resource_name = 'conference'
     def get_object(self, pk):
         try:
             return Conference.objects.get(pk=pk)
@@ -57,7 +58,7 @@ class ConferenceDetail(APIView):
 ## List of submissions
 class SubmissionList(generics.ListCreateAPIView):
     serializer_class = SubmissionSerializer
-    resource_name = 'Submission'
+    resource_name = 'submissions'
     encoding = 'utf-8'
     queryset= Submission.objects.all()
 
@@ -78,7 +79,7 @@ class SubmissionList(generics.ListCreateAPIView):
 
 ## Detail of a submission
 class SubmissionDetail(APIView):
-    resource_name = 'Submission'
+    resource_name = 'submission'
     serializer_class = SubmissionSerializer
 
     def get(self, request, conference_id=None, submission_id=None , format=None):
