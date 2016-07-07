@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 from django.db import models
 from django_countries.fields import CountryField
 
-
 class Conference(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     modified = models.DateTimeField(auto_now=True)
