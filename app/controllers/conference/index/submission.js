@@ -3,33 +3,33 @@ import TaggableMixin from 'ember-osf/mixins/taggable-mixin';
 import EmberValidations from 'ember-validations';
 
 export default Ember.Controller.extend(TaggableMixin, EmberValidations, {
-
-	displayErrors: false,
+    displayErrors: false,
     tagError: false,
     kill: true,
 
     validations: {
-    	'model.title': {
-    		length: {minimum: 3, maximum: 200, messages: {
-    			tooShort: 'Please enter a valid title',
-    			tooLong: 'Title exceeds limit of 200 characters'
-    		}}
-    	},
-    	//TODO: Validation for contributors?
-    	'model.description': {
-    		length: {minimum: 6, maximum: 2000, messages: {
-    			tooShort: 'Please enter a valid description',
-    			tooLong: 'Description exceeds limit of 2000 characters.'
-    		}}
-    	}
+        'model.title': {
+            length: {minimum: 3, maximum: 200, messages: {
+                tooShort: 'Please enter a valid title',
+                tooLong: 'Title exceeds limit of 200 characters'
+            }}
+        },
+        //TODO: Validation for contributors?
+        'model.description': {
+            length: {minimum: 6, maximum: 2000, messages: {
+                tooShort: 'Please enter a valid description',
+                tooLong: 'Description exceeds limit of 2000 characters.'
+            }}
+        }
     },
 
- 	actions: {
+    actions: {
         killSubmission() {
-            if (this.get('kill'))
+            if (this.get('kill')) {
                 this.get('model').destroyRecord();
+            }
         },
- 		saveNodeSubmission(newNode, id) {
+        saveNodeSubmission(newNode, id) {
             if (this.get('isValid')) {
                 this.set('kill',false);
                 newNode.setProperties({
@@ -42,8 +42,8 @@ export default Ember.Controller.extend(TaggableMixin, EmberValidations, {
                 });
             }
             else {
-               this.set('displayErrors',true);
+                this.set('displayErrors',true);
             }
         }
- 	}
+    }
 });

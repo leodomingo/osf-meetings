@@ -10,12 +10,15 @@ from conferences.serializers import ConferenceSerializer
 # List of conferences
 class ConferenceList(ListCreateAPIView):
     resource_name = 'conferences'
+
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
 
 
 # Detail of a conference
 class ConferenceDetail(APIView):
+    resourece_name = 'conference'
+
     def get_object(self, pk):
         try:
             return Conference.objects.get(pk=pk)
