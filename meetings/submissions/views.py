@@ -4,6 +4,9 @@ from rest_framework.response import Response
 
 from submissions.serializers import SubmissionSerializer
 from submissions.models import Submission
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+
 
 
 # List of submissions
@@ -18,10 +21,10 @@ class SubmissionList(ListCreateAPIView):
         submissionsSerializer = SubmissionSerializer(conferenceSubmissions, context={'request': request}, many=True)
         return Response(submissionsSerializer.data)
 
+    @method_decorator(login_required)
     def post(self, request, conference_id=None, format=None):
         serializer = SubmissionSerializer(data=request.data)
         contributors = [request.user.id]
-
         if serializer.is_valid():
             serializer.save(contributors=contributors)
             return Response(serializer.data)
