@@ -9,7 +9,7 @@ export default Ember.Mixin.create({
 			dataType: 'json',
 			contentType: 'text/plain',
 			xhrFields: {
-				withCredentials: false,
+				withCredentials: true,
 			}
 		}).then(function(loggedIn) {
 			if (loggedIn.data == 'false')
