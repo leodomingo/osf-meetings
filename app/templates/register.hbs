@@ -7,6 +7,10 @@
                     <div class="form-group row fade-background">
                         <div class="section-header">IDENTIFY</div>
                         <hr>
+                        <div class="col-lg-6">
+                            <label for="city" class="form-control-label">Conference Identifier</label>
+                            {{input value=model.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
+                        </div>
                         <div class="col-lg-6 {{"has-success"}}" id="titleScroll">
                             <label for="title" class="form-control-label">Title</label>
                             {{input value=model.title class="form-control" placeholder="Conference Title" id="title"}}
