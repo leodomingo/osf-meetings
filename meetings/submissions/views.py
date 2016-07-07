@@ -23,10 +23,8 @@ class SubmissionList(ListCreateAPIView):
 
     @method_decorator(login_required)
     def post(self, request, conference_id=None, format=None):
-        print("helloworld")
         serializer = SubmissionSerializer(data=request.data)
         contributors = [request.user.id]
-
         if serializer.is_valid():
             serializer.save(contributors=contributors)
             return Response(serializer.data)
