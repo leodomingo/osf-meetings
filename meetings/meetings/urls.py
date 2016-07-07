@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^users/(?P<pk>[0-9]+)/$', apiViews.UserDetail, name='user-detail'),
     url(r'^conferences/', include('conferences.urls', namespace='conferences')),
+    url(r'^checklogin/', apiViews.checkLoggedIn.as_view(), name='checklogin'), 
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
