@@ -47,10 +47,12 @@ export default Ember.Controller.extend({
       },
       scrollit() {
         this.set('visited',true);
+        Ember.$('body').removeClass('hide-scroll');
+        Ember.$('html').css({overflow: 'scroll'});
         Ember.$('#indexTop').hide(2000, function() {
           Ember.$('#indexBottom').css({"margin-top": "80px"});
           Ember.$('#tableContainer').css({"margin-top": "80px"});
-          Ember.$('#create').addClass("navbar-fixed-top");
+          Ember.$('#create').css({position: "fixed"});
         });
       },
       tileView() {

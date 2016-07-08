@@ -11,8 +11,8 @@
         </div>
         <img class="background" src="https://osf.io/static/img/front-page/bg-web.png">
     </div> <!-- end container & splash page -->
-    <div class="container-fluid osf-light-background">
-        <nav id="create" class="navbar navbar-default">
+    <div class="container-fluid osf-light-background ">
+        <nav id="create" class="navbar navbar-default navbar-background">
             <div class="container-fluid" id="browse">
                 <form class="navbar-form navbar-left" role="search">
                     <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
@@ -25,10 +25,10 @@
                         <span class="glyphicon glyphicon-plus"></span>
                         Create a Meeting
                     </button>
-                    <button id="tileButton" class="btn navbar-btn" {{action "tileView"}}>
+                    <button id="tileButton" class="btn btn-default navbar-btn" {{action "tileView"}}>
                         <span class="glyphicon glyphicon-th-large"></span>
                     </button>
-                    <button id="listButton" class="btn navbar-btn" {{action "listView"}}>
+                    <button id="listButton" class="btn btn-default navbar-btn" {{action "listView"}}>
                         <span class="glyphicon glyphicon-th-list"></span>
                     </button>
                 </form>
@@ -37,7 +37,7 @@
       {{#if tileview}}
           <div class="row conference-view-outer-container" id="indexBottom">
               <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
-                  <div class="col-md-12 tile-view">
+                  <div class="col-md-10 col-md-offset-1 tile-view fade-background">
                       {{#masonry-grid  isFitWidth=true gutter=20 items= model as |conf|}}
                           {{#link-to "conference.index" conf.id class="title"}}
                               {{meeting-masonry title=conf.title

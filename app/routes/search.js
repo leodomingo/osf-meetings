@@ -9,9 +9,8 @@ export default Ember.Route.extend({
 
 	model: function(params)
 	{	
-
+		this.store.unloadAll();
 		let foundConferences =  this.store.query('conference', {search:params.q, page: params.p});
-		console.log(foundConferences.length);
 		return foundConferences;
 	}
 });
