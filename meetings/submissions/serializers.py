@@ -1,4 +1,4 @@
-from rest_framework import serializers as ser
+from rest_framework_json_api import serializers as ser
 
 from submissions.models import Submission
 from conferences.models import Conference

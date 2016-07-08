@@ -4,11 +4,11 @@ import Model from 'ember-data/model';
 
 export default Model.extend({
     title: attr('string'),
-    city: attr('string'),
-    state: attr('string'),
+    city: attr('string', { defaultValue : '' }),
+    state: attr('string', { defaultValue : '' }),
     country: attr('string'),
-    start: attr('isodate', { defaultValue : (new Date()).toISOString() }),
-    end: attr('isodate', { defaultValue : (new Date()).toISOString() }),
+    eventStart: attr('isodate', { defaultValue : (new Date()).toISOString() }),
+    eventEnd: attr('isodate', { defaultValue : (new Date()).toISOString() }),
     submissionStart: attr('isodate', { defaultValue : (new Date()).toISOString() }),
     submissionEnd: attr('isodate', { defaultValue : (new Date()).toISOString() }),
     description: attr('string'),
