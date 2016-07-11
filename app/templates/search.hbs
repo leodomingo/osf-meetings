@@ -8,36 +8,57 @@
                         {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" id='searchQuery' action="search"}}
                     </div>
                     <button type="submit" class="btn btn-default" {{action "search"}}>Search</button>
-                    <button class="btn btn-outline-primary" {{action "forward"}}>More Results</button>
+                    <button class="btn btn-outline-default" {{action "forward"}}>More Results</button>
                 </form>
+                <h5 class="navbar-text">
+                Page: <strong><em>{{model.meta.pagination.page}}</em></strong> of {{model.meta.pagination.pages}}
+                </h5>
             </div>
         </nav>
+        {{#if this.onePage}}
+        {{else}}
+        <div class="row ">
+              <div class="col-md-4 col-md-offset-4">
+                <div class="pagination">
+                  <div class="btn-toolbar" role="toolbar">
+                    <button class="btn btn-success"{{action "toPage" 1}}> First</button> 
+                    <div class="btn-group" role="group" aria-label="Toolbar with button groups">
+                      {{#each this.buttonArray as |page|}}  
+                        <button class="btn btn-default"{{action "toPage" page}}> {{page}}</button>
+                      {{/each}}                   
+                    </div>
+                    <button class="btn btn-danger"{{action "toPage" model.meta.pagination.pages}}> Last</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+          {{/if}}
           <div class="row" id="indexBottom">
               <div class="col-md-12 table-view">
-                  <div class="col-md-10 col-md-offset-1 fade-background">
+                  <div class="col-md-7 col-md-offset-2 fade-background">
                   {{#if this.results}}
                       <div class="col-md-12">
                           <div class="row table-head">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <h4>Title</h4>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <h4>Location</h4>
                                 </div>
-                                <div class="col-md-4"> 
+                                <div class="col-md-6"> 
                                   <h4>Description</h4>
                                 </div>
                           </div>
                           {{#each model as |conference|}}
                             {{#link-to "conference.index.index" conference.id tagName="div" class="row"}}
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <h5><strong><em>{{conference.title}}</em></strong></h5>
                                 </div>
-                                <div class="col-md-4">
-                                    <h5>{{conference.city}}, {{conference.state}}</h5>
+                                <div class="col-md-3">
+                                    <h6>{{conference.city}}, {{conference.state}}</h6>
                                 </div>
-                                <div class="col-md-4"> 
-                                  <h5>{{truncate conference.description limit=200}}</h5>
+                                <div class="col-md-6"> 
+                                  <h6>{{truncate conference.description limit=200}}</h6>
                                 </div>
                             {{/link-to}}
                           {{/each}}
@@ -47,18 +68,25 @@
                       {{/if}}
                   </div> <!-- end conference-view-inner-container -->
               </div> <!-- end table-view -->
-              <div class="col-md-10 col-md-offset-1">
-                <div class="col-md-3">
-                  <h5 class="navbar-text">Page: {{model.meta.pagination.pages}}</h5>
-                </div>
-                <div class="col-md-3">
-                  {{input value=pageNum placeholder="page" class="form-control" }}
-                </div>
-                <div class="col-md-3">
-                  <button type="submit" class="btn btn-default" {{action "topPage" }}>Submit</button>
+            </div>
+            {{#if this.onePage}}
+            {{else}}
+            <div class="row ">
+              <div class="col-md-4 col-md-offset-4">
+                <div class="pagination">
+                  <div class="btn-toolbar" role="toolbar">
+                    <button class="btn btn-success"{{action "toPage" 1}}> First</button>
+                    <div class="btn-group" role="group" aria-label="Toolbar with button groups">
+                      {{#each this.buttonArray as |page|}}  
+                        <button class="btn btn-default"{{action "toPage" page}}> {{page}}</button>
+                      {{/each}}                   
+                    </div>
+                    <button class="btn btn-danger"{{action "toPage" model.meta.pagination.pages}}> Last</button>
+                  </div>
                 </div>
               </div>
-          </div><!-- end conference-view-outer-container-->
+          </div>
+          {{/if}}
       {{outlet}}
     </div> <!-- end container fluid -->
 

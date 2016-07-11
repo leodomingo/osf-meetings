@@ -1,6 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
+	onePage: false,
+	buttonArray: [],
 	query: null,
 	results: null,
 	store: Ember.inject.service('store'),
@@ -23,8 +25,11 @@ export default Ember.Controller.extend({
 		this.send('search');
 		},
 		toPage(pageNum){
-			let query = this.get("searchQuery");
-			this.transitionToRoute('search', {queryParams: {q: query, p: pageNum }});
+			this.transitionToRoute('search', {queryParams: {p: pageNum }});
+		},
+		sendPage(page)
+		{
+			console.log(page);
 		}
     }
 });

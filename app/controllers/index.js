@@ -74,7 +74,7 @@ export default Ember.Controller.extend({
       search()
       {
         let query = this.get("searchQuery");
-        this.transitionToRoute('search', {queryParams: {q: query}});
+        this.transitionToRoute('search', {queryParams: {q: query, p:1}});
       }
     },
 

@@ -118,7 +118,6 @@ td
 .table-view
 {
   width: 100%;
-  margin-top: 80px;
 }
 .table-head .col-md-4 h4
 {
@@ -142,6 +141,11 @@ td
   padding: 5px;
   transition: 0.3s ease;
 
+}
+.pagination 
+{
+  width: 100%;
+  text-align: center;
 }
 .hide-scroll
 {
