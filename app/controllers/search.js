@@ -15,21 +15,8 @@ export default Ember.Controller.extend({
         this.set('query', query);
 		this.transitionToRoute('search', {queryParams: {q: query, p: this.page }});
 		},
-	  forward(){
-		this.set('page',this.page+1);
-		this.send('search');
-		var model = this.get('model');
-		},
-	  back(){
-		this.set('page',this.page-1);
-		this.send('search');
-		},
 		toPage(pageNum){
 			this.transitionToRoute('search', {queryParams: {p: pageNum }});
-		},
-		sendPage(page)
-		{
-			console.log(page);
 		}
     }
 });
