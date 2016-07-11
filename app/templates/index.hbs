@@ -34,10 +34,12 @@
                 </form>
             </div>
         </nav>
+
       {{#if tileview}}
           <div class="row conference-view-outer-container" id="indexBottom">
               <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
                   <div class="col-md-10 col-md-offset-1 tile-view fade-background">
+                  {{#if this.results}}
                       {{#masonry-grid  isFitWidth=true gutter=20 items= model as |conf|}}
                           {{#link-to "conference.index" conf.id class="title"}}
                               {{meeting-masonry title=conf.title
@@ -48,6 +50,9 @@
                               submissions=(submission-count 5)}}
                           {{/link-to}}
                       {{/masonry-grid}}
+                      {{else}}
+                      <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
+                      {{/if}}
                   </div> <!-- end tile view -->
               </div> <!-- end conference-view-inner-container-->
           </div><!-- end conference-view-outer-container-->
@@ -55,6 +60,7 @@
           <div class="row conference-view-outer-container">
               <div class="col-md-12 table-view">
                   <div class="col-md-10 col-md-offset-1 conference-view-inner-container fade-background">
+                  {{#if this.results}}
                       <div class="col-md-12">
                           <div class="row table-head">
                                 <div class="col-md-4">
@@ -81,10 +87,22 @@
                             {{/link-to}}
                           {{/each}}
                       </div>
+                      {{else}}
+                      <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
+                      {{/if}}
                   </div> <!-- end conference-view-inner-container -->
               </div> <!-- end table-view -->
           </div> <!-- conference-view-outer-container -->
       {{/if}}
+      <div class="row conference-view-outer-container" id="indexBottom">
+                    <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
+                        <div class="col-md-10 col-md-offset-1 tile-view fade-background">
+                        <button type="submit" class="btn btn-default" {{action "search"}}>See More Conferences</button>
+                        </div> <!-- end tile view -->
+                    </div> <!-- end conference-view-inner-container-->
+                </div><!-- end conference-view-outer-container-->
+            
+
       {{outlet}}
     </div> <!-- end container fluid -->
 

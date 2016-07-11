@@ -1,7 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-
+  results: null,
+  query: null,
   tileview: true,
   queryParams: ['q', 'p'],
   columns: [
@@ -69,6 +70,7 @@ export default Ember.Controller.extend({
       },
       filter() {
         let query = this.get("searchQuery");
+        this.set('query', query);
         this.transitionToRoute('index', {queryParams: {q: query}});
       },
       search()

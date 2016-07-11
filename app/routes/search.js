@@ -14,7 +14,7 @@ export default Ember.Route.extend({
 	},
 	model: function(params)
 	{	
-
+		this.controllerFor('search').set('query', params.q);
 		let foundConferences = this.store.query('conference', {search:params.q, page: params.p}).then((result) => {
 				this.set('results', true);
   				let meta = result.get('meta');
