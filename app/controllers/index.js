@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Controller.extend({
 
   tileview: true,
-
+  queryParams: ['q', 'p'],
   columns: [
   {
     "propertyName": "title",
@@ -66,6 +66,15 @@ export default Ember.Controller.extend({
         Ember.$('#tileButton').removeClass('disabled');
         let shift = this;
         shift.set('tileview', false );
+      },
+      filter() {
+        let query = this.get("searchQuery");
+        this.transitionToRoute('index', {queryParams: {q: query}});
+      },
+      search()
+      {
+        let query = this.get("searchQuery");
+        this.transitionToRoute('search', {queryParams: {q: query}});
       }
     },
 

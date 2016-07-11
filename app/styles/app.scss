@@ -1,4 +1,4 @@
-@import "ember-modal-dialog/ember-modal-structure";
+ @import "ember-modal-dialog/ember-modal-structure";
 @import "ember-modal-dialog/ember-modal-appearance";
 @import "breakpoints";
 @import "index";
@@ -10,10 +10,6 @@ html, body
   font-family: 'Open Sans', sans-serif;
 }
 
-h1,h2,h3,h4,h5,h6
-{
-  font-weight: 400;
-}
 h1
 {
   font-size: 11.089em;
@@ -61,8 +57,12 @@ p
 }
 .osf-light-background
 {
-  background-image: url("https://osf.io/static/img/bg6.jpg");
-  background-size: repeat-y;
+  background-image: url("/assets/bg6.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position-x: center;
+  background-position-y: top;
   min-height: 100%;
 }
 .osf-standard-background

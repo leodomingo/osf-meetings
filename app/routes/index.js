@@ -1,12 +1,12 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  model() {
-     return this.store.findAll('conference');
+  queryParams: {
+    q: {refreshModel: true}
   },
-  activate: function() {
-    Ember.$('body').addClass('hide-scroll');
-    Ember.$('html').css({overflow: 'hidden'});
+  model(params) {
+    let foundConferences =  this.store.query('conference', {search:params.q});
+    return foundConferences;
   },
   deactivate: function(){
     Ember.$('body').removeClass('hide-scroll');

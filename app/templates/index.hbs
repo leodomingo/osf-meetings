@@ -17,10 +17,10 @@
                 <form class="navbar-form navbar-left" role="search">
                     <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
                     <p class="navbar-brand">Meetings</p>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search">
+                     <div class="form-group">
+                        {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" action="filter" on="key-up"}}
                     </div>
-                    <button type="submit" disabled class="btn btn-default">Submit</button>
+                    <button type="submit" class="btn btn-default" {{action "search"}}>Search</button>
                     <button class="btn btn-success navbar-btn" {{action "create"}}>
                         <span class="glyphicon glyphicon-plus"></span>
                         Create a Meeting
@@ -55,23 +55,32 @@
           <div class="row conference-view-outer-container">
               <div class="col-md-12 table-view">
                   <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
-                      <table class="table">
-                          <tbody>
+                      <div class="col-md-12">
+                          <div class="row table-head">
+                                <div class="col-md-4">
+                                    <h4>Title</h4>
+                                </div>
+                                <div class="col-md-4">
+                                    <h4>Location</h4>
+                                </div>
+                                <div class="col-md-4"> 
+                                  <h4>Description</h4>
+                                </div>
+                          </div>
                           {{#each model as |conference|}}
-                            {{#link-to "conference.index.index" conference.id tagName="tr"}}
-                                <td class="hidden-xs">
-                                    <img src={{conference.logo}}>
-                                </td>
-                                <td>
-                                    <h1>{{conference.title}}</h1>
-                                    <h5>{{conference.website}}</h5>
-                                    <h2>{{conference.city}}, {{conference.state}}</h2>
-                                  {{conference.description}}
-                                </td>
+                            {{#link-to "conference.index.index" conference.id tagName="div" class="row"}}
+                                <div class="col-md-4">
+                                    <h5><strong><em>{{conference.title}}</em></strong></h5>
+                                </div>
+                                <div class="col-md-4">
+                                    <h5>{{conference.city}}, {{conference.state}}</h5>
+                                </div>
+                                <div class="col-md-4"> 
+                                  <h5>{{truncate conference.description limit=200}}</h5>
+                                </div>
                             {{/link-to}}
                           {{/each}}
-                          </tbody>
-                      </table>
+                      </div>
                   </div> <!-- end conference-view-inner-container -->
               </div> <!-- end table-view -->
           </div> <!-- conference-view-outer-container -->
