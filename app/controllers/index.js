@@ -42,7 +42,7 @@ export default Ember.Controller.extend({
   visited: false,
   actions: {
       create() {
-        this.transitionToRoute('register').then(function(newRoute) {
+        this.transitionToRoute('conference.new').then(function(newRoute) {
           newRoute.controller.set('displayErrors',false);
         });
       },

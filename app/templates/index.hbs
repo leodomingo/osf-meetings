@@ -41,7 +41,7 @@
                   <div class="col-md-10 col-md-offset-1 tile-view fade-background">
                   {{#if this.results}}
                       {{#masonry-grid  isFitWidth=true gutter=20 items= model as |conf|}}
-                          {{#link-to "conference.index" conf.id class="title"}}
+                          {{#link-to "conference.index"  conf.id class="title"}}
                               {{meeting-masonry title=conf.title
                               description=conf.description logo=conf.logo
                               location=(location-display
@@ -74,7 +74,7 @@
                                 </div>
                           </div>
                           {{#each model as |conference|}}
-                            {{#link-to "conference.index.index" conference.id tagName="div" class="row"}}
+                            {{#link-to "conference.index" conference.id tagName="div" class="row"}}
                                 <div class="col-md-4">
                                     <h5><strong><em>{{conference.title}}</em></strong></h5>
                                 </div>

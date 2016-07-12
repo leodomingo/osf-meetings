@@ -44,7 +44,6 @@ export default Ember.Controller.extend(EmberValidations, {
 		selectCountry(country) {
       		this.set('model.country', country);
     	},
-
 		editConference() {
 			this.set('editing',true);
 		},	
