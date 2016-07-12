@@ -10,6 +10,7 @@ from conferences.serializers import ConferenceSerializer
 # List of conferences
 class ConferenceList(ListCreateAPIView):
     resource_name = 'conferences'
+
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
     filter_backends = (filters.SearchFilter,)
@@ -18,6 +19,8 @@ class ConferenceList(ListCreateAPIView):
 
 # Detail of a conference
 class ConferenceDetail(APIView):
+    resource_name = 'conference'
+
     def get_object(self, pk):
         try:
             return Conference.objects.get(pk=pk)

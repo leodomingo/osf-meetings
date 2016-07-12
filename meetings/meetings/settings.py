@@ -37,14 +37,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'django_countries',
     'guardian',
     'rest_framework',
     'corsheaders',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_framework_json_api',
     'api',
     'conferences',
     'submissions',
-    'autofixture'
+    'autofixture',
+    'oauth2_provider',
+    'osf_oauth2_adapter',
 ]
 
 REST_FRAMEWORK = {
@@ -63,6 +70,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
 }
+
+JSON_API_FORMAT_KEYS = 'dasherize'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -89,6 +98,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # `allauth` needs this from django
+                'django.template.context_processors.request',
             ],
         },
     },
@@ -131,6 +142,7 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend', # default
     'guardian.backends.ObjectPermissionBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 
 
@@ -162,3 +174,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
 STATIC_URL = '/static/'
+SITE_ID = 1
+
+# Where users are redirected after login
+LOGIN_REDIRECT_URL = 'http://localhost:4200'
