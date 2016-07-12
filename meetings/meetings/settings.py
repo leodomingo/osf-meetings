@@ -42,15 +42,16 @@ INSTALLED_APPS = [
     'guardian',
     'rest_framework',
     'corsheaders',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'rest_framework_json_api',
+
     'api',
     'conferences',
     'submissions',
     'oauth2_provider',
     'osf_oauth2_adapter',
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-
 ]
 
 REST_FRAMEWORK = {
@@ -69,6 +70,8 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
 }
+
+JSON_API_FORMAT_KEYS = 'dasherize'
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
