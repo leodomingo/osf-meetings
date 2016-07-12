@@ -8,7 +8,7 @@ export default Ember.Route.extend(CheckLoginMixin, {
     },
 
     actions : {
-        createSubmission(newSubmission) {
+        saveSubmission(newSubmission) {
             var conference = this.modelFor('conference.index');
             console.log(conference);
             this.store.adapterFor('submission').set('namespace', `conferences/${conference.id}`);
