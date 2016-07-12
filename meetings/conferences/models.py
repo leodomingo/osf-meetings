@@ -22,7 +22,6 @@ class Conference(models.Model):
     submission_end = models.DateTimeField()
     logo = models.URLField(blank=True)
     description = models.TextField(blank=True, max_length=500)
-    submissions = models.ManyToManyField(Submission)
 
     class Meta:
         ordering = ('created',)
