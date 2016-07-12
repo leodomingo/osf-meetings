@@ -2,6 +2,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend({
 	query: null,
+	underFive: false,
 	onePage: false,
 	buttonArray: [],
 	query: null,

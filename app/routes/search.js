@@ -44,7 +44,21 @@ export default Ember.Route.extend({
 		else{ push.set('onePage', false)}
 		this._super(controller, model);
 		push.set('results', this.get('results'));
-		if((page <=3) && (pages > 5))
+
+
+		if((pages >1) && (pages< 5))
+		{
+			let buttonArray = [];
+			let i = 1;
+			while(i <= pages)
+			{
+				buttonArray.push(i);
+				i++;
+			}
+			push.set('underFive', true);
+			push.set('buttonArray', buttonArray);
+		}
+		else if((page <=3) && (pages > 5))
 		{
 			push.set('buttonArray', [ 2, 3, 4, 5,6])
 		}
