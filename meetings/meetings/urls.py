@@ -3,12 +3,14 @@ from api import views as apiViews
 from rest_framework.urlpatterns import format_suffix_patterns
 from django.contrib import admin
 from rest_framework import routers
+from conferences import views
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 
 router = routers.DefaultRouter()
 router.register(r'users', apiViews.UserViewSet)
+router.register(r'conferences', views.ConferenceList)
 
 
 urlpatterns = [

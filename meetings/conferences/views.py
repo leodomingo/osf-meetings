@@ -14,7 +14,6 @@ class ConferenceList(ListCreateAPIView):
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
 
-
 # Detail of a conference
 class ConferenceDetail(APIView):
     resource_name = 'conference'

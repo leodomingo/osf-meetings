@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'rest_framework_json_api',
-
     'api',
     'conferences',
     'submissions',
