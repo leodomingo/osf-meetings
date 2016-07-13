@@ -5,7 +5,6 @@ from django.contrib.sites.models import Site
 from django_countries.fields import CountryField
 from django.template.defaultfilters import slugify
 
-
 class Conference(models.Model):
     id = models.SlugField(primary_key=True, max_length=10)
     created = models.DateTimeField(auto_now_add=True)
