@@ -9,11 +9,12 @@ export default Ember.Mixin.create({
 			dataType: 'json',
 			contentType: 'text/plain',
 			xhrFields: {
-				withCredentials: true,
+				withCredentials: true
 			}
 		}).then(function(loggedIn) {
-			if (loggedIn.data == 'false')
-				self.transitionTo('login');
+			if (loggedIn.data === 'false') {
+                self.transitionTo('login');
+            }
 		});
 	}
 });
