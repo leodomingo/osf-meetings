@@ -1,5 +1,4 @@
-import OsfAdapter from './osf-adapter';
-
+import DS from 'ember-data';
 export default DS.JSONAPIAdapter.extend({
     host: 'http://localhost:8000',
     buildURL(modelName, id, snapshot, requestType) {
@@ -16,4 +15,15 @@ export default DS.JSONAPIAdapter.extend({
         }
         return url;
     },
+    ajax: function(url, method, hash) {
+		hash.crossDomain = true;
+		hash.xhrFields = {withCredentials: true};
+		return this._super(url, method, hash);
+  	},
+  	headers: Ember.computed(function() {
+	    return {
+	      "X-CSRFToken": Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1")
+	    };
+  	}).volatile()
+
 });
