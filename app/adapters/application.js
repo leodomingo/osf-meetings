@@ -21,8 +21,16 @@ export default DS.JSONAPIAdapter.extend({
 		return this._super(url, method, hash);
   	},
   	headers: Ember.computed(function() {
+  		var csrftoken = ""
+  		try {
+  			var csrftoken = Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1")
+  		} catch(e){
+  			console.log(e)
+  			console.log('no csrftoken present')
+  		}
+
 	    return {
-	      "X-CSRFToken": Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1")
+	   		"X-CSRFToken": csrftoken
 	    };
   	}).volatile()
 
