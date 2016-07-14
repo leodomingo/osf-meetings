@@ -46,7 +46,7 @@ html, body
 
 .conference-view-outer-container
 {
-  margin-top: 40px;
+  margin-top: 60px;
 }
 .conference-view-inner-container
 {
@@ -59,9 +59,12 @@ html, body
 }
 .meetings-navbar-background
 {
+  position: fixed;
+  width: 100%;
   background-color: transparent;
   background-image: linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,0.95));
   border: none;
+  z-index: 500;
 }
 .tile-view
 {
