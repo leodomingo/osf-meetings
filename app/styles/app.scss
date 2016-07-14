@@ -1,15 +1,9 @@
-@import 'node_modules/ember-osf/addon/styles/osf-style';
 @import "ember-modal-dialog/ember-modal-structure";
 @import "ember-modal-dialog/ember-modal-appearance";
 @import "breakpoints";
 @import "index";
 @import "register";
 @import "conference";
-
-html, body 
-{
-  font-family: 'Open Sans', sans-serif;
-}
 
 h1
 {
@@ -52,13 +46,17 @@ p
 }
 .meetings-navbar
 {
-  border-color: transparent;
-  position: fixed;
+  position: absolute;
   left: 0;
+  top: 0;
   margin-bottom: 45px;
+  background-color: transparent;
+  background-image: linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,0.95));
+  border: none;
 }
 .osf-light-background
 {
+  padding: 0;
   background-image: url("/assets/bg6.jpg");
   background-position: center;
   background-size: cover;
@@ -66,7 +64,6 @@ p
   background-position-x: center;
   background-position-y: top;
   min-height: 100%;
-  padding-top: 50px;
 }
 .osf-standard-background
 {
@@ -103,3 +100,4 @@ html
 {
   word-wrap: break-word;
 }
+
