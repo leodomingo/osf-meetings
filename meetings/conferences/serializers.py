@@ -10,6 +10,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Conference
+        exclude = ('admin',)
 
     def get_links(self, obj):
         request = self.context.get('request')

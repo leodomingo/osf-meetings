@@ -6,6 +6,8 @@ from rest_framework import filters
 from conferences.models import Conference
 from conferences.serializers import ConferenceSerializer
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 
 # List of conferences
 class ConferenceList(ListCreateAPIView):
@@ -16,6 +18,7 @@ class ConferenceList(ListCreateAPIView):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title', 'description')
 
+    @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
         return super(ConferenceList, self).create(request, args, kwargs)
 
