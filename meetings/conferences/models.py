@@ -27,3 +27,6 @@ class Conference(models.Model):
     class Meta:
         ordering = ('created',)
 
+    class JSONAPIMeta:
+        resource_name = "conferences"
+

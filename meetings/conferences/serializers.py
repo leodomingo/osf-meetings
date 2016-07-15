@@ -5,23 +5,22 @@ from conferences.models import Conference
 
 
 class ConferenceSerializer(serializers.ModelSerializer):
-    #links = serializers.SerializerMethodField()
+    links = serializers.SerializerMethodField()
 
     class Meta:
         model = Conference
-        fields = ('url',)
 
-#    def get_links(self, obj):
-#        request = self.context.get('request')
-#        return {
-#            'self': reverse(
-#                'conferences:detail',
-#                kwargs={'pk': obj.pk},
-#                request=request
-#            ),
-#            'submissions': reverse(
-#                'conferences:submissions:list',
-#                kwargs={'conference_id': obj.pk},
-#                request=request
-#            )
-#        }
+    def get_links(self, obj):
+        request = self.context.get('request')
+        return {
+            'self': reverse(
+                'conferences:detail',
+                kwargs={'pk': obj.pk},
+                request=request
+            ),
+            'submissions': reverse(
+                'conferences:submissions:list',
+                kwargs={'conference_id': obj.pk},
+                request=request
+            )
+        }
