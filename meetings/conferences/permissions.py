@@ -1,3 +1,5 @@
+from rest_framework import permissions
+
 class CustomObjectPermissions(permissions.DjangoObjectPermissions):
     """
     Similar to `DjangoObjectPermissions`, but adding 'view' permissions.

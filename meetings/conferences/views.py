@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework import filters 
 from conferences.models import Conference
 from conferences.serializers import ConferenceSerializer
+from conferences.permissions import CustomObjectPermissions
+
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -16,6 +18,7 @@ class ConferenceList(viewsets.ModelViewSet):
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
     filter_backends = (filters.SearchFilter,)
+    permission_classes = (CustomObjectPermissions,)
     search_fields = ('title', 'description')
 
     @method_decorator(login_required)
