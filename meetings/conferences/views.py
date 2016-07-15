@@ -1,6 +1,7 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView
+from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework import filters 
 from conferences.models import Conference
@@ -10,9 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
 # List of conferences
-class ConferenceList(ListCreateAPIView):
+class ConferenceList(viewsets.ModelViewSet):
     resource_name = 'conferences'
-
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
     filter_backends = (filters.SearchFilter,)
