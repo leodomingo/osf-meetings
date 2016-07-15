@@ -14,4 +14,5 @@ export default Model.extend({
     description: attr('string'),
     site: attr('string', { defaultValue : '' }),
     logo: attr('string', { defaultValue : '' }),
+    canEdit: attr('boolean', { defaultValue : ''}),
 });

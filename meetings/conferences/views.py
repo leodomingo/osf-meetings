@@ -16,6 +16,12 @@ class ConferenceList(ListCreateAPIView):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title', 'description')
 
+    def create(self, request, *args, **kwargs):
+        return super(ConferenceList, self).create(request, args, kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(admin=self.request.user)
+
 
 # Detail of a conference
 class ConferenceDetail(APIView):
@@ -29,5 +35,5 @@ class ConferenceDetail(APIView):
 
     def get(self, request, pk, format=None):
         conference = self.get_object(pk)
-        serializer = ConferenceSerializer(conference)
+        serializer = ConferenceSerializer(conference, context={'request': request})
         return Response(serializer.data)

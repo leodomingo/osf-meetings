@@ -2,9 +2,11 @@ from rest_framework_json_api import serializers
 from rest_framework.reverse import reverse
 
 from conferences.models import Conference
+from django.contrib.auth.models import User
 
 class ConferenceSerializer(serializers.ModelSerializer):
     links = serializers.SerializerMethodField()
+    can_edit = serializers.SerializerMethodField()
 
     class Meta:
         model = Conference
@@ -23,3 +25,8 @@ class ConferenceSerializer(serializers.ModelSerializer):
                 request=request
             )
         }
+
+    def get_can_edit(self, obj):
+        request = self.context.get('request')
+        user = User.objects.get(username=request.user)
+        return user == obj.admin
