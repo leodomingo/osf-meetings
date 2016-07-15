@@ -11,28 +11,26 @@
     </div>
     <img class="background" src="https://osf.io/static/img/front-page/bg-web.png">
 </div> <!-- end container & splash page -->
-<div class="container-fluid osf-light-background">
-    <nav id="create" class="navbar navbar-default">
+<div class="container-fluid osf-light-background ">
+    <nav id="create" class="navbar navbar-default navbar-background">
         <div class="container-fluid" id="browse">
             <form class="navbar-form navbar-left" role="search">
                 <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
                 <p class="navbar-brand">Meetings</p>
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" action="filter" on="key-up"}}
                 </div>
-                <button type="submit" disabled class="btn btn-default">Submit</button>
-                {{#link-to "conference.new"}}
-                    <button class="btn btn-success navbar-btn">
-                        <span class="glyphicon glyphicon-plus"></span>
-                        Create a Meeting
-                    </button>
-                {{/link-to}}
-                <button id="tileButton" class="btn navbar-btn" {{action "tileView"}}>
-                    <span class="glyphicon glyphicon-th-large"></span>
+                <button type="submit" class="btn btn-default" {{action "search"}}>Search</button>
+                <button class="btn btn-success navbar-btn" {{action "create"}}>
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Create a Meeting
                 </button>
-                <button id="listButton" class="btn navbar-btn" {{action "listView"}}>
-                    <span class="glyphicon glyphicon-th-list"></span>
-                </button>
+            <button id="tileButton" class="btn navbar-btn" {{action "tileView"}}>
+                <span class="glyphicon glyphicon-th-large"></span>
+            </button>
+            <button id="listButton" class="btn navbar-btn" {{action "listView"}}>
+                <span class="glyphicon glyphicon-th-list"></span>
+            </button>
             </form>
         </div>
     </nav>
@@ -78,10 +76,5 @@
             </div> <!-- end table-view -->
         </div> <!-- conference-view-outer-container -->
     {{/if}}
-    {{outlet}}
 </div> <!-- end container fluid -->
-
-{{yield}}
-
-
-
+{{outlet}}

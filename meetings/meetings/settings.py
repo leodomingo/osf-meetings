@@ -49,12 +49,13 @@ INSTALLED_APPS = [
     'api',
     'conferences',
     'submissions',
+    'autofixture',
     'oauth2_provider',
     'osf_oauth2_adapter',
 ]
 
 REST_FRAMEWORK = {
-    'PAGE_SIZE': 10,
+    'PAGE_SIZE': 25,
     'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework_json_api.pagination.PageNumberPagination',
@@ -175,6 +176,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 SITE_ID = 1
+SOCIALACCOUNT_ADAPTER = 'osf_oauth2_adapter.views.OSFOAuth2Adapter'
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
