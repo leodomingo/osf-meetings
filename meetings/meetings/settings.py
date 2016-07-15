@@ -175,6 +175,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 SITE_ID = 1
+SOCIALACCOUNT_ADAPTER = 'osf_oauth2_adapter.views.OSFOAuth2Adapter'
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'

@@ -9,4 +9,4 @@ class OsfOauth2AdapterConfig(AppConfig):
     osf_api_url = os.environ.get('OSF_API_URL', 'https://staging-api.osf.io').rstrip('/') + '/'
     osf_accounts_url = os.environ.get('OSF_ACCOUNTS_URL', 'https://staging-accounts.osf.io').rstrip('/') + '/'
     default_scopes = ['osf.full_write',]
-    humans_group_name = 'OSF_USERS'
+    osf_users_group = 'OSF_USERS'
