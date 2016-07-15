@@ -11,9 +11,9 @@ def add_permissions(sender, **kwargs):
     submission, created = kwargs["instance"], kwargs["created"]
     if created:
         # submission_contributor: get change, delete, view permissions
-        assign_perm("submissions.change_submission", submission.contributor, conference)
-        assign_perm("submissions.delete_submission", submission.contributor, conference)
-        assign_perm("submissions.view_submission", submission.contributor, conference)
+        assign_perm("submissions.change_submission", submission.contributor, submission)
+        assign_perm("submissions.delete_submission", submission.contributor, submission)
+        assign_perm("submissions.view_submission", submission.contributor, submission)
 
         # current_osf_user: doesn't get any permissions initially
         current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
