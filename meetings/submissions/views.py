@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 class SubmissionViewSet(viewsets.ModelViewSet):
     resource_name = 'submissions'
     serializer_class = SubmissionSerializer
-    encoding = 'utf-8'
+    #encoding = 'utf-8'
     lookup_url_kwarg = 'submission_id'
     lookup_field = 'pk'
 
@@ -20,8 +20,6 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = SubmissionSerializer(data=request.data,
                                           context={'request': request})
-        print(request.user)
-        print(request.user.id)
         contributor = User.objects.get(id=request.user.id)
 
         if serializer.is_valid():

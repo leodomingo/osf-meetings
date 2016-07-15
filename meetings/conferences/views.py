@@ -1,4 +1,5 @@
 from django.http import Http404
+from rest_framework_json_api.views import RelationshipView
 from rest_framework.views import APIView
 from rest_framework.generics import ListCreateAPIView
 from rest_framework import viewsets
@@ -7,7 +8,6 @@ from rest_framework import filters
 from conferences.models import Conference
 from conferences.serializers import ConferenceSerializer
 from conferences.permissions import CustomObjectPermissions
-
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -42,3 +42,6 @@ class ConferenceDetail(APIView):
         conference = self.get_object(pk)
         serializer = ConferenceSerializer(conference, context={'request': request})
         return Response(serializer.data)
+
+class ConferenceRelationshipView(RelationshipView):
+    queryset = Conference.objects
