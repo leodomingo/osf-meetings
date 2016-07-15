@@ -27,12 +27,6 @@ class Conference(models.Model):
 
     class Meta:
         ordering = ('created',)
-        permissions = (('osf_admin', 'OSF Admin'), 
-            ('conference_admin','Conference Admin'),
-            ('public','Public'),
-            ('current_osf_user','Current OSF user'),
-            )
 
     class JSONAPIMeta:
         resource_name = "conferences"
-

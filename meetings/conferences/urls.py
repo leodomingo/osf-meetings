@@ -1,13 +1,24 @@
 from django.conf.urls import url, include
 from conferences import views
 
+conference_list = views.ConferenceViewSet.as_view({
+	'get': 'list', 
+	'post':'create', 
+})
+
+conference_detail = views.ConferenceViewSet.as_view({
+	'get': 'retrieve', 
+	'delete':'destroy', 
+    'patch':'partial_update'
+})
+
 urlpatterns = [
-    url(r'^$', views.ConferenceList.as_view({'get': 'list', 'post':'create'}), name='list'),
-    url(r'^(?P<pk>[-\w]+)/$', views.ConferenceDetail.as_view(), name='detail'),
-    url(r'^(?P<conference_id>[-\w]+)/submissions/', include('submissions.urls',
-        namespace='submissions')),
-    url(regex=r'^(?P<pk>[-\w]+)/relationships/(?P<related_field>[^/.]+)$',
-        view=views.ConferenceRelationshipView.as_view(),
-        name='conference-relationships'
-    )
+    url(r'^$', conference_list, name='list'),
+    url(r'^(?P<pk>[-\w]+)/$', conference_detail, name='detail'),
+    url(r'^(?P<conference_id>[-\w]+)/submissions/',
+        include('submissions.urls', namespace='submissions')),
+#    url(regex=r'^(?P<pk>[-\w]+)/relationships/(?P<related_field>[^/.]+)$',
+#        view=views.ConferenceRelationshipView.as_view(),
+#        name='conference-relationships'
+#    )
 ]

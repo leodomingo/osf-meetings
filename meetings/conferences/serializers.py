@@ -7,10 +7,10 @@ from django.contrib.auth.models import User
 class ConferenceSerializer(serializers.ModelSerializer):
     links = serializers.SerializerMethodField()
     can_edit = serializers.SerializerMethodField()
+    admin = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Conference
-        exclude = ('admin',)
 
     def get_links(self, obj):
         request = self.context.get('request')
