@@ -8,7 +8,6 @@ from guardian.shortcuts import assign_perm
 
 @receiver(post_save, sender=Conference)
 def add_permissions(sender, **kwargs):
-    print('hello from conference signal')
     conference, created = kwargs["instance"], kwargs["created"]
     if created:
         # conference_admin: gets all permissions

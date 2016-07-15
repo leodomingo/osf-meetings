@@ -16,7 +16,7 @@ from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, DjangoObjectPermissions
 
 # List of conferences
-class ConferenceList(viewsets.ModelViewSet):
+class ConferenceViewSet(viewsets.ModelViewSet):
     resource_name = 'conferences'
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
@@ -26,22 +26,7 @@ class ConferenceList(viewsets.ModelViewSet):
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
-        return super(ConferenceList, self).create(request, args, kwargs)
+        return super(ConferenceViewSet, self).create(request, args, kwargs)
 
     def perform_create(self, serializer):
         serializer.save(admin=self.request.user)
-
-# Detail of a conference
-class ConferenceDetail(APIView):
-    resource_name = 'conference'
-
-    def get_object(self, pk):
-        try:
-            return Conference.objects.get(pk=pk)
-        except Conference.DoesNotExist:
-            raise Http404
-
-    def get(self, request, pk, format=None):
-        conference = self.get_object(pk)
-        serializer = ConferenceSerializer(conference, context={'request': request})
-        return Response(serializer.data)
