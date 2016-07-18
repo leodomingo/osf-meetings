@@ -15,16 +15,37 @@ export default Ember.Component.extend({
     authUrl: "http://localhost:8000/checklogin",
     user: null,
     showSearch: false,
-
+    _loadCurrentUser() {
+        console.log("LoadCurrentUser");
+        this.get('currentUser').load().then((user) => this.set('user', user));
+        console.log(this.get('user'));
+    },
+    init: function() {
+        this._super(...arguments);
+        console.log("INIT");
+        console.log(this.get('authUrl'));
+        this._loadCurrentUser();
+    },
+    didUpdateAttrs: function() 
+    {
+        this._super(...arguments);
+        console.log("INIT");
+        if (this.get('session.isAuthenticated')) {
+            this._loadCurrentUser();
+        }
+    },
+    // TODO: Make these parameters configurable from... somewhere. (currently set by OSF settings module)
+    allowLogin: true,
+    enableInstitutions: true,
     actions: 
     {
-        filter: function()
+        filter: function() 
         {
             this._super(...arguments);
             this._loadCurrentUser();
             this.sendAction('filter', this.get("searchQuery"));
         },
-        search: function()
+        search: function() 
         {
             this.sendAction('search', this.get("searchQuery"));
         }
