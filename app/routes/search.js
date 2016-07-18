@@ -34,7 +34,7 @@ export default Ember.Route.extend({
         let page = this.get('page');
         //console.log("Current page: " + page);
         let pages = this.get('pages');
-        console.log('Pages set to: ' +  pages);
+        //console.log('Pages set to: ' +  pages);
         let push = this.controllerFor('search');
         push.set('buttonArray', null);
 
@@ -46,7 +46,6 @@ export default Ember.Route.extend({
 
         this._super(controller, model);
         push.set('results', this.get('results'));
-
 
         if((pages >1) && (pages< 5))
         {
