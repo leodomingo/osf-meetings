@@ -3,7 +3,6 @@ from guardian.shortcuts import assign_perm, remove_perm
 from django.contrib.auth.models import User, Group
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
-
 class SubmissionPermissions(permissions.DjangoObjectPermissions):
 
     """
@@ -24,6 +23,16 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
     def has_permission(self, request, view):
         # ----------------------------------------------------------
         # OVERWRITING THIS METHOD FROM DRF
+        #
+        # This method gets called on list view and normally fails due to
+        # the commented out line below.
+        #
+        # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
+        # to be able to see
+        #
+        # has_object_permission() in DjangoObjectPermissions ensures users can only
+        # GET, POST, PATCH etc. on objects they have the required permissions for
+        #
         #
         # This method gets called on list view and normally fails due to
         # the commented out line below.

@@ -8,7 +8,6 @@ from submissions import permissions
 from approvals.permissions import (add_approval_permissions_to_submission_contributor,
                                    add_approval_permissions_to_conference_admin)
 
-
 @receiver(post_save, sender=Submission)
 def add_permissions_on_submission_save(sender, **kwargs):
     submission = kwargs["instance"]
