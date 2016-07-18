@@ -1,5 +1,5 @@
 import DS from 'ember-data';
-import Ember from 'Ember';
+import Ember from 'ember';
 
 export default DS.JSONAPIAdapter.extend({
     host: 'http://localhost:8000',

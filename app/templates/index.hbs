@@ -38,7 +38,7 @@
         <div class="row conference-view-outer-container" id="indexBottom">
             <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
                 <div class="col-md-12 tile-view">
-                    {{#masonry-grid  isFitWidth=true gutter=20 items= model.conf as |conf|}}
+                    {{#masonry-grid  isFitWidth=true gutter=20 items= model as |conf|}}
                         {{#link-to "conference.index" conf.id class="title"}}
                             {{meeting-masonry title=conf.title
                             description=conf.description logo=conf.logo
@@ -57,7 +57,7 @@
                 <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
                     <table class="table">
                         <tbody>
-                            {{#each model.conf as |conference|}}
+                            {{#each model as |conference|}}
                                 {{#link-to "conference.index" conference.id tagName="tr"}}
                                     <td class="hidden-xs">
                                         <img src={{conference.logo}}>

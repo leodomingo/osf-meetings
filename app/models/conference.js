@@ -15,6 +15,6 @@ export default Model.extend({
     description: attr('string'),
     site: attr('string', { defaultValue : '' }),
     logo: attr('string', { defaultValue : '' }),
-    submissions : hasMany('submission'),
+    submissions : hasMany('submission', { async : true }),
     canEdit: attr('boolean', { defaultValue : ''})
 });

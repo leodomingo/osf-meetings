@@ -15,6 +15,7 @@ class SubmissionSerializer(ser.ModelSerializer):
     links = ser.SerializerMethodField()
     node_id = ser.CharField(read_only=True)
     contributor = ResourceRelatedField(read_only=True)
+    approved = ser.BooleanField(read_only=True)
 #    conference = ResourceRelatedField(
 #        queryset=Conference.objects,
 #        related_link_view_name='conference:submission:list',
@@ -31,7 +32,6 @@ class SubmissionSerializer(ser.ModelSerializer):
 
     class Meta:
         model = Submission
-        exclude = ('approved',)
 
     def get_links(self, obj):
         request = self.context.get('request')
