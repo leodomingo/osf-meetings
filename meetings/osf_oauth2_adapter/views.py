@@ -15,8 +15,6 @@ from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
 from django.contrib.auth.models import User, Group
 
-
-
 class OSFOAuth2Adapter(OAuth2Adapter, DefaultSocialAccountAdapter):
     provider_id = OSFProvider.id
     base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
