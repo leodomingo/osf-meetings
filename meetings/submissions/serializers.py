@@ -15,7 +15,12 @@ class SubmissionSerializer(ser.ModelSerializer):
     links = ser.SerializerMethodField()
     node_id = ser.CharField(read_only=True)
     contributor = ResourceRelatedField(read_only=True)
-    #conference = ResourceRelatedField(queryset=Conference.objects)
+#    conference = ResourceRelatedField(
+#        queryset=Conference.objects,
+#        related_link_view_name='conference:submission:list',
+#        related_link_url_kwarg='submission_id',
+#        self_link_view_name='submission-relationships'
+#    )
 
 #    def create(self, validated_data):
 #        # look up contributors by ID

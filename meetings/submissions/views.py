@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import viewsets
+from rest_framework_json_api.views import RelationshipView
 
 from submissions.serializers import SubmissionSerializer
 from submissions.models import Submission
@@ -27,3 +28,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
 
         return Response(serializer.errors)
+
+class SubmissionRelationshipView(RelationshipView):
+    encoding = 'utf-8',
+    queryset = Submission.objects.all()

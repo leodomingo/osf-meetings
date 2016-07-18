@@ -17,6 +17,6 @@ class Submission(models.Model):
     class Meta:
         ordering = ('date_created',)
         permissions = (
-        			('can_change_approved', 'Can change whether submission is approved'),
-        			('view_submission', 'Can view submission'),
-        			)
+            ('can_change_approved', 'Can change whether submission is approved'),
+            ('view_submission', 'Can view submission'),
+        )
