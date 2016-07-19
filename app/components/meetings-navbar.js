@@ -6,48 +6,54 @@ import {
 
 
 export default Ember.Component.extend({
+    authenticated: false,
+    router: Ember.inject.service('router'),
     session: Ember.inject.service(),
-    currentUser: Ember.inject.service(),
-    onSearchPage: false,
-    gravatarUrl: Ember.computed.alias('user.links.profile_image'),
+    currentUser: null,
+    gravatarUrl: null,
     fullName: null,
-    host: config.OSF.url,
-    authUrl: "http://localhost:8000/checklogin",
     user: null,
     showSearch: false,
-    _loadCurrentUser() {
-    	console.log("LoadCurrentUser");
-        this.get('currentUser').load().then((user) => this.set('user', user));
-        console.log(this.get('user'));
-    },
-    init: function() {
+    init: function(){
         this._super(...arguments);
-        console.log("INIT");
-        console.log(this.get('authUrl'));
-        this._loadCurrentUser();
+        var self = this;
+        Ember.$.ajax({
+            url: "http://localhost:8000/current/",
+            dataType: 'json',
+            contentType: 'text/plain',
+            xhrFields: {
+                withCredentials: true,
+            }
+        }).then(function(loggedIn) {
+            if (loggedIn.data !=='false')
+            {
+                self.set('authenticated', true);
+                self.set('user', loggedIn.data.data);
+            }
+            else 
+            {
+                self.set('authenticated', false);
+                self.set('user', null);
+            }
+        });
     },
-    didUpdateAttrs: function() 
-    {
-		this._super(...arguments);
-        console.log("INIT");
-        if (this.get('session.isAuthenticated')) {
-            this._loadCurrentUser();
-       }
-    },
-    // TODO: Make these parameters configurable from... somewhere. (currently set by OSF settings module)
-    allowLogin: true,
-    enableInstitutions: true,
 	actions: 
 	{
 		filter: function() 
 		{
-			this._super(...arguments);
-            this._loadCurrentUser();
 			this.sendAction('filter', this.get("searchQuery"));
 		},
 		search: function() 
 		{
 			this.sendAction('search', this.get("searchQuery"));
-		}
+		},
+        logout: function() 
+        {   
+            this.sendAction('logout');
+        },
+        login: function() 
+        {
+            this.sendAction('login');
+        }
 	}
 });

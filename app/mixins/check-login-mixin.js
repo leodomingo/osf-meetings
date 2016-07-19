@@ -16,10 +16,14 @@ export default Ember.Mixin.create({
 			{
 				self.transitionTo('login');
 			}
-			else 
-			{
-				console.log(loggedIn.data);
-			}
 		});
+	},
+	actions:
+	{
+		logout: function() 
+		 {
+		 	this.transitionToRoute('logout');
+		 }
 	}
+
 });
