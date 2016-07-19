@@ -1,0 +1,49 @@
+<nav id="create" class="navbar navbar-default meetings-navbar-background">
+    <div class="container-fluid" id="browse">
+        <form class="navbar-form navbar-left" role="search">
+            <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
+            <p class="navbar-brand">Meetings</p>
+             <div class="form-group">
+                {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" action="filter" on="key-up"}}
+            </div>
+            <button type="submit" class="btn btn-default" {{action "search"}}>
+            Search
+            </button>
+        </form>
+        {{# if session.isAuthenticated }}
+            {{!-- TODO: Replace display name functionality if possible- for now truncate via CSS at end of label --}}
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle nav-user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <span class="osf-gravatar">
+                        <img src={{gravatarUrl}} alt="User gravatar">
+                    </span> {{user.fullName}}
+                    <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li>
+                        <a href="{{host}}profile/"><i class="fa fa-user fa-lg p-r-xs"></i> My Profile</a>
+                    </li>
+                    <li>
+                        <a href="{{host}}support/" ><i class="fa fa-life-ring fa-lg p-r-xs"></i> Support</a>
+                    </li>
+
+                    <li>
+                        <a href="{{host}}settings/"><i class="fa fa-cog fa-lg p-r-xs"></i> Settings</a>
+                    </li>
+                    <li>
+                        <a onclick={{action 'logout'}}><i class="fa fa-sign-out fa-lg p-r-xs"></i> Log out</a>
+                    </li>
+
+                </ul>
+            </li>
+        {{/if}}
+        <form class="navbar-form navbar-right" role="search">
+            <button type="submit" class="btn navbar-btn btn-success" {{action "Login"}}>
+            Login
+            </button>
+            <button type="submit" class="btn navbar-btn btn-info" {{action "Signup"}}>
+            Signup
+            </button>
+        </form>
+    </div>
+</nav>
