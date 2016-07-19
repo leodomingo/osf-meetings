@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
-from rest_framework_json_api.views import RelationshipView
+#from rest_framework_json_api.views import RelationshipView
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -30,6 +30,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                                           context={'request': request})
         new_approval = Approval.objects.create()
         contributor = request.user
+
         if not request.user.has_perm('submissions.can_set_contributor'):
             if serializer.is_valid():
                 serializer.save(contributor=contributor, approval=new_approval)

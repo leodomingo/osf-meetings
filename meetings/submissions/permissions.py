@@ -32,20 +32,10 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
         #
         # has_object_permission() in DjangoObjectPermissions ensures users can only
         # GET, POST, PATCH etc. on objects they have the required permissions for
-        #
-        #
-        # This method gets called on list view and normally fails due to
-        # the commented out line below.
-        #
-        # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
-        # to be able to see
-        #
-        # has_object_permission() in DjangoObjectPermissions ensures users can only
-        # GET, POST, PATCH etc. on objects they have the required permissions for
-        #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied
         # to the root view when using DefaultRouter.
+
         if getattr(view, '_ignore_model_permissions', False):
             return True
 
@@ -84,12 +74,10 @@ def add_approved_submission_permissions_to_current_osf_user(submission):
         name=OsfOauth2AdapterConfig.osf_users_group)
     assign_perm("submissions.view_submission", current_osf_users, submission)
 
-
 def remove_approved_submission_permissions_from_current_osf_user(submission):
     current_osf_users = Group.objects.get(
         name=OsfOauth2AdapterConfig.osf_users_group)
     remove_perm("submissions.view_submission", current_osf_users, submission)
-
 
 def add_submission_permissions_to_submission_contributor(submission, submission_contributor):
     assign_perm(

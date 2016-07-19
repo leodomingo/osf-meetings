@@ -32,7 +32,6 @@ class ConferenceViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(admin=serializer.context['request'].user)
 
-
 ## Detail of a conference
 #class ConferenceDetail(APIView):
 #    resource_name = 'conference'
