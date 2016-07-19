@@ -25,12 +25,12 @@ def add_permissions_on_submission_save(sender, **kwargs):
 
         # submission_contributor:
         permissions.add_submission_permissions_to_submission_contributor(
-            submission)
+            submission, submission_contributor)
         add_approval_permissions_to_submission_contributor(
             approval, submission_contributor)
 
         # conference_admin:
-        permissions.add_submission_permissions_to_conference_admin(submission)
+        permissions.add_submission_permissions_to_conference_admin(submission, conference_admin)
         add_approval_permissions_to_conference_admin(
             approval, conference_admin)
 
