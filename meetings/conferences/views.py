@@ -29,4 +29,4 @@ class ConferenceViewSet(viewsets.ModelViewSet):
         return super(ConferenceViewSet, self).create(request, args, kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(admin=self.request.user)
+        serializer.save(admin=serializer.context['request'].user)

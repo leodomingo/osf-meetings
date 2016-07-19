@@ -10,12 +10,11 @@ class Submission(models.Model):
     contributor = models.ForeignKey(User)
     description = models.TextField()
     conference = models.ForeignKey('conferences.Conference')
-    approved = models.NullBooleanField(blank=False)
+    approval = models.OneToOneField('approvals.Approval')
 
     class Meta:
         ordering = ('date_created',)
         permissions = (
-                    ('can_set_approved', 'Can change whether submission is approved'),
                     ('can_set_contributor', 'Can set the contributor for a submission'),
                     ('view_submission', 'Can view submission'),
                     )

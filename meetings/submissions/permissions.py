@@ -1,6 +1,10 @@
 from rest_framework import permissions
+from guardian.shortcuts import assign_perm, remove_perm
+from django.contrib.auth.models import User
+
 
 class SubmissionPermissions(permissions.DjangoObjectPermissions):
+
     """
     Similar to `DjangoObjectPermissions`, but adding 'view' permissions.
     """
@@ -19,16 +23,16 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
     def has_permission(self, request, view):
         # ----------------------------------------------------------
         # OVERWRITING THIS METHOD FROM DRF
-        # 
+        #
         # This method gets called on list view and normally fails due to
         # the commented out line below.
-        # 
+        #
         # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
         # to be able to see
-        # 
+        #
         # has_object_permission() in DjangoObjectPermissions ensures users can only
         # GET, POST, PATCH etc. on objects they have the required permissions for
-        # 
+        #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied
         # to the root view when using DefaultRouter.
@@ -49,6 +53,63 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
 
         return (
             request.user and
-            (request.user.is_authenticated() or not self.authenticated_users_only)
-            # and request.user.has_perms(perms) 
+            (request.user.is_authenticated()
+             or not self.authenticated_users_only)
+            # and request.user.has_perms(perms)
         )
+
+
+def add_approved_submission_permissions_to_public(submission):
+    public = User.objects.get(username="AnonymousUser")
+    assign_perm("submissions.view_submission", public, submission)
+
+
+def remove_approved_submission_permissions_from_public(submission):
+    public = User.objects.get(username="AnonymousUser")
+    remove_perm("submissions.view_submission", public, submission)
+
+
+def add_approved_submission_permissions_to_current_osf_user(submission):
+    public = User.objects.get(username="AnonymousUser")
+    assign_perm("submissions.view_submission", public, submission)
+
+
+def remove_approved_submission_permissions_from_current_osf_user(submission):
+    public = User.objects.get(username="AnonymousUser")
+    remove_perm("submissions.view_submission", public, submission)
+
+
+def add_submission_permissions_to_submission_contributor(submission, submission_contributor):
+    assign_perm(
+        "submissions.change_submission", submission_contributor, submission)
+    assign_perm(
+        "submissions.delete_submission", submission_contributor, submission)
+    assign_perm(
+        "submissions.view_submission", submission_contributor, submission)
+
+
+def remove_submission_permissions_from_submission_contributor(submission, submission_contributor):
+    remove_perm(
+        "submissions.change_submission", submission_contributor, submission)
+    remove_perm(
+        "submissions.delete_submission", submission_contributor, submission)
+    remove_perm(
+        "submissions.view_submission", submission_contributor, submission)
+
+
+def add_submission_permissions_to_conference_admin(submission, submission_contributor):
+    assign_perm(
+        "submissions.change_submission", submission_contributor, submission)
+    assign_perm(
+        "submissions.delete_submission", submission_contributor, submission)
+    assign_perm(
+        "submissions.view_submission", submission_contributor, submission)
+
+
+def remove_submission_permissions_from_conference_admin(submission, submission_contributor):
+    remove_perm(
+        "submissions.change_submission", submission_contributor, submission)
+    remove_perm(
+        "submissions.delete_submission", submission_contributor, submission)
+    remove_perm(
+        "submissions.view_submission", submission_contributor, submission)
