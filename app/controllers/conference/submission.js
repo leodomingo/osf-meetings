@@ -3,6 +3,24 @@ import Ember from 'ember';
 //import EmberValidations from 'ember-validations';
 
 export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
+    _url : null,
+    dropzoneOption : {
+        method : 'PUT'
+    },
+
+    actions : {
+        buildUrl() {
+            return this.get('_url');
+        },
+        preUpload(comp, drop, file) {
+            this.set('openModal', true);
+            this.set('latestFileName', true);
+            var promise = new Ember.RSVP.Promise(resolve => {
+                this.set('resolve', resolve);
+            });
+            return promise;
+        }
+    }
 //    displayErrors: false,
 //    tagError: false,
 //    kill: true,
@@ -46,4 +64,5 @@ export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
 //            }
 //        }
 //    }
+//    not being logged = http://localhost:8000/accounts/login/
 });

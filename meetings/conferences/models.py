@@ -16,7 +16,7 @@ class Conference(models.Model):
     site = models.URLField(blank=True)
     city = models.CharField(max_length=100, default='')
     state = models.CharField(max_length=100, default='')
-    country = CountryField(blank_label='(select country)')
+    country = CountryField()
     event_start = models.DateTimeField(blank=True, null=True)
     event_end = models.DateTimeField(blank=True, null=True)
     submission_start = models.DateTimeField(blank=True, null=True)
