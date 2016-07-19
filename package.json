@@ -68,6 +68,6 @@
     "wormhole": "3.0.0"
   },
   "dependencies": {
-    "ember-osf": "git://github.com/CenterForOpenScience/ember-osf.git#f8c1d1fbdcd549266fc5b730284f55e72d7e1547"
+    "ember-osf": "git://github.com/CenterForOpenScience/ember-osf.git#36cad456112206cd471230db99b40518e360eb4d"
   }
 }
