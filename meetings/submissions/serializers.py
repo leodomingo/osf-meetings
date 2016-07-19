@@ -10,10 +10,6 @@ from api.serializers import UserSerializer
 
 
 class SubmissionSerializer(ser.ModelSerializer):
-    #    include_serializers = {
-    #        'conference' : 'conferences.serializers.ConferenceSerializer'
-    #    }
-
     links = ser.SerializerMethodField()
     can_edit = ser.SerializerMethodField()
     node_id = ser.CharField(read_only=True)
