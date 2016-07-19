@@ -15,11 +15,12 @@ before_install:
   - npm install phantomjs-prebuilt
 
 install:
-  - npm install
-  - bower install
+#  - npm install
+#  - bower install
   - travis_retry pip install --upgrade pip
   - travis_retry pip install invoke==0.13.0
   - travis_retry pip install flake8==2.4.0 --force-reinstall --upgrade
 
 script:
-  - invoke test_all
+#  - invoke test_all
+  - invoke flake
