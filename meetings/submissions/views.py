@@ -29,7 +29,6 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         serializer = SubmissionSerializer(data=request.data,
                                           context={'request': request})
         new_approval = Approval.objects.create()
-        new_approval.save()
         contributor = request.user
         if not request.user.has_perm('submissions.can_set_contributor'):
             if serializer.is_valid():
