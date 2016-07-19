@@ -5,15 +5,21 @@ export default Ember.Mixin.create({
 	beforeModel: function() {
 		var self = this;
 		Ember.$.ajax({
-			url: "http://localhost:8000/checklogin",
+			url: "http://localhost:8000/current/",
 			dataType: 'json',
 			contentType: 'text/plain',
 			xhrFields: {
 				withCredentials: true,
 			}
 		}).then(function(loggedIn) {
-			if (loggedIn.data == 'false')
+			if (loggedIn.data ==='false')
+			{
 				self.transitionTo('login');
+			}
+			else 
+			{
+				console.log(loggedIn.data);
+			}
 		});
 	}
 });

@@ -35,7 +35,7 @@ class viewCurrentUser(APIView):
         })
             return Response(extra_data.json())
         else:
-            return Response('Not logged in')
+            return Response('false')
 
 class UserViewSet(viewsets.ModelViewSet):
     """
