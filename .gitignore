@@ -94,6 +94,7 @@ ENV/
 meetings/db*
 
 local.py
+local.yml
 
 ## Ember
 # compiled output
