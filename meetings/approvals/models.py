@@ -9,3 +9,8 @@ from django.contrib.auth.models import User
 
 class Approval(models.Model):
     approved = models.BooleanField(default=False)
+
+    class Meta:
+        permissions = (
+            ('view_approval', 'Can view approval'),
+        )

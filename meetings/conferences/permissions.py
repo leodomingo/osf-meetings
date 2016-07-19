@@ -1,8 +1,10 @@
-from guardian.shortcuts import assign_perm, remove_perm
 from rest_framework import permissions
+from guardian.shortcuts import assign_perm, remove_perm
+from django.contrib.auth.models import User, Group
+from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
 
-class ApprovalPermissions(permissions.DjangoObjectPermissions):
+class ConferencePermissions(permissions.DjangoObjectPermissions):
 
     """
     Similar to `DjangoObjectPermissions`, but adding 'view' permissions.
@@ -57,24 +59,37 @@ class ApprovalPermissions(permissions.DjangoObjectPermissions):
             # and request.user.has_perms(perms)
         )
 
+def add_conference_permissions_to_public(conference):
+    public = User.objects.get(username="AnonymousUser")
+    assign_perm("conferences.view_conference", public, conference)
 
-def add_approval_permissions_to_submission_contributor(approval, submission_contributor):
-    assign_perm("approvals.delete_approval", submission_contributor, approval)
-    assign_perm("approvals.view_approval", submission_contributor, approval)
-
-
-def remove_approval_permissions_to_submission_contributor(approval, submission_contributor):
-    remove_perm("approvals.delete_approval", submission_contributor, approval)
-    remove_perm("approvals.view_approval", submission_contributor, approval)
+def remove_conference_permissions_from_public(conference):
+    public = User.objects.get(username="AnonymousUser")
+    remove_perm("conferences.view_conference", public, conference)
 
 
-def add_approval_permissions_to_conference_admin(approval, conference_admin):
-    assign_perm("approvals.change_approval", conference_admin, approval)
-    assign_perm("approvals.delete_approval", conference_admin, approval)
-    assign_perm("approvals.view_approval", conference_admin, approval)
+def add_conference_permissions_to_current_osf_user(conference):
+    current_osf_users = Group.objects.get(
+        name=OsfOauth2AdapterConfig.osf_users_group)
+    assign_perm("conferences.view_conference", current_osf_users, conference)
 
+def remove_conference_permissions_from_current_osf_user(conference):
+    current_osf_users = Group.objects.get(
+        name=OsfOauth2AdapterConfig.osf_users_group)
+    remove_perm("conferences.view_conference", current_osf_users, conference)
 
-def remove_approval_permissions_to_conference_admin(approval, conference_admin):
-    remove_perm("approvals.change_approval", conference_admin, approval)
-    remove_perm("approvals.delete_approval", conference_admin, approval)
-    remove_perm("approvals.view_approval", conference_admin, approval)
+def add_conference_permissions_to_conference_admin(conference, conference_admin):
+    assign_perm(
+        "conferences.change_conference", conference_admin, conference)
+    assign_perm(
+        "conferences.delete_conference", conference_admin, conference)
+    assign_perm(
+        "conferences.view_conference", conference_admin, conference)
+
+def remove_conference_permissions_from_conference_admin(conference, conference_admin):
+    remove_perm(
+        "conferences.change_conference", conference_admin, conference)
+    remove_perm(
+        "conferences.delete_conference", conference_admin, conference)
+    remove_perm(
+        "conferences.view_conference", conference_admin, conference)

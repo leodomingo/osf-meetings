@@ -13,8 +13,6 @@ from approvals.permissions import (add_approval_permissions_to_submission_contri
 def add_permissions_on_submission_save(sender, **kwargs):
     submission = kwargs["instance"]
     approval = submission.approval
-    current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
     conference_admin = submission.conference.admin
     submission_contributor = submission.contributor
     if submission.approval.approved:
@@ -53,6 +51,6 @@ def add_permissions_on_submission_save(sender, **kwargs):
 
        # conference_admin:
         permissions.add_submission_permissions_to_conference_admin(
-            submission, submission_contributor)
+            submission, conference_admin)
         add_approval_permissions_to_conference_admin(
             approval, conference_admin)

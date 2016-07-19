@@ -1,5 +1,6 @@
 from rest_framework_json_api import serializers as ser
 from rest_framework.reverse import reverse
+from rest_framework_json_api.relations import ResourceRelatedField
 
 from submissions.models import Submission
 from conferences.models import Conference
@@ -9,15 +10,31 @@ from api.serializers import UserSerializer
 
 
 class SubmissionSerializer(ser.ModelSerializer):
+#    include_serializers = {
+#        'conference' : 'conferences.serializers.ConferenceSerializer'
+#    }
+
     links = ser.SerializerMethodField()
     node_id = ser.CharField(read_only=True)
-    contributor = ser.PrimaryKeyRelatedField(queryset=User.objects.all(), required=False, allow_null=True)
-    approval = ser.PrimaryKeyRelatedField(queryset=Approval.objects.all(), required=False, allow_null=True)
+    contributor = ResourceRelatedField(queryset=User.objects.all(), required=False, allow_null=True)
+    approval = ResourceRelatedField(queryset=Approval.objects.all(), required=False, allow_null=True)
 
     class Meta:
         model = Submission
-        fields = ('id', 'node_id', 'title', 'description', 'conference',
-                  'contributor', 'links', 'approval')
+
+#    conference = ResourceRelatedField(
+#        queryset=Conference.objects,
+#        related_link_view_name='conference:submission:list',
+#        related_link_url_kwarg='submission_id',
+#        self_link_view_name='submission-relationships'
+#    )
+
+#    def create(self, validated_data):
+#        # look up contributors by ID
+#        submission = Submission.objects.create(title=title, description=description, conference=conference, approved=False)
+#        for contributor in contributors:
+#                submission.contributors.add(contributor)
+#        return submission
 
     def get_links(self, obj):
         request = self.context.get('request')

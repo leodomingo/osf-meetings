@@ -24,7 +24,7 @@ export default Ember.Route.extend(CheckLoginMixin, {
                 newRoute.controller.set('visited', true);
             });
         },
-        saveNode(newConf) {
+        saveConference(newConf) {
             var router = this;
             newConf.save().then(function(params) {
                 router.transitionTo('conference.index', params.id);

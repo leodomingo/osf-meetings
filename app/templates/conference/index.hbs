@@ -5,79 +5,86 @@
                 <div class="col-md-12">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="conference-info">
-                                <div class="form-group row">
-                                    <div class="col-md-6 ">
-                                        <h1 class="break-word" style="margin: 15px" style="font-size:40px"> {{model.title}}</h1>
-                                        <h8 style="margin:15px 0 0 0">  {{this.conferenceDates}} {{date-display model.eventStart}} - {{date-display model.eventEnd}}</h8>
-                                        <h4 style="margin:15px 0 0 0"> {{model.city}}, {{model.state}}, {{model.country}}</h4>
-                                        <div class="logo-view" align="center"></div>
-                                        <p class="conference-description" style="font-size: 16px">{{model.description}}</p>
-                                    </div>
-                                    <div class="col-md-6 conference-photo">
-                                        <img src={{model.logo}}>
+                            <div class="form-group row">
+                                <div class="col-md-6 ">
+                                    <h1 class="break-word" style="margin:
+                                    15px" style="font-size:40px">
+                                        {{model.conf.title}}</h1>
+                                    <h8 style="margin:15px 0 0 0">
+                                        {{this.conferenceDates}}
+                                        {{date-display model.conf.eventStart}} - {{date-display model.conf.eventEnd}}
+                                    </h8>
+                                    <h4 style="margin:15px 0 0 0">
+                                        {{model.conf.city}},
+                                        {{model.conf.state}}, {{model.conf.country}}</h4>
+                                    <div class="logo-view" align="center"></div>
+                                    <p class="conference-description"
+                                       style="font-size: 16px">{{model.conf.description}}</p>
+                                </div>
+                                <div class="col-md-6 conference-photo">
+                                    <img src={{model.conf.logo}}>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="btn-group" role="group" aria-label="...">
+
+                                        {{#link-to "conference.submission" model.conf.id}}
+                                            <button type="button" class="btn btn-default" style="margin: 0 0 5px 0; width: 200px;">  Submit to This Conference</button>
+                                        {{/link-to}}
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="btn-group" role="group" aria-label="...">
+                            </div>
 
-                                            {{#link-to "conference.submission"
-                                                model.id}}
-                                                <button type="button" class="btn btn-default" style="margin: 0 0 5px 0; width: 200px;">  Submit to This Conference</button>
-                                            {{/link-to}}
-                                        </div>
-                                    </div>
+                            <!-- This is the basic code for a list with images -->
+                            <!--                                   <div id="table" class="row">
+                                <div class="col-md-12">
+                                {{!-- models-table data=model columns=columns useFilteringByColumns=false rowTemplate="row" --}}
+                                <table class="table  table-hover table-condensed table-bordered">
+                                <tbody>
+                                {{#each model.submissions as |item|}}
+                                    <a target="_blank" style="color: black;" href= {{link-to-osf item.id}}>
+                                    {{node-component title=item.title contributors=item.contributors description=item.description}}
+                                    </a>
+                                {{/each}}
+                                </tbody>
+                                </table>
                                 </div>
+                                </div>
+                            -->
 
-                                <!-- This is the basic code for a list with images -->
-                                <!--                                   <div id="table" class="row">
-                                    <div class="col-md-12">
-                                    {{!-- models-table data=model columns=columns useFilteringByColumns=false rowTemplate="row" --}}
-                                    <table class="table  table-hover table-condensed table-bordered">
+                            <!-- This is the basic code for a table of submissions without images -->
+                            {{#if (has-submissions model.submissions)}}
+                                <table class="table table-hover">
+                                    <thead class="thead">
+                                        <tr>
+                                            <th class="heading" bgcolor="#E0E0E0" width="30%" data-sortable="true">Title</th>
+                                            <th class="heading" bgcolor="#E0E0E0" width="20%">Author</th>
+                                            <th class="heading" bgcolor="#E0E0E0" width="50%">Description</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
-                                    {{#each model.meeting.linkedNodes as |item|}}
-                                        <a target="_blank" style="color: black;" href= {{link-to-osf item.id}}>
-                                        {{node-component title=item.title contributors=item.contributors description=item.description}}
-                                        </a>
-                                    {{/each}}
-                                    </tbody>
-                                    </table>
-                                    </div>
-                                    </div>
-                                -->
-
-                                <!-- This is the basic code for a table of submissions without images -->
-                                {{#if (has-submissions model.linkedNodes)}}
-                                    <table class="table table-hover">
-                                        <thead class="thead">
-                                            <tr>
-                                                <th class="heading" bgcolor="#E0E0E0" width="30%" data-sortable="true">Title</th>
-                                                <th class="heading" bgcolor="#E0E0E0" width="20%">Author</th>
-                                                <th class="heading" bgcolor="#E0E0E0" width="50%">Description</th>
+                                        {{#each model.submissions as |item|}}
+                                            <tr bgcolor="FFFFFF">
+                                                <th class="tableTitle" scope="row">
+                                                    <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
+                                                        {{item.title}}
+                                                    </a></th>
+                                                    <td style="color: black;">{{#each item.contributors as |contributor|}}
+                                                            {{contributor.users.fullName}}
+                                                        {{/each}}
+                                                    </td>
+                                                    <td class="tableDescription" style="color: #000000">{{item.description}}</td>
                                             </tr>
-                                        </thead>
-                                        <tbody>
-                                            {{#each model.linkedNodes as |item|}}
-                                                <tr bgcolor="FFFFFF">
-                                                    <th class="tableTitle" scope="row">
-                                                        <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
-                                                            {{item.title}}
-                                                        </a></th>
-                                                        <td style="color: black;">{{#each item.contributors as |contributor|}}
-                                                                {{contributor.users.fullName}}
-                                                            {{/each}}
-                                                        </td>
-                                                        <td class="tableDescription" style="color: #000000">{{item.description}}</td>
-                                                </tr>
-                                            {{/each}}
-                                        </tbody>
-                                    </table>
-                                {{else}}
-                                    <!-- This needs styling and probably rephrasing -->
-                                    <div style="color:black; font-size:16px;">
-                                        No submissions have been made for this conference
-                                    </div>
-                                {{/if}}
+                                        {{/each}}
+                                    </tbody>
+                                </table>
+                            {{else}}
+                                <!-- This needs styling and probably rephrasing -->
+                                <div style="color:black; font-size:16px;">
+                                    No submissions have been made for this conference
+                                </div>
+                            {{/if}}
                         </div>
                     </div>
                 </div>

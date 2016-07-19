@@ -17,4 +17,8 @@ urlpatterns = [
     url(r'^(?P<pk>[-\w]+)/$', conference_detail, name='detail'),
     url(r'^(?P<conference_id>[-\w]+)/submissions/',
         include('submissions.urls', namespace='submissions')),
+#    url(regex=r'^(?P<pk>[-\w]+)/relationships/(?P<related_field>[^/.]+)$',
+#        view=views.ConferenceRelationshipView.as_view(),
+#        name='conference-relationships'
+#    )
 ]

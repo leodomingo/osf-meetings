@@ -1,4 +1,6 @@
 import DS from 'ember-data';
+import Ember from 'ember';
+
 export default DS.JSONAPIAdapter.extend({
     host: 'http://localhost:8000',
     buildURL(modelName, id, snapshot, requestType) {
@@ -16,22 +18,19 @@ export default DS.JSONAPIAdapter.extend({
         return url;
     },
     ajax: function(url, method, hash) {
-  		hash.crossDomain = true;
-  		hash.xhrFields = {withCredentials: true};
-  		return this._super(url, method, hash);
-  	},
-  	headers: Ember.computed(function() {
-  		var csrftoken = ""
-  		try {
-  			var csrftoken = Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1")
-  		} catch(e){
-  			console.log(e)
-  			console.log('no csrftoken present')
-  		}
+        hash.crossDomain = true;
+        hash.xhrFields = {withCredentials: true};
+        return this._super(url, method, hash);
+    },
+    headers: Ember.computed(function() {
+        var csrftoken = "";
+        try {
+            csrftoken = Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1");
+        } catch(e){
+            console.log(e);
+            console.log('no csrftoken present');
+        }
 
-	    return {
-	   		"X-CSRFToken": csrftoken
-	    };
-  	}).volatile()
-
+        return { "X-CSRFToken": csrftoken };
+    }).volatile()
 });
