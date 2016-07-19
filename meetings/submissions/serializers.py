@@ -10,14 +10,17 @@ from api.serializers import UserSerializer
 
 
 class SubmissionSerializer(ser.ModelSerializer):
-#    include_serializers = {
-#        'conference' : 'conferences.serializers.ConferenceSerializer'
-#    }
+    #    include_serializers = {
+    #        'conference' : 'conferences.serializers.ConferenceSerializer'
+    #    }
 
     links = ser.SerializerMethodField()
+    can_edit = ser.SerializerMethodField()
     node_id = ser.CharField(read_only=True)
-    contributor = ResourceRelatedField(queryset=User.objects.all(), required=False, allow_null=True)
-    approval = ResourceRelatedField(queryset=Approval.objects.all(), required=False, allow_null=True)
+    contributor = ResourceRelatedField(
+        queryset=User.objects.all(), required=False, allow_null=True)
+    approval = ResourceRelatedField(
+        queryset=Approval.objects.all(), required=False, allow_null=True)
 
     class Meta:
         model = Submission
@@ -53,3 +56,8 @@ class SubmissionSerializer(ser.ModelSerializer):
                 request=request
             ),
         }
+
+    def get_can_edit(self, obj):
+        request = self.context.get('request')
+        user = request.user
+        return (user == obj.contributor or user == obj.conference.admin)
