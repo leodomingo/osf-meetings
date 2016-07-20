@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import config from '../config/environment'
+import config from '../config/environment';
 
 export default Ember.Mixin.create({
 	//Overwrite redirectRoute function to return the route the user should transition to after logging in
