@@ -8,7 +8,7 @@ class Submission(models.Model):
     node_id = models.CharField(max_length=10)
     date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100)
-    contributor = models.ForeignKey(User)
+    contributor = models.ForeignKey(User, related_name='submission_contributor')
     description = models.TextField()
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     approval = models.OneToOneField('approvals.Approval')
