@@ -1,12 +1,13 @@
 import Ember from 'ember';
 import CheckLoginMixin from 'osf-meetings/mixins/check-login-mixin';
+import config from '../../config/environment';
 
 
 export default Ember.Route.extend(CheckLoginMixin, {
     model() {
         return Ember.RSVP.hash({
             meta : Ember.$.ajax({
-                url : "http://localhost:8000/conferences/",
+                url : config.meetingsUrl + "conferences/",
                 type : "OPTIONS"
             }),
             newConf : this.store.createRecord('conference')

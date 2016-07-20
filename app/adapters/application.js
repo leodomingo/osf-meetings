@@ -1,6 +1,8 @@
 import DS from 'ember-data';
+import config from '../config/environment';
+
 export default DS.JSONAPIAdapter.extend({
-    host: 'http://localhost:8000',
+    host: config.meetingsUrl,
     buildURL(modelName, id, snapshot, requestType) {
         // Fix issue where CORS request failed on 301s: Ember does not seem to append trailing
         // slash to URLs for single documents, but DRF redirects to force a trailing slash
