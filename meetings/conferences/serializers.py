@@ -5,7 +5,6 @@ from conferences.models import Conference
 from submissions.models import Submission
 
 
-
 class ConferenceSerializer(serializers.ModelSerializer):
     links = serializers.SerializerMethodField()
     submission_count = serializers.SerializerMethodField()
