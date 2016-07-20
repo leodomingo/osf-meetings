@@ -1,9 +1,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from django.contrib.sites.models import Site
 from django_countries.fields import CountryField
-from django.template.defaultfilters import slugify
+
 
 class Conference(models.Model):
     id = models.SlugField(primary_key=True, max_length=10)
@@ -23,4 +22,3 @@ class Conference(models.Model):
 
     class Meta:
         ordering = ('created',)
-

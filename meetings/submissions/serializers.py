@@ -2,7 +2,6 @@ from rest_framework_json_api import serializers as ser
 from rest_framework.reverse import reverse
 
 from submissions.models import Submission
-from conferences.models import Conference
 from api.serializers import UserSerializer
 
 
@@ -17,7 +16,12 @@ class SubmissionSerializer(ser.ModelSerializer):
         title = validated_data['title']
         description = validated_data['description']
         conference = validated_data['conference']
-        submission = Submission.objects.create(title=title, description=description, conference=conference, approved=False)
+        submission = Submission.objects.create(
+            title=title,
+            description=description,
+            conference=conference,
+            approved=False
+        )
         for contributor in contributors:
                 submission.contributors.add(contributor)
         return submission
