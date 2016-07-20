@@ -3,6 +3,8 @@
 
 SECRET_KEY = ''  # Set to large random value in your local.py
 DEBUG = True
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 
 # Database
 # POSTGRES_NAME = ''
