@@ -1,22 +1,35 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
-import {
-    getAuthUrl
-} from 'ember-osf/utils/auth';
 
+const {
+  getOwner
+} = Ember;
 
 export default Ember.Component.extend({
+    routing: Ember.inject.service('-routing'),
+    host: 'https://staging.osf.io/',
     authenticated: false,
-    router: Ember.inject.service('router'),
     session: Ember.inject.service(),
     currentUser: null,
     gravatarUrl: null,
     fullName: null,
+    frontPage: null,
     user: null,
     showSearch: false,
-    init: function(){
+    didInsertElement: function() 
+    {
+        console.log("Did Insert Element");
+    },
+    init: function(){   
         this._super(...arguments);
         var self = this;
+        var currentRoute = this.get('routing').get('currentRouteName');
+        console.log("Current Path is", currentRoute);
+        if (currentRoute === 'index'){
+            self.set('frontPage', true);
+        }
+        else {
+            self.set('frontPage', false);
+        }
         Ember.$.ajax({
             url: "http://localhost:8000/current/",
             dataType: 'json',
@@ -25,7 +38,7 @@ export default Ember.Component.extend({
                 withCredentials: true,
             }
         }).then(function(loggedIn) {
-            if (loggedIn.data !=='false')
+            if (!(loggedIn.data.errors) && (loggedIn.data !== 'false'))
             {
                 self.set('authenticated', true);
                 self.set('user', loggedIn.data.data);
@@ -45,6 +58,7 @@ export default Ember.Component.extend({
 		},
 		search: function() 
 		{
+            console.log('test');
 			this.sendAction('search', this.get("searchQuery"));
 		},
         logout: function() 

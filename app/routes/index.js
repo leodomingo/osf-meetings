@@ -50,13 +50,11 @@ export default Ember.Route.extend({
           shift.set('tileview', false );
         },
         filter(params) {
-          let query = params;
-          this.transitionTo('index', {queryParams: {q: query}});
+          this.transitionTo('index', {queryParams: {q: params}});
         },
         search(params)
         {
-          let query = params;
-          this.transitionTo('search', {queryParams: {q: query, p:1}});
+          this.transitionTo('search', {queryParams: {q: params, p:1}});
         }
       }
 });

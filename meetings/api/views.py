@@ -26,6 +26,7 @@ class viewCurrentUser(APIView):
     authorize_url = base_url.format('authorize')
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
     def get(self, request, **kwargs):
+        print "Got Get"
         if request.user.is_authenticated():
             curUser = request.user.username
             account = SocialAccount.objects.get(uid=curUser)

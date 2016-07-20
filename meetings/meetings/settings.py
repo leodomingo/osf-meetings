@@ -178,3 +178,4 @@ SITE_ID = 1
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'http://localhost:4200'
