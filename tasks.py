@@ -9,7 +9,8 @@ API = os.path.join(HERE, 'meetings')
 def test_all(ctx):
     flake(ctx)
     # TODO: add more as they become available
-    ember_test(ctx)
+    # ember_test(ctx)
+    jshint(ctx)
 
 
 # PYTHON
@@ -45,6 +46,12 @@ def ember_server(ctx, environment='local'):
     ctx.run('ember server --environment={}'.format(environment),
             echo=True, pty=True)
 
+
 @task
 def ember_test(ctx):
     ctx.run('ember test', echo=True, pty=True)
+
+
+@task
+def jshint(ctx):
+    ctx.run('jshint {}/app'.format(HERE), echo=True)

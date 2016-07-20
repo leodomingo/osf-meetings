@@ -22,5 +22,4 @@ install:
   - travis_retry pip install flake8==2.4.0 --force-reinstall --upgrade
 
 script:
-#  - invoke test_all
-  - invoke flake
+  - invoke test_all
