@@ -3,6 +3,7 @@ from rest_framework.reverse import reverse
 
 from conferences.models import Conference
 
+
 class ConferenceSerializer(serializers.ModelSerializer):
     links = serializers.SerializerMethodField()
 

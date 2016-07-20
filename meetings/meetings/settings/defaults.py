@@ -137,7 +137,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # django guardian object permissions
 # https://github.com/django-guardian/django-guardian
 AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend', # default
+    'django.contrib.auth.backends.ModelBackend',  # default
     'guardian.backends.ObjectPermissionBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 )
