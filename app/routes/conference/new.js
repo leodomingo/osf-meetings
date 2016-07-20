@@ -7,7 +7,11 @@ export default Ember.Route.extend(CheckLoginMixin, {
         return Ember.RSVP.hash({
             meta : Ember.$.ajax({
                 url : "http://localhost:8000/conferences/",
-                type : "OPTIONS"
+                type : "OPTIONS",
+                xhrFields : {
+                    withCredentials : true
+                },
+                crossDomain : true
             }),
             newConf : this.store.createRecord('conference')
         });

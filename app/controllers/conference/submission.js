@@ -3,9 +3,13 @@ import Ember from 'ember';
 //import EmberValidations from 'ember-validations';
 
 export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
+    toast : Ember.inject.service(),
     _url : null,
-    dropzoneOption : {
-        method : 'PUT'
+    resolve : null,
+    latestFileName : null,
+    dropzoneOptions : {
+        uploadMultiple : false,
+        method : 'POST'
     },
 
     actions : {
@@ -13,13 +17,15 @@ export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
             return this.get('_url');
         },
         preUpload(comp, drop, file) {
-            this.set('openModal', true);
-            this.set('latestFileName', true);
-            var promise = new Ember.RSVP.Promise(resolve => {
+            return new Ember.RSVP.Promise(resolve => {
                 this.set('resolve', resolve);
             });
-            return promise;
-        }
+        },
+        success(ignore, dropzone, file, response) {
+        },
+        error(ignore, err) {
+            console.log(err);
+        },
     }
 //    displayErrors: false,
 //    tagError: false,
@@ -64,5 +70,4 @@ export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
 //            }
 //        }
 //    }
-//    not being logged = http://localhost:8000/accounts/login/
 });
