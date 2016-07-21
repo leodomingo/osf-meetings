@@ -11,10 +11,11 @@
                 <div class="form-group row">
                     <div class="col-md-6" style="height: 100%;">
                         <div class="submission-header"> Upload File(s):
-                            {{dropzone-widget preUpload=(action 'preUpload')
+                            <!-- {{dropzone-widget preUpload=(action 'preUpload')
                                 success=(action 'success') error=(action 'error')
                                 buildUrl=(action 'buildUrl')
-                                options=dropzoneOptions}}
+                                options=dropzoneOptions}} -->
+                                {{file-upload url=url}}
                         </div>
                     </div>
                 </div>

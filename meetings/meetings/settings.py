@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'conferences',
     'submissions',
     'approvals',
+    'files',
     'autofixture',
     'oauth2_provider',
     'osf_oauth2_adapter',

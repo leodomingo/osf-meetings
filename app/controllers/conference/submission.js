@@ -9,7 +9,7 @@ export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
     latestFileName : null,
     dropzoneOptions : {
         uploadMultiple : false,
-        method : 'POST'
+        method : 'PUT'
     },
 
     actions : {
