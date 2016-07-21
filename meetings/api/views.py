@@ -25,6 +25,7 @@ class viewCurrentUser(APIView):
     access_token_url = base_url.format('token')
     authorize_url = base_url.format('authorize')
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
+
     def get(self, request, **kwargs):
         if request.user.is_authenticated():
             curUser = request.user.username
