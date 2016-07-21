@@ -10,6 +10,7 @@ from rest_framework import status
 
 
 class checkLoggedIn(APIView):
+
     def get(self, request, format=None):
         if request.user.is_authenticated():
             return Response('true')
@@ -18,6 +19,7 @@ class checkLoggedIn(APIView):
 
 
 class UserViewSet(viewsets.ModelViewSet):
+
     """
     API endpoint that allows users to be viewed or edited.
     """

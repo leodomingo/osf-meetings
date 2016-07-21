@@ -12,7 +12,8 @@ router.register(r'users', apiViews.UserViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^conferences/', include('conferences.urls', namespace='conferences')),
+    url(r'^conferences/',
+        include('conferences.urls', namespace='conferences')),
     url(r'^checklogin/', apiViews.checkLoggedIn.as_view(), name='checklogin'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),
