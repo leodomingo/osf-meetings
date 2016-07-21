@@ -12,7 +12,7 @@ export default Ember.Route.extend({
         this.set('results', true);
         this.controllerFor('index').set('results', this.results);
           let meta = result.get('meta');
-          if(meta.pagination.count == 0)
+          if(meta.pagination.count === 0)
           {
             this.set('results', false);
             this.controllerFor('index').set('results', this.results);

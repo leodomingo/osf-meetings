@@ -19,8 +19,8 @@ export default Ember.Route.extend({
 				this.set('results', true);
   				let meta = result.get('meta');
   				this.set('pages', meta.pagination.pages);
-  				this.set('page', meta.pagination.page)
-  				if(meta.pagination.count == 0)
+  				this.set('page', meta.pagination.page);
+  				if(meta.pagination.count === 0)
   				{
   					this.set('results', false);
   				}
@@ -37,11 +37,11 @@ export default Ember.Route.extend({
 		console.log('Pages set to: ' +  pages);
 		let push = this.controllerFor('search');
 		push.set('buttonArray', null);
-		if (pages == 1)
+		if (pages === 1)
 		{
 			push.set('onePage', true);
 		}
-		else{ push.set('onePage', false)}
+		else{ push.set('onePage', false);}
 		this._super(controller, model);
 		push.set('results', this.get('results'));
 
@@ -60,15 +60,15 @@ export default Ember.Route.extend({
 		}
 		else if((page <=3) && (pages > 5))
 		{
-			push.set('buttonArray', [ 2, 3, 4, 5,6])
+			push.set('buttonArray', [ 2, 3, 4, 5,6]);
 		}
 		else if((page > 3) && (page < (pages - 2)))
 		{
-			push.set('buttonArray', [page - 2, page -1, page, page + 1, page +2])
+			push.set('buttonArray', [page - 2, page -1, page, page + 1, page +2]);
 		}
 		else if(page >= (pages -2))
 		{
-			push.set('buttonArray', [pages-5,pages -4, pages -3, pages -2, pages -1])
+			push.set('buttonArray', [pages-5,pages -4, pages -3, pages -2, pages -1]);
 		}
 	}
 });

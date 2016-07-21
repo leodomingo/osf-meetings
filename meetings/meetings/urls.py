@@ -1,6 +1,5 @@
 from django.conf.urls import url, include
 from api import views as apiViews
-from rest_framework.urlpatterns import format_suffix_patterns
 from django.contrib import admin
 from rest_framework import routers
 

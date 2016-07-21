@@ -1,7 +1,7 @@
 ---
-language: node_js
+language: python
 node_js:
-  - "4"
+  - "2.7"
 
 sudo: false
 
@@ -13,10 +13,14 @@ before_install:
   - npm config set spin false
   - npm install -g bower
   - npm install phantomjs-prebuilt
+  - npm install jshint
 
 install:
-  - npm install
-  - bower install
+#  - npm install
+#  - bower install
+  - travis_retry pip install --upgrade pip
+  - travis_retry pip install invoke==0.13.0
+  - travis_retry pip install flake8==2.4.0 --force-reinstall --upgrade
 
 script:
-  - npm test
+  - invoke test_all

@@ -5,7 +5,6 @@ export default Ember.Controller.extend({
 	underFive: false,
 	onePage: false,
 	buttonArray: [],
-	query: null,
 	results: null,
 	store: Ember.inject.service('store'),
 	queryParams: ['q', 'p'],
