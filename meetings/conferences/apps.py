@@ -7,4 +7,4 @@ class ConferenceAppConfig(AppConfig):
     name = 'conferences'
 
     def ready(self):
-        import conferences.signals
+        import conferences.signals #noqa
