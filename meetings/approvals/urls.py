@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from approvals import views
 
 approval_list = views.ApprovalViewSet.as_view({
