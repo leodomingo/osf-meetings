@@ -2,6 +2,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django_countries.fields import CountryField
+from django.contrib.auth.models import User
 
 
 class Conference(models.Model):
@@ -19,6 +20,10 @@ class Conference(models.Model):
     submission_end = models.DateTimeField(blank=True, null=True)
     logo = models.URLField(blank=True)
     description = models.TextField(blank=True, max_length=500)
+    admin = models.ForeignKey(User, blank=True, null=True)
 
     class Meta:
         ordering = ('created',)
+        permissions = (
+            ('view_conference', 'Can view conference'),
+        )

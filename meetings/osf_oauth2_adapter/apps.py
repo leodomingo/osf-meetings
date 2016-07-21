@@ -14,4 +14,4 @@ class OsfOauth2AdapterConfig(AppConfig):
         'OSF_ACCOUNTS_URL', 'https://staging-accounts.osf.io'
     ).rstrip('/') + '/'
     default_scopes = ['osf.full_write', ]
-    humans_group_name = 'OSF_USERS'
+    osf_users_group = 'OSF_USERS'

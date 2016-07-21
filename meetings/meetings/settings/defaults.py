@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'rest_framework_json_api',
     'oauth2_provider',
     'api',
+    'approvals',
     'conferences',
     'submissions',
     'autofixture',
@@ -175,3 +176,6 @@ SITE_ID = 1
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
+
+CLIENT_ID = ''
+CLIENT_SECRET = ''
