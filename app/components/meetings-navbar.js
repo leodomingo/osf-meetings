@@ -37,6 +37,7 @@ export default Ember.Component.extend({
     // TODO: Make these parameters configurable from... somewhere. (currently set by OSF settings module)
     allowLogin: true,
     enableInstitutions: true,
+
     actions: 
     {
         filter: function() 

@@ -2,8 +2,6 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 import os
 
-
-
 class ApiConfig(AppConfig):
     name = 'api'
 
