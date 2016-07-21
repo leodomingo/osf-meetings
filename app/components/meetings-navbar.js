@@ -8,22 +8,12 @@ export default Ember.Component.extend({
     routing: Ember.inject.service('-routing'),
     host: 'https://staging.osf.io/',
     authenticated: false,
-    session: Ember.inject.service(),
-    currentUser: null,
-    gravatarUrl: null,
-    fullName: null,
     frontPage: null,
     user: null,
-    showSearch: false,
-    didInsertElement: function() 
-    {
-        console.log("Did Insert Element");
-    },
     init: function(){   
         this._super(...arguments);
         var self = this;
         var currentRoute = this.get('routing').get('currentRouteName');
-        console.log("Current Path is", currentRoute);
         if (currentRoute === 'index'){
             self.set('frontPage', true);
         }
