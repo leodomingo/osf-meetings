@@ -49,7 +49,7 @@ def add_permissions_on_submission_save(sender, **kwargs):
         add_approval_permissions_to_submission_contributor(
             approval, submission_contributor)
 
-       # conference_admin:
+        # conference_admin:
         perm.add_submission_permissions_to_conference_admin(
             submission, conference_admin)
         add_approval_permissions_to_conference_admin(
