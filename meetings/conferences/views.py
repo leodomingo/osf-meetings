@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from rest_framework.response import Response
 from rest_framework import filters
 from conferences.models import Conference
 from conferences.serializers import ConferenceSerializer

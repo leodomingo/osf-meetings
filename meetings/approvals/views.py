@@ -1,10 +1,10 @@
-from django.shortcuts import render
-from rest_framework import viewsets, filters, permissions
+from rest_framework import viewsets, filters
 from approvals.models import Approval
 from approvals.serializers import ApprovalSerializer
 from approvals.permissions import ApprovalPermissions
 
 # Create your views here.
+
 
 class ApprovalViewSet(viewsets.ModelViewSet):
     resource_name = 'approvals'

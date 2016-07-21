@@ -3,6 +3,7 @@ from rest_framework import viewsets
 
 from submissions.serializers import SubmissionSerializer
 from submissions.models import Submission
+from approvals.models import Approval
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 

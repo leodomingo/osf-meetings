@@ -1,9 +1,6 @@
-from django.contrib.auth.models import Group
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 from django.dispatch import receiver
 from conferences.models import Conference
 from django.db.models.signals import post_save
-from guardian.shortcuts import assign_perm
 from conferences import permissions
 
 

@@ -3,10 +3,8 @@ from rest_framework.reverse import reverse
 from rest_framework_json_api.relations import ResourceRelatedField
 
 from submissions.models import Submission
-from conferences.models import Conference
 from approvals.models import Approval
 from django.contrib.auth.models import User
-from api.serializers import UserSerializer
 
 
 class SubmissionSerializer(ser.ModelSerializer):

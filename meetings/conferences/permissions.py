@@ -26,7 +26,7 @@ class ConferencePermissions(permissions.DjangoObjectPermissions):
         # OVERWRITING THIS METHOD FROM DRF
         #
         # This method gets called on list view and normally fails due to
-        # the commented out line below.
+        # the commented out line in the return statement.
         #
         # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
         # to be able to see
@@ -50,7 +50,7 @@ class ConferencePermissions(permissions.DjangoObjectPermissions):
             'does not set `.queryset` or have a `.get_queryset()` method.'
         )
 
-        perms = self.get_required_permissions(request.method, queryset.model)
+        # perms = self.get_required_permissions(request.method, queryset.model)
 
         return (
             request.user and
