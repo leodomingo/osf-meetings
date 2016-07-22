@@ -1,12 +1,10 @@
 import Ember from 'ember';
 
-const {
-  getOwner
-} = Ember;
+import config from '../config/environment';
 
 export default Ember.Component.extend({
     routing: Ember.inject.service('-routing'),
-    host: 'https://staging.osf.io/',
+    host: config.osfUrl,
     authenticated: false,
     frontPage: null,
     user: null,
@@ -21,7 +19,7 @@ export default Ember.Component.extend({
             self.set('frontPage', false);
         }
         Ember.$.ajax({
-            url: "http://localhost:8000/current/",
+            url: config.currentUser,
             dataType: 'json',
             contentType: 'text/plain',
             xhrFields: {
@@ -48,7 +46,6 @@ export default Ember.Component.extend({
 		},
 		search: function() 
 		{
-            console.log('test');
 			this.sendAction('search', this.get("searchQuery"));
 		},
         logout: function() 

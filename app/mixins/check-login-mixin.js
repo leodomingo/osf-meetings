@@ -6,7 +6,7 @@ export default Ember.Mixin.create({
 	beforeModel: function() {
 		var self = this;
 		Ember.$.ajax({
-			url: config.meetingsUrl + "/checklogin",
+			url: config.currentUser,
 			dataType: 'json',
 			contentType: 'text/plain',
 			xhrFields: {
@@ -17,5 +17,13 @@ export default Ember.Mixin.create({
                 self.transitionTo('login');
             }
 		});
+	},
+	actions:
+	{
+		logout: function() 
+		 {
+		 	this.transitionToRoute('logout');
+		 }
 	}
+
 });
