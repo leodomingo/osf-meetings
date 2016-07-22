@@ -17,5 +17,4 @@ requests-oauth2==0.2.0
 requests-oauthlib==0.6.1
 six==1.10.0
 django-autofixture==0.12.1
-
 invoke==0.13.0
