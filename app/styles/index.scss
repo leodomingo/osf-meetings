@@ -1,6 +1,11 @@
 /*
 Splash page typography settings
 */
+html, body 
+{
+  font-family: 'Open Sans', sans-serif;
+  padding-top: 0;
+}
 
 .title-row
 {
@@ -41,28 +46,32 @@ Splash page typography settings
 
 .conference-view-outer-container
 {
+<<<<<<< HEAD
   margin-top: 50px;
+=======
+  margin-top: 60px;
+>>>>>>> a3b7aa1657a3ffe5c8eb8eaaf74cc3fc33a97a7c
 }
 .conference-view-inner-container
 {
   padding-bottom: 80px;
 }
-.navbar-text
+.meetings-navbar-text
 {
   color: white;
   vertical-align: middle;
 }
-.navbar-background
+.meetings-navbar-background
 {
   position: fixed;
+  width: 100%;
   background-color: transparent;
   background-image: linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,0.95));
   border: none;
+  z-index: 500;
 }
 .tile-view
 {
-  margin-left: 85px;
-  padding-right: 34px;
   padding-bottom: 80px;
   padding-top: 15px;
   display: inline-block;
@@ -106,7 +115,6 @@ Splash page typography settings
 }
 .masonry-grid
 {
-  margin: 0 auto;
 }
 table 
 {
@@ -118,10 +126,6 @@ td
 {
   padding-top: .5em;
   padding-bottom: .5em;
-}
-.table-view
-{
-  width: 100%;
 }
 .table-head .col-md-4 h4
 {

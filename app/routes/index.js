@@ -15,35 +15,12 @@ export default Ember.Route.extend({
           {
             this.set('results', false);
             this.controllerFor('index').set('results', this.results);
-<<<<<<< Updated upstream
           }
           return result;
     });
     //console.log(foundConferences.get('length'));
     return foundConferences;
   },
-  deactivate: function(){
-    Ember.$('body').removeClass('hide-scroll');
-    Ember.$('html').css({"overflow-y": 'scroll'});
-  }
-});
-=======
-            let meta = result.get('meta');
-            if (meta.pagination.count === 0) {
-                this.set('results', false);
-                this.controllerFor('index').set('results', this.results);
-            }
-            console.log(foundConferences.length());
-            return result;
-        });
-        return foundConferences;
-    },
-    deactivate: function() {
-        Ember.$('body').removeClass('hide-scroll');
-        Ember.$('html').css({
-            "overflow-y": 'scroll'
-        });
-    },
     actions: {
         create() {
             this.transitionTo('conference.new').then(function(newRoute) {
@@ -86,4 +63,3 @@ export default Ember.Route.extend({
         }
     }
 });
->>>>>>> Stashed changes

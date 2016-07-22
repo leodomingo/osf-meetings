@@ -17,5 +17,13 @@ export default Ember.Mixin.create({
                 self.transitionTo('login');
             }
 		});
+	},
+	actions:
+	{
+		logout: function() 
+		 {
+		 	this.transitionToRoute('logout');
+		 }
 	}
+
 });

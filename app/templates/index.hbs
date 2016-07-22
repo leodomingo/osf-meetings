@@ -1,5 +1,5 @@
 {{#if this.visited}}
-    {{auto-scroll}}
+{{auto-scroll}}
 {{/if}}
 <!--div id="indexTop" class="container-fluid big osf-standard-background">r
 <a href="https://osf.io"><img class="logo" src="https://osf.io/static/img/cos-white2.png"> </a>
@@ -42,17 +42,23 @@
                 </div>
               {{/link-to}}
                   {{!--meeting-masonry title=conf.title
+=======
+        {{#if this.results}}
+                  {{#each model as |conf|}}
+                  {{#link-to "conference.index"  conf.id }}
+                  {{meeting-masonry title=conf.title
+>>>>>>> a3b7aa1657a3ffe5c8eb8eaaf74cc3fc33a97a7c
                   description=conf.description logo=conf.logo
                   location=(location-display
                   conf.city conf.state conf.country)
                   date=(date-display conf.start)
+<<<<<<< HEAD
                   submissions=conf.submissionCount--}}
             {{/each}}
         {{else}}
         <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
                 {{/if}}     
-        </div>
-                 
+        </div>              
       </div> <!-- end tile view -->
     </div> <!-- end conference-view-inner-container-->
   </div><!-- end conference-view-outer-container-->
@@ -194,6 +200,42 @@
       {{outlet}}
     </div> <!-- end container fluid -->
 {{yield}}
-
-
-
+            </div>
+            <div class="col-md-4">
+              <h4>Location</h4>
+            </div>
+            <div class="col-md-4">
+              <h4>Description</h4>
+            </div>
+          </div>
+          {{#each model as |conference|}}
+          {{#link-to "conference.index" conference.id tagName="div" class="row"}}
+          <div class="col-md-4">
+            <h5><strong><em>{{conference.title}} {{@key}}</em></strong></h5>
+          </div>
+          <div class="col-md-4">
+            <h5>{{conference.city}}, {{conference.state}}</h5>
+          </div>
+          <div class="col-md-4">
+            <h5>{{truncate conference.description limit=200}}</h5>
+          </div>
+          {{/link-to}}
+          {{/each}}
+        </div>
+        {{else}}
+        <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
+        {{/if}}
+      </div> <!-- end conference-view-inner-container -->
+    </div> <!-- end table-view -->
+  </div> <!-- conference-view-outer-container -->
+  {{/if}}
+  <div class="row" id="indexBottom">
+    <div class="col-md-10 col-md-offset-1 conference-view-inner-container">
+      <div class="col-md-10 col-md-offset-1 tile-view fade-background more-conferences-button">
+        <button type="submit" class="btn btn-default" {{action "search"}}>See More Conferences</button>
+      </div> <!-- end tile view -->
+    </div> <!-- end conference-view-inner-container-->
+  </div><!-- end conference-view-outer-container-->
+  {{outlet}}
+</div> <!-- end container fluid -->
+{{yield}}
