@@ -7,7 +7,7 @@ import uuid
 # Create your models here.
 
 class File(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    osf_id = models.UUIDField(default='')
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    osf_id = models.UUIDField(editable=True)
     owner = models.ForeignKey(User)
-    osf_file_link = models.URLField()
+    osf_path = models.URLField(blank=True)

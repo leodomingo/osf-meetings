@@ -40,7 +40,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
         serializer = SubmissionSerializer(data=request.data,
-                                          context={'request': request})
+                context={'request': request})
         new_approval = Approval.objects.create()
         contributor = request.user
         current_user = request.user.username
@@ -71,7 +71,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 )
 
                 obj = response.json()
-                serializer.save(contributor=contributor, approval=new_approval,
+                submission = serializer.save(contributor=contributor, approval=new_approval,
                         node_id=obj['data']['id'])
 
                 return Response(serializer.data)
