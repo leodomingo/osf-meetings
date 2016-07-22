@@ -13,6 +13,7 @@ import requests
 
 class checkLoggedIn(APIView):
 
+
     def get(self, request, format=None):
         if request.user.is_authenticated():
             return Response('true')
