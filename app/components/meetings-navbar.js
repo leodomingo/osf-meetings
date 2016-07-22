@@ -1,54 +1,54 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
-import {
-    getAuthUrl
-} from 'ember-osf/utils/auth';
-
+import config from '../config/environment';
 
 export default Ember.Component.extend({
-    session: Ember.inject.service(),
-    currentUser: Ember.inject.service(),
-    onSearchPage: false,
-    gravatarUrl: Ember.computed.alias('user.links.profile_image'),
-    fullName: null,
-    host: config.OSF.url,
-    authUrl: "http://localhost:8000/checklogin",
+    routing: Ember.inject.service('-routing'),
+    host: config.osfUrl,
+    authenticated: false,
+    frontPage: null,
     user: null,
-    showSearch: false,
-    _loadCurrentUser() {
-        console.log("LoadCurrentUser");
-        this.get('currentUser').load().then((user) => this.set('user', user));
-        console.log(this.get('user'));
-    },
     init: function() {
         this._super(...arguments);
-        console.log("INIT");
-        console.log(this.get('authUrl'));
-        this._loadCurrentUser();
-    },
-    didUpdateAttrs: function() 
-    {
-        this._super(...arguments);
-        console.log("INIT");
-        if (this.get('session.isAuthenticated')) {
-            this._loadCurrentUser();
-        }
-    },
-    // TODO: Make these parameters configurable from... somewhere. (currently set by OSF settings module)
-    allowLogin: true,
-    enableInstitutions: true,
+        var self = this;
+        var currentRoute = this.get('routing').get('currentRouteName');
 
-    actions: 
-    {
-        filter: function() 
-        {
-            this._super(...arguments);
-            this._loadCurrentUser();
+        if (currentRoute === 'index'){
+            self.set('frontPage', true);
+        }
+        else {
+            self.set('frontPage', false);
+        }
+
+        Ember.$.ajax({
+            url: config.currentUser,
+            dataType: 'json',
+            contentType: 'text/plain',
+            xhrFields: {
+                withCredentials: true,
+            }
+        }).then(function(loggedIn) {
+            if (!(loggedIn.data.errors) && (loggedIn.data !== 'false')) {
+                self.set('authenticated', true);
+                self.set('user', loggedIn.data.data);
+            }
+            else {
+                self.set('authenticated', false);
+                self.set('user', null);
+            }
+        });
+    },
+    actions: {
+        filter: function() {
             this.sendAction('filter', this.get("searchQuery"));
         },
-        search: function() 
-        {
+        search: function() {
             this.sendAction('search', this.get("searchQuery"));
+        },
+        logout: function() {
+            this.sendAction('logout');
+        },
+        login: function() {
+            this.sendAction('login');
         }
     }
 });

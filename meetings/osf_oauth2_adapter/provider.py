@@ -4,6 +4,7 @@ from allauth.socialaccount.providers.base import ProviderAccount
 from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 
 class OSFAccount(ProviderAccount):
+
     def to_str(self):
         # default ... reserved word?
         dflt = super(OSFAccount, self).to_str()

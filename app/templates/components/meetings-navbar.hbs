@@ -1,49 +1,63 @@
 <nav id="create" class="navbar navbar-default meetings-navbar-background">
     <div class="container-fluid" id="browse">
-        <form class="navbar-form navbar-left" role="search">
+        <div class="navbar-header">
             <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
-            <p class="navbar-brand">Meetings</p>
-             <div class="form-group">
+            <a class="navbar-brand" href="/">Meetings</a>
+        </div>
+        <form class="navbar-form navbar-left form-group">
                 {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" action="filter" on="key-up"}}
-            </div>
             <button type="submit" class="btn btn-default" {{action "search"}}>
             Search
             </button>
         </form>
-        {{# if session.isAuthenticated }}
+        {{# if authenticated }}
             {{!-- TODO: Replace display name functionality if possible- for now truncate via CSS at end of label --}}
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle nav-user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
-                    <span class="osf-gravatar">
-                        <img src={{gravatarUrl}} alt="User gravatar">
-                    </span> {{user.fullName}}
-                    <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu" role="menu">
-                    <li>
-                        <a href="{{host}}profile/"><i class="fa fa-user fa-lg p-r-xs"></i> My Profile</a>
-                    </li>
-                    <li>
-                        <a href="{{host}}support/" ><i class="fa fa-life-ring fa-lg p-r-xs"></i> Support</a>
-                    </li>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    {{#if frontPage}}
+                        {{else}}
+                        <form class="navbar-form navbar-left form-group" action="/">
+                            <button type="submit" class="btn navbar-btn btn-warning">
+                            Back to Browse
+                            </button>
+                        </form>
+                        {{/if}}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle form-group" data-toggle="dropdown" role="button" aria-expanded="false">
+                            <span class="osf-gravatar">
+                                <img src={{user.links.profile_image}} alt="User gravatar">
+                            </span> {{user.attributes.full_name}}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="{{user.links.html}}"><i class="fa fa-user fa-lg p-r-xs"></i> My Profile</a>
+                            </li>
+                            <li>
+                                <a href="{{host}}support/" ><i class="fa fa-life-ring fa-lg p-r-xs"></i> Support</a>
+                            </li>
 
-                    <li>
-                        <a href="{{host}}settings/"><i class="fa fa-cog fa-lg p-r-xs"></i> Settings</a>
-                    </li>
-                    <li>
-                        <a onclick={{action 'logout'}}><i class="fa fa-sign-out fa-lg p-r-xs"></i> Log out</a>
-                    </li>
+                            <li>
+                                <a href="{{host}}settings/"><i class="fa fa-cog fa-lg p-r-xs"></i> Settings</a>
+                            </li>
+                            <li>
+                                <a onclick={{action 'logout'}}><i class="fa fa-sign-out fa-lg p-r-xs"></i> Log out</a>
+                            </li>
 
+                        </ul>
+                    </li>
                 </ul>
-            </li>
-        {{/if}}
+        </div>
+        {{else}}
         <form class="navbar-form navbar-right" role="search">
-            <button type="submit" class="btn navbar-btn btn-success" {{action "Login"}}>
+            <button type="submit" class="btn navbar-btn btn-success" {{action 'login'}}>
             Login
             </button>
-            <button type="submit" class="btn navbar-btn btn-info" {{action "Signup"}}>
+            <button type="submit" class="btn navbar-btn btn-info" {{action "login"}}>
             Signup
             </button>
         </form>
+        {{/if}}
+
     </div>
 </nav>

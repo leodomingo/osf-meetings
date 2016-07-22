@@ -3,12 +3,14 @@ from rest_framework import serializers as ser
 
 
 class UserSerializer(ser.HyperlinkedModelSerializer):
+
     class Meta:
         model = User
         fields = ('username', 'email', 'groups')
 
 
 class GroupSerializer(ser.HyperlinkedModelSerializer):
+
     class Meta:
         model = Group
         fields = ('id', 'name')
