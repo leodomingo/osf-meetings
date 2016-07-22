@@ -12,7 +12,6 @@ export default Ember.Mixin.create({
             xhrFields: {
                 withCredentials: true
             },
-            crossDomain : true
         }).then(function(loggedIn) {
             if (loggedIn.data === 'false') {
                 self.transitionTo('login');

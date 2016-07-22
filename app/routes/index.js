@@ -1,20 +1,6 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-//    model() {
-//        var conference = this.store.findAll('conference');
-//        conference.forEach(function(item) {
-//            console.log(item);
-//        });
-//
-//        return Ember.RSVP.hash({
-//            conf : conference
-//            //I need submissions per conference
-//            //submissions : this.store.findAll('submission')
-//        });
-//    }
-//    COME BACK TO THIS for pulling all conferences with length
-
   results: true,
   query: null,
   queryParams: {
@@ -34,7 +20,6 @@ export default Ember.Route.extend({
           return result;
     });
 
-    //console.log(foundConferences.get('length'));
     return foundConferences;
   },
   deactivate: function(){
