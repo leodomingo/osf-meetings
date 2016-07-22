@@ -30,7 +30,6 @@ default Ember.Route.extend({
     deactivate: function(){
         Ember.$('body').removeClass('hide-scroll');
         Ember.$('html').css({"overflow-y": 'scroll'});
-        });
     },
 
     actions: {

@@ -13,8 +13,6 @@ module.exports = function(environment) {
             }
         },
 
-        authorizationType : AUTHORIZER,
-
         'ember-simple-auth': {
             authenticationRoute: 'login',
             routeAfterAuthentication: 'index'
