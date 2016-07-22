@@ -7,7 +7,6 @@ submission_list = views.SubmissionViewSet.as_view({
 })
 submission_detail = views.SubmissionViewSet.as_view({
     'get': 'retrieve',
-    'put': 'update',
     'patch': 'partial_update',
     'delete': 'destroy'
 })

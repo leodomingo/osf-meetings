@@ -67,5 +67,7 @@
     "svg4everybody": "2.0.3",
     "wormhole": "3.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ember-osf": "CenterForOpenScience/ember-osf#develop"
+  }
 }

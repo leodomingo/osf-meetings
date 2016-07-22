@@ -4,7 +4,6 @@ from allauth.socialaccount.providers.base import ProviderAccount
 from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 
 
-
 class OSFAccount(ProviderAccount):
     def to_str(self):
         # default ... reserved word?
@@ -23,6 +22,7 @@ class OSFAccount(ProviderAccount):
             if value is not None
         )
 
+
 class OSFProvider(OAuth2Provider):
     id = 'osf'
     name = 'Open Science Framework'
@@ -31,9 +31,9 @@ class OSFProvider(OAuth2Provider):
     def extract_common_fields(self, data):
         attributes = data.get('data').get('attributes')
         return dict(
-            # we could put more fields here later
-            # the api has much more available, just not sure how much we need right now
-            username=data.get('id'),
+            # we could put more fields here later the api has much
+            # more available, just not sure how much we need right now
+            username=self.extract_uid(data),
             first_name=attributes.get('given_name'),
             last_name=attributes.get('family_name'),
         )
