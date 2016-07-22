@@ -27,7 +27,6 @@ class OSFOAuth2Adapter(OAuth2Adapter):
             'Authorization': 'Bearer {}'.format(access_token.token)
         })
 
-        ipdb.set_trace()
         return self.get_provider().sociallogin_from_response(
             request,
             extra_data.json()
