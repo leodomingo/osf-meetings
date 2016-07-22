@@ -1,4 +1,3 @@
-import DS from 'ember-data';
 import OsfAdapter from './osf-adapter';
 import Ember from 'ember';
 

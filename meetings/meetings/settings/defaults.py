@@ -174,10 +174,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 SITE_ID = 1
+
+OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
+OSF_ACCOUNT_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
+DEFAULT_SCOPES = ['osf.full_write', ]
+HUMANS_GROUP_NAME = 'OSF_USERS'
+
+LOGIN_REDIRECT_URL = 'http://localhost.4200'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'http://localhost:4200'
+
 SOCIALACCOUNT_ADAPTER = 'osf_oauth2_adapter.views.OSFOAuth2Adapter'
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
-
-CLIENT_ID = ''
-CLIENT_SECRET = ''
