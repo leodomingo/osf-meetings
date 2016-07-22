@@ -1,13 +1,101 @@
 {{#if this.visited}}
     {{auto-scroll}}
 {{/if}}
-    <div id="indexTop" class="container-fluid big osf-standard-background">
-        <a href="https://osf.io"><img class="logo" src="https://osf.io/static/img/cos-white2.png"> </a>
-        <div class="row title-row">
-            <h1>OSF for Meetings</h1>
-            <h4>A free sharing service for academic meetings and conferences</h4>
-            <h5>Broaden your impact, create an open scholar environment</h5>
-            <button {{action 'scrollit'}} type="button" value="continue" class="btn btn-success">Begin Sharing</button>
+<!--div id="indexTop" class="container-fluid big osf-standard-background">r
+<a href="https://osf.io"><img class="logo" src="https://osf.io/static/img/cos-white2.png"> </a>
+<div class="row title-row">
+<h1>OSF for Meetings</h1>
+<h4>A free sharing service for academic meetings and conferences</h4>
+<h5>Broaden your impact, create an open scholar environment</h5>
+<button {{action 'scrollit'}} type="button" value="continue" class="btn btn-success">Begin Sharing</button>
+</div>
+<img class="background" src="https://osf.io/static/img/front-page/bg-web.png">
+</div--> <!-- end container & splash page -->
+{{meetings-navbar logout='logout' login='login' search='search' filter='filter' currentRoute='currentRoute'}}
+<div class="container-fluid osf-light-background ">
+  {{#if tileview}}
+  <div class="row conference-view-outer-container" id="indexBottom">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="col-md-10 col-md-offset-1 tile-view fade-background">
+        <button class="btn btn-success navbar-btn" {{action "create"}}>
+          <span class="glyphicon glyphicon-plus"></span>
+          Create a Meeting
+        </button>
+        <button id="tileButton" class="btn btn-default navbar-btn" {{action "tileView"}}>
+          <span class="glyphicon glyphicon-th-large"></span>
+        </button>
+        <button id="listButton" class="btn btn-default navbar-btn" {{action "listView"}}>
+          <span class="glyphicon glyphicon-th-list"></span>
+        </button>
+        <div class="col-md-12">
+        {{#if this.results}}
+                      {{#each model as |conf| }}
+              {{#link-to "conference.index"  conf.id }}
+                <div class="col-md-6">
+                  <div style="background-image: linear-gradient( rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) ), url({{conf.logo}});">
+                    <h4 class="tile-title">{{conf.title}}</h4>
+                    <h6 class="tile-submission-count"> Location: {{location-display conf.city conf.state conf.country}} </h6>
+                    <h6 class="tile-submission-count"> Date: {{date-display conf.start}} </h6>
+                    <h6 class="tile-submission-count"> Submissions: {{conf.submissionCount}} </h6>
+                    <h5 class="tile-description">{{truncate description limit=200}}</h5>
+                  </div>
+                </div>
+              {{/link-to}}
+                  {{!--meeting-masonry title=conf.title
+                  description=conf.description logo=conf.logo
+                  location=(location-display
+                  conf.city conf.state conf.country)
+                  date=(date-display conf.start)
+                  submissions=conf.submissionCount--}}
+            {{/each}}
+        {{else}}
+        <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
+                {{/if}}     
+        </div>
+                 
+      </div> <!-- end tile view -->
+    </div> <!-- end conference-view-inner-container-->
+  </div><!-- end conference-view-outer-container-->
+  {{else}}
+  <div class="row conference-view-outer-container">
+    <div class="col-md-10 col-md-offset-1 ">
+      <div class="col-md-10 col-md-offset-1 fade-background table-view">
+        <button class="btn btn-success navbar-btn" {{action "create"}}>
+          <span class="glyphicon glyphicon-plus"></span>
+          Create a Meeting
+        </button>
+        <button id="tileButton" class="btn btn-default navbar-btn" {{action "tileView"}}>
+          <span class="glyphicon glyphicon-th-large"></span>
+        </button>
+        <button id="listButton" class="btn btn-default navbar-btn" {{action "listView"}}>
+          <span class="glyphicon glyphicon-th-list"></span>
+        </button>
+        {{#if this.results}}
+        <div class="col-md-12">
+          <div class="row table-head">
+            <div class="col-md-4">
+              <h4>Title</h4>
+            </div>
+            <div class="col-md-4">
+              <h4>Location</h4>
+            </div>
+            <div class="col-md-4">
+              <h4>Description</h4>
+            </div>
+          </div>
+          {{#each model as |conference|}}
+          {{#link-to "conference.index" conference.id tagName="div" class="row"}}
+          <div class="col-md-4">
+            <h5><strong><em>{{conference.title}} {{@key}}</em></strong></h5>
+          </div>
+          <div class="col-md-4">
+            <h5>{{conference.city}}, {{conference.state}}</h5>
+          </div>
+          <div class="col-md-4">
+            <h5>{{truncate conference.description limit=200}}</h5>
+          </div>
+          {{/link-to}}
+          {{/each}}
         </div>
         <img class="background" src="https://osf.io/static/img/front-page/bg-web.png">
     </div> <!-- end container & splash page -->

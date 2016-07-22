@@ -15,6 +15,7 @@ export default Ember.Route.extend({
           {
             this.set('results', false);
             this.controllerFor('index').set('results', this.results);
+<<<<<<< Updated upstream
           }
           return result;
     });
@@ -26,3 +27,63 @@ export default Ember.Route.extend({
     Ember.$('html').css({"overflow-y": 'scroll'});
   }
 });
+=======
+            let meta = result.get('meta');
+            if (meta.pagination.count === 0) {
+                this.set('results', false);
+                this.controllerFor('index').set('results', this.results);
+            }
+            console.log(foundConferences.length());
+            return result;
+        });
+        return foundConferences;
+    },
+    deactivate: function() {
+        Ember.$('body').removeClass('hide-scroll');
+        Ember.$('html').css({
+            "overflow-y": 'scroll'
+        });
+    },
+    actions: {
+        create() {
+            this.transitionTo('conference.new').then(function(newRoute) {
+                newRoute.controller.set('displayErrors', false);
+            });
+        },
+        scrollit() {
+            let shift = this.controllerFor('index');
+            shift.set('visited', true);
+            Ember.$('#indexTop').hide(2000);
+        },
+        tileView() {
+            Ember.$('#tileButton').addClass('disabled');
+            Ember.$('#listButton').removeClass('disabled');
+            let shift = this.controllerFor('index');
+            shift.set('tileview', true);
+        },
+        listView() {
+            Ember.$('#listButton').addClass('disabled');
+            Ember.$('#tileButton').removeClass('disabled');
+            let shift = this.controllerFor('index');
+            shift.set('tileview', false);
+        },
+        filter(params) {
+            let shift = this.controllerFor('index');
+            shift.set('query', params);
+            this.transitionTo('index', {
+                queryParams: {
+                    q: params
+                }
+            });
+        },
+        search(params) {
+            this.transitionTo('search', {
+                queryParams: {
+                    q: params,
+                    p: 1
+                }
+            });
+        }
+    }
+});
+>>>>>>> Stashed changes

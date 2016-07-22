@@ -65,11 +65,12 @@ Splash page typography settings
   padding-right: 34px;
   padding-bottom: 80px;
   padding-top: 15px;
+  display: inline-block;
 }
 .tile
 {
-  width: 40%;
-  margin-bottom: 20px;
+  width: 50%;
+  margin: 5px;
   text-decoration: none;
   transition: 1s ease;
 }
