@@ -11,8 +11,8 @@ from allauth.socialaccount.models import SocialAccount
 from .apps import OsfOauth2AdapterConfig
 import requests
 
-class checkLoggedIn(APIView):
 
+class checkLoggedIn(APIView):
 
     def get(self, request, format=None):
         if request.user.is_authenticated():
