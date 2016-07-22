@@ -3,11 +3,8 @@ from rest_framework.reverse import reverse
 from rest_framework_json_api.relations import ResourceRelatedField
 
 from submissions.models import Submission
-from conferences.models import Conference
 from approvals.models import Approval
 from django.contrib.auth.models import User
-from api.serializers import UserSerializer
-
 
 class SubmissionSerializer(ser.ModelSerializer):
     links = ser.SerializerMethodField()
@@ -20,20 +17,6 @@ class SubmissionSerializer(ser.ModelSerializer):
 
     class Meta:
         model = Submission
-
-#    conference = ResourceRelatedField(
-#        queryset=Conference.objects,
-#        related_link_view_name='conference:submission:list',
-#        related_link_url_kwarg='submission_id',
-#        self_link_view_name='submission-relationships'
-#    )
-
-#    def create(self, validated_data):
-#        # look up contributors by ID
-#        submission = Submission.objects.create(title=title, description=description, conference=conference, approved=False)
-#        for contributor in contributors:
-#                submission.contributors.add(contributor)
-#        return submission
 
     def get_links(self, obj):
         request = self.context.get('request')

@@ -43,6 +43,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 context={'request': request})
         new_approval = Approval.objects.create()
         contributor = request.user
+
         current_user = request.user.username
         account = SocialAccount.objects.get(uid=current_user)
         osf_token = SocialToken.objects.get(account=account)

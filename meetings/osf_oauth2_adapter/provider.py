@@ -3,9 +3,8 @@ from allauth.socialaccount import providers
 from allauth.socialaccount.providers.base import ProviderAccount
 from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 
-
-
 class OSFAccount(ProviderAccount):
+
     def to_str(self):
         # default ... reserved word?
         dflt = super(OSFAccount, self).to_str()
@@ -31,14 +30,11 @@ class OSFProvider(OAuth2Provider):
     def extract_common_fields(self, data):
         attributes = data.get('data').get('attributes')
         return dict(
-            # we could put more fields here later
-            # the api has much more available, just not sure how much we need right now
-            username=data.get('data').get('id'),
-            first_name=attributes.get('given_name', None),
-            last_name=attributes.get('family_name', None),
-            time_zone=attributes.get('timezone', None),
-            locale=attributes.get('locale', None),
-            profile_image_url=data.get('data').get('links').get('profile_image')
+            # we could put more fields here later the api has much
+            # more available, just not sure how much we need right now
+            username=self.extract_uid(data),
+            first_name=attributes.get('given_name'),
+            last_name=attributes.get('family_name'),
         )
 
     def extract_uid(self, data):

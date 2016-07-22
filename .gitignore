@@ -91,8 +91,10 @@ ENV/
 # Rope project settings
 .ropeproject
 
-00*
 meetings/db*
+
+local.py
+local.yml
 
 ## Ember
 # compiled output
@@ -112,3 +114,8 @@ npm-debug.log
 testem.log
 config/local.yml
 **/.DS_Store
+
+meetings/approvals/migrations/**
+meetings/conferences/migrations/**
+meetings/submissions/migrations/**
+meetings/api/migrations/**

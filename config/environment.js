@@ -1,7 +1,6 @@
 /* jshint node: true */
 
 module.exports = function(environment) {
-    var AUTHORIZER = process.env.AUTHORIZER || 'token';
     var ENV = {
         modulePrefix: 'osf-meetings',
         environment: environment,
@@ -13,8 +12,6 @@ module.exports = function(environment) {
                 // e.g. 'with-controller': true
             }
         },
-
-        authorizationType : AUTHORIZER,
 
         'ember-simple-auth': {
             authenticationRoute: 'login',
@@ -33,6 +30,9 @@ module.exports = function(environment) {
         // ENV.APP.LOG_TRANSITIONS = true;
         // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
         // ENV.APP.LOG_VIEW_LOOKUPS = true;
+        ENV.meetingsUrl = 'http://localhost:8000';
+        ENV.osfUrl = 'https://staging.osf.io/';
+        ENV.currentUser = 'http://localhost:8000/current/'
     }
 
     if (environment === 'test') {

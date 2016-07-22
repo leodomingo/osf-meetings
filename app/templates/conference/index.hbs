@@ -1,3 +1,4 @@
+{{meetings-navbar logout='logout' login='login' search='search'}}
 <div class="container-fluid osf-light-background">
     <div class="row conference-view-outer-container">
         <div class="col-md-12">
@@ -36,25 +37,8 @@
                                 </div>
                             </div>
 
-                            <!-- This is the basic code for a list with images -->
-                            <!--                                   <div id="table" class="row">
-                                <div class="col-md-12">
-                                {{!-- models-table data=model columns=columns useFilteringByColumns=false rowTemplate="row" --}}
-                                <table class="table  table-hover table-condensed table-bordered">
-                                <tbody>
-                                {{#each model.submissions as |item|}}
-                                    <a target="_blank" style="color: black;" href= {{link-to-osf item.id}}>
-                                    {{node-component title=item.title contributors=item.contributors description=item.description}}
-                                    </a>
-                                {{/each}}
-                                </tbody>
-                                </table>
-                                </div>
-                                </div>
-                            -->
-
                             <!-- This is the basic code for a table of submissions without images -->
-                            {{#if (has-submissions model.submissions)}}
+                            {{#if model.submissionCount}}
                                 <table class="table table-hover">
                                     <thead class="thead">
                                         <tr>

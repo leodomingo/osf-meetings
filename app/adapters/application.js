@@ -1,14 +1,15 @@
-import DS from 'ember-data';
 import OsfAdapter from './osf-adapter';
 import Ember from 'ember';
 
 export default OsfAdapter.extend({
     namespace : '',
+
     ajax: function(url, method, hash) {
         hash.crossDomain = true;
         hash.xhrFields = {withCredentials: true};
         return this._super(url, method, hash);
     },
+
     headers: Ember.computed(function() {
         var csrftoken = "";
         try {
