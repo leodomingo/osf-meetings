@@ -6,6 +6,11 @@ DEBUG = True
 CLIENT_ID = ''
 CLIENT_SECRET = ''
 
+OSF_API_URL =  ('https://staging-api.osf.io').rstrip('/') + '/'
+OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
+DEFAULT_SCOPES = ['osf.full_write', ]
+HUMANS_GROUP_NAME = 'OSF_USERS'
+
 # Database
 # POSTGRES_NAME = ''
 # POSTGRES_USER = ''

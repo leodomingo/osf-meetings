@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from '../config/environment'
 
 const {
   getOwner
@@ -6,7 +7,7 @@ const {
 
 export default Ember.Component.extend({
     routing: Ember.inject.service('-routing'),
-    host: 'https://staging.osf.io/',
+    host: config.osfUrl,
     authenticated: false,
     frontPage: null,
     user: null,
@@ -21,7 +22,7 @@ export default Ember.Component.extend({
             self.set('frontPage', false);
         }
         Ember.$.ajax({
-            url: "http://localhost:8000/current/",
+            url: config.currentUser,
             dataType: 'json',
             contentType: 'text/plain',
             xhrFields: {
