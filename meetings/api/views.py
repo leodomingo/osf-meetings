@@ -2,14 +2,18 @@ from django.contrib.auth.models import User
 from api.serializers import UserSerializer
 from rest_framework import viewsets
 from api.serializers import AuthenticationSerializer
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
 from rest_framework import status
+from allauth.socialaccount.models import SocialToken
+from allauth.socialaccount.models import SocialAccount
+from .apps import OsfOauth2AdapterConfig
+import requests
 
 
 class checkLoggedIn(APIView):
+
     def get(self, request, format=None):
         if request.user.is_authenticated():
             return Response('true')
@@ -17,7 +21,28 @@ class checkLoggedIn(APIView):
             return Response('false')
 
 
+class viewCurrentUser(APIView):
+    base_url = '{}oauth2/{}'.format(
+        OsfOauth2AdapterConfig.osf_accounts_url, '{}')
+    access_token_url = base_url.format('token')
+    authorize_url = base_url.format('authorize')
+    profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
+
+    def get(self, request, **kwargs):
+        if request.user.is_authenticated():
+            curUser = request.user.username
+            account = SocialAccount.objects.get(uid=curUser)
+            token = SocialToken.objects.get(account=account)
+            extra_data = requests.get(self.profile_url, headers={
+                'Authorization': 'Bearer {}'.format(token)
+            })
+            return Response(extra_data.json())
+        else:
+            return Response('false')
+
+
 class UserViewSet(viewsets.ModelViewSet):
+
     """
     API endpoint that allows users to be viewed or edited.
     """

@@ -1,20 +1,5 @@
+{{meetings-navbar logout='logout' login='login' search='search'}}
     <div class="container-fluid osf-light-background">
-        <nav id="create" class="navbar navbar-default navbar-background navbar-fixed-top">
-            <div class="container-fluid" id="browse">
-                <form class="navbar-form navbar-left" role="search">
-                    <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
-                    <p class="navbar-brand">Search</p>
-                    <div class="form-group">
-                        {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" id='searchQuery' action="search"}}
-                    </div>
-                    <button type="submit" class="btn btn-default" {{action "search"}}>Search</button>
-                    <button class="btn btn-outline-default" {{action "forward"}}>More Results</button>
-                </form>
-                <h5 class="navbar-text">
-                Page: <strong><em>{{model.meta.pagination.page}}</em></strong> of {{model.meta.pagination.pages}}
-                </h5>
-            </div>
-        </nav>
         {{#if this.onePage}}
         {{else if this.underFive}}
         <div class="row ">

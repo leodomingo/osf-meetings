@@ -15,6 +15,7 @@ Router.map(function() {
   this.route('signup');
   this.route('search');
 
+  this.route('logout');
 });
 
 export default Router;
