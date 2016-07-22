@@ -8,7 +8,7 @@ def update_permissions_on_approval_save(sender, **kwargs):
     approval = kwargs["instance"]
     # cause submission signal to fire, updating permissions
     try:
-    	approval.submission.save()
-    except Submission.DoesNotExist, e:
-    	# this needs to be logged somewhere
-    	print('submission signal not triggered from approval signal') 
+        approval.submission.save()
+    except Submission.DoesNotExist:
+        # this needs to be logged somewhere
+        print('submission signal not triggered from approval signal')

@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import config from '../config/environment';
 
 export default Ember.Route.extend({
     activate: function() {
-        window.location = "http://localhost:8000/accounts/login/";
+        window.location = config.meetingsUrl + "/accounts/login/";
     }
 });
 

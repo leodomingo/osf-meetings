@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 import os
 
+
 class OsfOauth2AdapterConfig(AppConfig):
     name = 'osf_oauth2_adapter'
     # staging by default so people don't have to run OSF to use this.

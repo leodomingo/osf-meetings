@@ -1,23 +1,25 @@
 import requests
-from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
-
-from allauth.account.adapter import DefaultAccountAdapter
 
 from allauth.utils import valid_email_or_none
-
 from allauth.account.utils import user_email, user_username, user_field
 
 from .apps import OsfOauth2AdapterConfig
-from allauth.socialaccount.providers.oauth2.views import OAuth2Adapter, OAuth2LoginView, OAuth2CallbackView
+
+from allauth.socialaccount.providers.oauth2.views import (
+    OAuth2Adapter,
+    OAuth2LoginView,
+    OAuth2CallbackView,
+)
 
 from osf_oauth2_adapter.provider import OSFProvider
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
-from django.contrib.auth.models import User, Group
+from django.contrib.auth.models import Group
 
-class OSFOAuth2Adapter(OAuth2Adapter, DefaultSocialAccountAdapter):
+class OSFOAuth2Adapter(OAuth2Adapter):
     provider_id = OSFProvider.id
-    base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
+    base_url = '{}oauth2/{}'.format(
+        OsfOauth2AdapterConfig.osf_accounts_url, '{}'
+    )
     access_token_url = base_url.format('token')
     authorize_url = base_url.format('authorize')
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
@@ -60,11 +62,11 @@ class OSFOAuth2Adapter(OAuth2Adapter, DefaultSocialAccountAdapter):
         Saves a newly signed up social login. In case of auto-signup,
         the signup form is not available.
         """
-        u = super(OSFOAuth2Adapter, self).save_user(request,sociallogin,form)
+        _user = super(OSFOAuth2Adapter, self).save_user(request,sociallogin,form)
         osf_users_group = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
-        u.groups.add(osf_users_group)
-        u.save()
-        return u
+        _user.groups.add(osf_users_group)
+        _user.save()
+        return _user
 
     def complete_login(self, request, app, access_token, **kwargs):
         extra_data = requests.get(self.profile_url, headers={

@@ -25,7 +25,7 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
         # OVERWRITING THIS METHOD FROM DRF
         #
         # This method gets called on list view and normally fails due to
-        # the commented out line below.
+        # the commented out line in the return statement below.
         #
         # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
         # to be able to see
@@ -36,6 +36,10 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
         # Workaround to ensure DjangoModelPermissions are not applied
         # to the root view when using DefaultRouter.
 
+        #
+        # -----------------------------------------------------------
+        # Workaround to ensure DjangoModelPermissions are not applied
+        # to the root view when using DefaultRouter.
         if getattr(view, '_ignore_model_permissions', False):
             return True
 
@@ -49,8 +53,6 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
             'does not set `.queryset` or have a `.get_queryset()` method.'
         )
 
-        perms = self.get_required_permissions(request.method, queryset.model)
-
         return (
             request.user and
             (request.user.is_authenticated()
@@ -58,58 +60,38 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
             # and request.user.has_perms(perms)
         )
 
-
 def add_approved_submission_permissions_to_public(submission):
     public = User.objects.get(username="AnonymousUser")
     assign_perm("submissions.view_submission", public, submission)
-
 
 def remove_approved_submission_permissions_from_public(submission):
     public = User.objects.get(username="AnonymousUser")
     remove_perm("submissions.view_submission", public, submission)
 
-
 def add_approved_submission_permissions_to_current_osf_user(submission):
-    current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
     assign_perm("submissions.view_submission", current_osf_users, submission)
 
 def remove_approved_submission_permissions_from_current_osf_user(submission):
-    current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
     remove_perm("submissions.view_submission", current_osf_users, submission)
 
 def add_submission_permissions_to_submission_contributor(submission, submission_contributor):
-    assign_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.view_submission", submission_contributor, submission)
-
+    assign_perm("submissions.change_submission", submission_contributor, submission)
+    assign_perm("submissions.delete_submission", submission_contributor, submission)
+    assign_perm("submissions.view_submission", submission_contributor, submission)
 
 def remove_submission_permissions_from_submission_contributor(submission, submission_contributor):
-    remove_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.view_submission", submission_contributor, submission)
-
+    remove_perm("submissions.change_submission", submission_contributor, submission)
+    remove_perm("submissions.delete_submission", submission_contributor, submission)
+    remove_perm("submissions.view_submission", submission_contributor, submission)
 
 def add_submission_permissions_to_conference_admin(submission, submission_contributor):
-    assign_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.view_submission", submission_contributor, submission)
-
+    assign_perm("submissions.change_submission", submission_contributor, submission)
+    assign_perm("submissions.delete_submission", submission_contributor, submission)
+    assign_perm("submissions.view_submission", submission_contributor, submission)
 
 def remove_submission_permissions_from_conference_admin(submission, submission_contributor):
-    remove_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.view_submission", submission_contributor, submission)
+    remove_perm("submissions.change_submission", submission_contributor, submission)
+    remove_perm("submissions.delete_submission", submission_contributor, submission)
+    remove_perm("submissions.view_submission", submission_contributor, submission)

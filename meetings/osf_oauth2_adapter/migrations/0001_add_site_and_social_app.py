@@ -8,9 +8,16 @@ from allauth.socialaccount.models import SocialApp
 from django.contrib.sites.models import Site
 
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+<<<<<<< HEAD
 
 CLIENT_ID = "c8afa24def0c47b6a261f6e431891d44"
 CLIENT_SECRET = "9px3QS1DNcUNcnQEnW1RgnCutVoZcTDnFafnCIwO"
+=======
+from django.conf import settings
+
+CLIENT_ID = settings.CLIENT_ID
+CLIENT_SECRET = settings.CLIENT_SECRET
+>>>>>>> develop
 
 def make_social_app(apps, schema_editor):
 	mysite = Site.objects.create(domain="osf.io", name="OSF")
