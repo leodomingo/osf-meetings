@@ -1,9 +1,5 @@
 import Ember from 'ember';
-import config from '../config/environment'
-
-const {
-  getOwner
-} = Ember;
+import config from '../config/environment';
 
 export default Ember.Component.extend({
     routing: Ember.inject.service('-routing'),
