@@ -1,16 +1,8 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-	didTransition: function() 
-	{
-		console.log(this.controllerFor('application').get('currentRouteName'));
-	},
 	actions: 
 	{
-		currentRoute: function()
-		{
-			console.log(this.controllerFor('application').get('currentRouteName'));
-		},
 		logout: function() 
 		{
  		this.transitionTo('logout');

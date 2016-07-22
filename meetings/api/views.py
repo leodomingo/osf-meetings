@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from api.serializers import UserSerializer
 from rest_framework import viewsets
 from api.serializers import AuthenticationSerializer
-
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
@@ -10,7 +9,7 @@ from rest_framework import status
 from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 from .apps import OsfOauth2AdapterConfig
-
+import requests
 
 class checkLoggedIn(APIView):
 
@@ -29,7 +28,6 @@ class viewCurrentUser(APIView):
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
 
     def get(self, request, **kwargs):
-        print "Got Get"
         if request.user.is_authenticated():
             curUser = request.user.username
             account = SocialAccount.objects.get(uid=curUser)

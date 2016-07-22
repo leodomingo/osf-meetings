@@ -26,15 +26,12 @@ export default Ember.Route.extend({
   				}
   				return result;
 		});
-		//console.log(foundConferences.get('length'));
 		return foundConferences;
 	},
 	setupController: function(controller, model)
 	{	
 		let page = this.get('page');
-		console.log("Current page: " + page);
 		let pages = this.get('pages');
-		console.log('Pages set to: ' +  pages);
 		let push = this.controllerFor('search');
 		push.set('buttonArray', null);
 		if (pages === 1)

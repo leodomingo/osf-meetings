@@ -19,7 +19,6 @@ export default Ember.Route.extend({
           }
           return result;
     });
-    //console.log(foundConferences.get('length'));
     return foundConferences;
   },
   deactivate: function(){
