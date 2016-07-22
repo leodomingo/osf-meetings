@@ -1,6 +1,4 @@
 import requests
-import ipdb
-import json
 from .apps import OsfOauth2AdapterConfig
 
 from allauth.socialaccount.providers.oauth2.views import (
@@ -25,8 +23,7 @@ class OSFOAuth2Adapter(OAuth2Adapter):
             'Authorization': 'Bearer {}'.format(access_token.token)
         })
 
-        jsonData = json.loads(extra_data.content)
-        ipdb.set_trace()
+        jsonData = extra_data.json()
 
         response = self.get_provider().sociallogin_from_response(
             request,
