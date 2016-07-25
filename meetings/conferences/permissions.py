@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from guardian.shortcuts import assign_perm, remove_perm
 from django.contrib.auth.models import User, Group
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+from meetings.utils import OsfOauth2AdapterConfig
 
 class ConferencePermissions(permissions.DjangoObjectPermissions):
 
@@ -69,12 +69,12 @@ def remove_conference_permissions_from_public(conference):
 
 def add_conference_permissions_to_current_osf_user(conference):
     current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+        name=OsfOauth2AdapterConfig.humans_group_name)
     assign_perm("conferences.view_conference", current_osf_users, conference)
 
 def remove_conference_permissions_from_current_osf_user(conference):
     current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+        name=OsfOauth2AdapterConfig.humans_group_name)
     remove_perm("conferences.view_conference", current_osf_users, conference)
 
 def add_conference_permissions_to_conference_admin(conference, conference_admin):

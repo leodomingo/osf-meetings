@@ -7,11 +7,11 @@ from django.db import migrations
 from allauth.socialaccount.models import SocialApp
 from django.contrib.sites.models import Site
 
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
-from django.conf import settings
+from meetings.utils import OsfOauth2AdapterConfig
+import meetings.settings.local as local
 
-CLIENT_ID = settings.CLIENT_ID
-CLIENT_SECRET = settings.CLIENT_SECRET
+CLIENT_ID = local.CLIENT_ID
+CLIENT_SECRET = local.CLIENT_SECRET
 
 def make_social_app(apps, schema_editor):
     mysite = Site.objects.create(domain="osf.io", name="OSF")
@@ -22,7 +22,7 @@ def make_social_app(apps, schema_editor):
 
 def create_human_group(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
-    Group.objects.create(name=OsfOauth2AdapterConfig.osf_users_group)
+    Group.objects.create(name=OsfOauth2AdapterConfig.humans_group_name)
 
 class Migration(migrations.Migration):
 

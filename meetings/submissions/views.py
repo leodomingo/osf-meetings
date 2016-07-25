@@ -1,4 +1,4 @@
-import json;
+import json
 
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
@@ -18,7 +18,7 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from api.apps import OsfOauth2AdapterConfig
+from meetings.utils import OsfOauth2AdapterConfig
 
 class SubmissionViewSet(viewsets.ModelViewSet):
     resource_name = 'submissions'
@@ -66,14 +66,13 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                         data=json.dumps(node),
                         headers = {
                             'Authorization' : 'Bearer {}'.format(osf_token),
-                            'Content-Type' : 'application/json; charset=UTF-8',
-                            'Accept' : 'application/json, text/*'
+                            'Content-Type' : 'application/json; charset=UTF-8'
                         }
                 )
 
                 obj = response.json()
-                submission = serializer.save(contributor=contributor, approval=new_approval,
-                        node_id=obj['data']['id'])
+                submission = serializer.save(contributor=contributor,
+                        approval=new_approval, node_id=obj['data']['id'])
 
                 return Response(serializer.data)
         else:

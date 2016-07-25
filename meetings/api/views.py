@@ -8,7 +8,7 @@ from django.contrib.auth import authenticate, login
 from rest_framework import status
 from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
-from .apps import OsfOauth2AdapterConfig
+from meetings.utils import OsfOauth2AdapterConfig
 import requests
 
 class checkLoggedIn(APIView):

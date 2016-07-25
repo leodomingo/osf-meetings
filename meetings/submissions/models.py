@@ -9,10 +9,12 @@ class Submission(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100)
     #id for user - primary key
-    contributor = models.ForeignKey(User, primary_key=True, related_name='submission_contributor')
+    contributor = models.ForeignKey(User, on_delete=models.CASCADE,
+            related_name='submissions_contributors')
     description = models.TextField()
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     approval = models.OneToOneField('approvals.Approval')
+#    file = models.OneToOneField('files.File')
 
     class Meta:
         ordering = ('date_created',)

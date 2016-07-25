@@ -1,5 +1,5 @@
 import requests
-from .apps import OsfOauth2AdapterConfig
+from meetings.utils import OsfOauth2AdapterConfig
 
 from allauth.socialaccount.providers.oauth2.views import (
     OAuth2Adapter,

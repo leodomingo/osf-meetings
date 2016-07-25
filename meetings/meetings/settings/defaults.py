@@ -51,7 +51,6 @@ INSTALLED_APPS = [
     'approvals',
     'conferences',
     'submissions',
-    'approvals',
     'files',
     'autofixture',
     'osf_oauth2_adapter',
@@ -188,6 +187,3 @@ HUMANS_GROUP_NAME = 'OSF_USERS'
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'http://localhost:4200'
-
-CLIENT_ID = ''
-CLIENT_SECRET = ''

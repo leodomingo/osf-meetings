@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from guardian.shortcuts import assign_perm, remove_perm
 from django.contrib.auth.models import User, Group
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+from meetings.utils import OsfOauth2AdapterConfig
 
 class SubmissionPermissions(permissions.DjangoObjectPermissions):
 
@@ -69,11 +69,11 @@ def remove_approved_submission_permissions_from_public(submission):
     remove_perm("submissions.view_submission", public, submission)
 
 def add_approved_submission_permissions_to_current_osf_user(submission):
-    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
+    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.humans_group_name)
     assign_perm("submissions.view_submission", current_osf_users, submission)
 
 def remove_approved_submission_permissions_from_current_osf_user(submission):
-    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
+    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.humans_group_name)
     remove_perm("submissions.view_submission", current_osf_users, submission)
 
 def add_submission_permissions_to_submission_contributor(submission, submission_contributor):

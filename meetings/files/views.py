@@ -12,7 +12,7 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from api.apps import OsfOauth2AdapterConfig
+from meetings.utils import OsfOauth2AdapterConfig
 
 # Create your views here.
 
