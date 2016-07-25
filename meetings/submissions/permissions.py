@@ -2,6 +2,10 @@ from rest_framework import permissions
 from guardian.shortcuts import assign_perm, remove_perm
 from django.contrib.auth.models import User, Group
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+from approvals.permissions import (
+    add_approval_permissions_to_submission_contributor,
+    add_approval_permissions_to_conference_admin
+)
 
 
 class SubmissionPermissions(permissions.DjangoObjectPermissions):
@@ -118,3 +122,48 @@ def remove_submission_permissions_from_conference_admin(submission,
         "submissions.delete_submission", submission_contributor, submission)
     remove_perm(
         "submissions.view_submission", submission_contributor, submission)
+
+
+def set_approved_submission_permissions(submission, submission_contributor,
+                                        conference_admin, approval):
+    # public
+    add_approved_submission_permissions_to_public(submission)
+
+    # current_osf_user:
+    add_approved_submission_permissions_to_current_osf_user(
+        submission)
+
+    # submission_contributor:
+    add_submission_permissions_to_submission_contributor(
+        submission, submission_contributor)
+    add_approval_permissions_to_submission_contributor(
+        approval, submission_contributor)
+
+    # conference_admin:
+    add_submission_permissions_to_conference_admin(
+        submission, conference_admin)
+    add_approval_permissions_to_conference_admin(
+        approval, conference_admin)
+
+
+def set_unapproved_submission_permissions(submission, submission_contributor,
+                                          conference_admin, approval):
+    # public:
+    remove_approved_submission_permissions_from_public(
+        submission)
+
+    # current_osf_user:
+    remove_approved_submission_permissions_from_current_osf_user(
+        submission)
+
+    # submission_contributor:
+    add_submission_permissions_to_submission_contributor(
+        submission, submission_contributor)
+    add_approval_permissions_to_submission_contributor(
+        approval, submission_contributor)
+
+    # conference_admin:
+    add_submission_permissions_to_conference_admin(
+        submission, conference_admin)
+    add_approval_permissions_to_conference_admin(
+        approval, conference_admin)

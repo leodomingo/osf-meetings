@@ -9,12 +9,4 @@ def add_permissions(sender, **kwargs):
     conference, created = kwargs["instance"], kwargs["created"]
     conference_admin = conference.admin
     if created:
-        # conference_admin:
-        permissions.add_conference_permissions_to_conference_admin(
-            conference, conference_admin)
-
-        # current_osf_user:
-        permissions.add_conference_permissions_to_current_osf_user(conference)
-
-        # public:
-        permissions.add_conference_permissions_to_public(conference)
+        permissions.set_conference_permissions(conference, conference_admin)
