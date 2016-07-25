@@ -3,7 +3,6 @@ from allauth.socialaccount import providers
 from allauth.socialaccount.providers.base import ProviderAccount
 from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
 
-
 class OSFAccount(ProviderAccount):
 
     def to_str(self):
@@ -22,7 +21,6 @@ class OSFAccount(ProviderAccount):
             )
             if value is not None
         )
-
 
 class OSFProvider(OAuth2Provider):
     id = 'osf'

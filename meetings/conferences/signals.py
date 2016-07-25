@@ -3,7 +3,6 @@ from conferences.models import Conference
 from django.db.models.signals import post_save
 from conferences import permissions
 
-
 @receiver(post_save, sender=Conference)
 def add_permissions(sender, **kwargs):
     conference, created = kwargs["instance"], kwargs["created"]

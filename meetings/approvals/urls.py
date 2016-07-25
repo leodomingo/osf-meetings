@@ -1,14 +1,14 @@
-from django.conf.urls import url
+from django.conf.urls import url, include
 from approvals import views
 
 approval_list = views.ApprovalViewSet.as_view({
     'get': 'list',
-    'post': 'create',
+    'post':'create',
 })
 
 approval_detail = views.ApprovalViewSet.as_view({
-    'get': 'retrieve',
-    'patch': 'partial_update'
+    'get': 'retrieve', 
+    'patch':'partial_update'
 })
 
 urlpatterns = [

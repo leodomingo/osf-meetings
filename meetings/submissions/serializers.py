@@ -6,7 +6,6 @@ from submissions.models import Submission
 from approvals.models import Approval
 from django.contrib.auth.models import User
 
-
 class SubmissionSerializer(ser.ModelSerializer):
     links = ser.SerializerMethodField()
     can_edit = ser.SerializerMethodField()

@@ -7,4 +7,4 @@ class SubmissionAppConfig(AppConfig):
     name = 'submissions'
 
     def ready(self):
-        import submissions.signals  # noqa
+        import submissions.signals

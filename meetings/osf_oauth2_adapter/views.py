@@ -1,5 +1,6 @@
 import requests
 from .apps import OsfOauth2AdapterConfig
+
 from allauth.socialaccount.providers.oauth2.views import (
     OAuth2Adapter,
     OAuth2LoginView,
@@ -7,9 +8,6 @@ from allauth.socialaccount.providers.oauth2.views import (
 )
 
 from osf_oauth2_adapter.provider import OSFProvider
-
-# Create your views here.
-
 
 class OSFOAuth2Adapter(OAuth2Adapter):
     provider_id = OSFProvider.id
@@ -25,10 +23,13 @@ class OSFOAuth2Adapter(OAuth2Adapter):
             'Authorization': 'Bearer {}'.format(access_token.token)
         })
 
-        return self.get_provider().sociallogin_from_response(
+        jsonData = extra_data.json()
+
+        response = self.get_provider().sociallogin_from_response(
             request,
-            extra_data.json()
+            jsonData
         )
+        return response
 
 oauth2_login = OAuth2LoginView.adapter_view(OSFOAuth2Adapter)
 oauth2_callback = OAuth2CallbackView.adapter_view(OSFOAuth2Adapter)

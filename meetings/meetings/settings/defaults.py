@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'conferences',
     'submissions',
     'autofixture',
+    'files',
     'osf_oauth2_adapter',
 ]
 
@@ -73,6 +74,7 @@ REST_FRAMEWORK = {
 }
 
 JSON_API_FORMAT_KEYS = 'dasherize'
+#JSON_API_PLURALIZE_TYPES = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
