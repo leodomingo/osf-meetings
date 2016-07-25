@@ -9,6 +9,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register(r'users', apiViews.UserViewSet)
 
+
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^conferences/', include('conferences.urls', namespace='conferences')),

@@ -2,7 +2,7 @@ from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
 from conferences.models import Conference
-import uuid
+
 
 class Submission(models.Model):
     node_id = models.CharField(max_length=10)

@@ -11,6 +11,7 @@ from allauth.socialaccount.models import SocialAccount
 from .apps import OsfOauth2AdapterConfig
 import requests
 
+
 class checkLoggedIn(APIView):
 
     def get(self, request, format=None):
@@ -18,6 +19,7 @@ class checkLoggedIn(APIView):
             return Response('true')
         else:
             return Response('false')
+
 
 class viewCurrentUser(APIView):
     base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
@@ -37,6 +39,7 @@ class viewCurrentUser(APIView):
         else:
             return Response('false')
 
+
 class UserViewSet(viewsets.ModelViewSet):
 
     """
@@ -44,6 +47,7 @@ class UserViewSet(viewsets.ModelViewSet):
     """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
+
 
 class UserDetail(APIView):
     resource_name = 'User'
@@ -53,10 +57,11 @@ class UserDetail(APIView):
         user = User.objects.get(pk=user_id)
         user_serializer = UserSerializer(
             user,
-            context={'request': request},
+            context={'request' : request},
             many=False
         )
         return Response(user_serializer.data)
+
 
 class AuthenticateUser(APIView):
     resource_name = 'User'
