@@ -15,7 +15,6 @@ import requests
 from meetings.utils import OsfOauth2AdapterConfig
 from utils import OsfFileStorageUrls
 
-# Create your views here.
 
 class FileViewSet(ModelViewSet):
     resource_name = 'files'
@@ -29,21 +28,26 @@ class FileViewSet(ModelViewSet):
         osf_token = SocialToken.objects.get(account=account)
 
         submission_obj = Submission.objects.get(id=request.data['submission_id'])
+        file_url = '{}{}/providers/osfstorage'.format(
+            OsfFileStorageUrls.WATERBUTLER_URL, submission_obj.node_id)
 
         file_stream = request.FILES['temp_file']
 
-        upload_url = '{}/?kind=file&name={}'.format(OsfFileStorageUrls.FILE_URL, file_stream.name)
+        upload_url = '{}/?kind=file&name={}'.format(file_url, file_stream.name)
 
         response = requests.put(
             upload_url,
             data=file_stream,
             headers = {
-                'Authorization' : 'Bearer {}' . format(osf_token)
-                }
+                'Authorization': 'Bearer {}'.format(osf_token)
+            }
         )
 
         res_json = json.loads(response.content)
 
+
+
+        ipdb.sset_trace()
         #pull the submission related to an user
         #multiple submissions?
         pass
