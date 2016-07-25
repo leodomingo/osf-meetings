@@ -13,6 +13,7 @@ from allauth.socialaccount.models import SocialAccount
 
 import requests
 from meetings.utils import OsfOauth2AdapterConfig
+from utils import OsfFileStorageUrls
 
 # Create your views here.
 
@@ -22,12 +23,6 @@ class FileViewSet(ModelViewSet):
     queryset = File.objects.all()
     serializer_class = FileSerializer
 
-    base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
-    access_token_url = base_url.format('token')
-    profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
-    waterbutler_url = '{}v1/resources/'.format(OsfOauth2AdapterConfig.osf_files_url)
-    staging_url = '{}project/'.format(OsfOauth2AdapterConfig.osf_staging_url)
-
     def create(self, request):
         current_user = request.user.username
         account = SocialAccount.objects.get(uid=current_user)
@@ -35,12 +30,9 @@ class FileViewSet(ModelViewSet):
 
         submission_obj = Submission.objects.get(id=request.data['submission_id'])
 
-        file_url = '{}{}/providers/osfstorage'.format(self.waterbutler_url,
-            submission_obj.node_id)
-
         file_stream = request.FILES['temp_file']
 
-        upload_url = '{}/?kind=file&name={}'.format(file_url, file_stream.name)
+        upload_url = '{}/?kind=file&name={}'.format(OsfFileStorageUrls.FILE_URL, file_stream.name)
 
         response = requests.put(
             upload_url,
@@ -48,7 +40,7 @@ class FileViewSet(ModelViewSet):
             headers = {
                 'Authorization' : 'Bearer {}' . format(osf_token)
                 }
-            )
+        )
 
         res_json = json.loads(response.content)
 
