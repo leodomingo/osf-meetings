@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'guardian',
     'rest_framework',
     'corsheaders',
+    'anymail',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -51,6 +52,7 @@ INSTALLED_APPS = [
     'approvals',
     'conferences',
     'submissions',
+    'mail',
     'autofixture',
     'osf_oauth2_adapter',
 ]
@@ -185,3 +187,11 @@ ACCOUNT_LOGOUT_REDIRECT_URL = 'http://localhost:4200'
 
 CLIENT_ID = ''
 CLIENT_SECRET = ''
+
+# https://github.com/anymail/django-anymail
+EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
+
+MAILGUN_API_KEY = ''
+ANYMAIL = {
+    "MAILGUN_API_KEY": MAILGUN_API_KEY,
+}

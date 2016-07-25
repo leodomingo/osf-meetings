@@ -18,5 +18,6 @@ urlpatterns = [
     url(r'^current/', apiViews.viewCurrentUser.as_view(), name='current'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^mail/inbound/', include('mail.urls')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
