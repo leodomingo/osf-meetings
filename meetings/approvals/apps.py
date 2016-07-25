@@ -7,4 +7,4 @@ class ApprovalsConfig(AppConfig):
     name = 'approvals'
 
     def ready(self):
-        import approvals.signals #noqa
+        import approvals.signals  # noqa

@@ -38,8 +38,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
-        serializer = SubmissionSerializer(data=request.data,
-                context={'request': request})
+        serializer = SubmissionSerializer(data=request.data, context={'request': request})
         new_approval = Approval.objects.create()
         contributor = request.user
 
@@ -50,15 +49,15 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         if not request.user.has_perm('submissions.can_set_contributor'):
             if serializer.is_valid():
                 node = {
-                        'data' : {
-                            'attributes': {
-                                'category': 'project',
-                                'description': request.data['description'],
-                                'title': request.data['title']
-                                },
-                            'type': 'nodes'
-                            }
+                    'data': {
+                        'attributes': {
+                            'category': 'project',
+                            'description': request.data['description'],
+                            'title': request.data['title']
+                            },
+                        'type': 'nodes'
                         }
+                    }
 
                 response = requests.post(
                         self.node_url,
@@ -72,7 +71,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
                 obj = response.json()
                 serializer.save(contributor=contributor, approval=new_approval,
-                        node_id=obj['data']['id'])
+                    node_id=obj['data']['id'])
 
                 return Response(serializer.data)
         else:

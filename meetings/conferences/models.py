@@ -25,7 +25,7 @@ class Conference(models.Model):
 
     class Meta:
         ordering = ('created', )
-        permissions= (
+        permissions = (
             ('view_conference', 'Can view conference'),
         )
 

@@ -7,8 +7,8 @@ from allauth.socialaccount.providers.oauth2.views import (
     OAuth2CallbackView,
 )
 
-
 from osf_oauth2_adapter.provider import OSFProvider
+
 
 class OSFOAuth2Adapter(OAuth2Adapter):
     provider_id = OSFProvider.id
