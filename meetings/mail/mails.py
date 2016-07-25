@@ -1,6 +1,31 @@
 from django.core.mail.message import EmailMultiAlternatives
 from django.template import Context
 from django.template.loader import get_template
+from django.conf import settings
+
+
+def create_mailgun_conference_poster_route(conference_identifer):
+    route_address = "match_recipient('" + conference_identifer + \
+        '-poster' + "@" + settings.EMAIL_DOMAIN + "')"
+    return requests.post(
+        "https://api.mailgun.net/v3/routes",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"priority": 0,
+              "description": "Conference submission by email",
+              "expression": route_address,
+              "action": ["forward('http://myhost.com/messages/')", "stop()"]})
+
+
+def create_mailgun_conference_talk_route(conference_identifer):
+    route_address = "match_recipient('" + conference_identifer + \
+        '-talk' + "@" + settings.EMAIL_DOMAIN + "')"
+    return requests.post(
+        "https://api.mailgun.net/v3/routes",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"priority": 0,
+              "description": "Conference submission by email",
+              "expression": route_address,
+              "action": ["forward('http://myhost.com/messages/')", "stop()"]})
 
 
 class SubmissionSuccessEmail(EmailMultiAlternatives):
