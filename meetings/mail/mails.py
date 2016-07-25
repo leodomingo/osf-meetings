@@ -2,6 +2,7 @@ from django.core.mail.message import EmailMultiAlternatives
 from django.template import Context
 from django.template.loader import get_template
 from django.conf import settings
+import requests
 
 
 def create_mailgun_conference_poster_route(conference_identifer):
