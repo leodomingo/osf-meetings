@@ -2,20 +2,20 @@ from django.conf.urls import url, include
 from conferences import views
 
 conference_list = views.ConferenceViewSet.as_view({
-    'get' : 'list',
-    'post' :'create',
+    'get': 'list',
+    'post': 'create',
 })
 
 conference_detail = views.ConferenceViewSet.as_view({
-    'get' : 'retrieve',
-    'delete' :'destroy',
-    'patch' :'partial_update'
+    'get': 'retrieve',
+    'delete': 'destroy',
+    'patch': 'partial_update'
 })
 
 conference_detail = views.ConferenceViewSet.as_view({
-    'get' : 'retrieve',
-    'delete' : 'destroy',
-    'patch' : 'partial_update'
+    'get': 'retrieve',
+    'delete': 'destroy',
+    'patch': 'partial_update'
 })
 
 urlpatterns = [

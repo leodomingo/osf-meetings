@@ -88,7 +88,8 @@ def add_submission_permissions_to_submission_contributor(submission, submission_
     assign_perm("submissions.view_submission", submission_contributor, submission)
 
 
-def remove_submission_permissions_from_submission_contributor(submission, submission_contributor):
+def remove_submission_permissions_from_submission_contributor(
+        submission, submission_contributor):
     remove_perm("submissions.change_submission", submission_contributor, submission)
     remove_perm("submissions.delete_submission", submission_contributor, submission)
     remove_perm("submissions.view_submission", submission_contributor, submission)

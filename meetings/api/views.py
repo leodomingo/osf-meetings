@@ -57,7 +57,7 @@ class UserDetail(APIView):
         user = User.objects.get(pk=user_id)
         user_serializer = UserSerializer(
             user,
-            context={'request' : request},
+            context={'request': request},
             many=False
         )
         return Response(user_serializer.data)

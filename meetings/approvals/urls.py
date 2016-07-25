@@ -8,7 +8,7 @@ approval_list = views.ApprovalViewSet.as_view({
 
 approval_detail = views.ApprovalViewSet.as_view({
     'get': 'retrieve',
-    'patch':'partial_update'
+    'patch': 'partial_update'
 })
 
 urlpatterns = [
