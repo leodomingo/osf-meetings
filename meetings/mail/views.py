@@ -7,13 +7,13 @@ from conferences.models import Conference
 def on_incoming_message(request):
     if request.method == 'POST':
         name_and_sender = request.POST.get('from')
-        name = name_and_sender[:name_and_sender.index('<')].strip()
+        name = name_and_sender[:name_and_sender.index('<')].strip()  # noqa
         sender = request.POST.get('sender')
         recipient = request.POST.get('recipient')
-        subject = request.POST.get('subject', '')
+        subject = request.POST.get('subject', '')  # noqa
 
-        body_plain = request.POST.get('body-plain', '')
-        body_without_quotes = request.POST.get('stripped-text', '')
+        body_plain = request.POST.get('body-plain', '')  # noqa
+        body_without_quotes = request.POST.get('stripped-text', '')  # noqa
         # note: other MIME headers are also posted here...
 
         # attachments:
@@ -25,7 +25,7 @@ def on_incoming_message(request):
 
         conf_identifier = recipient.replace(
             '-poster@osf.io', "").replace('-talk@osf.io', "").strip()
-        
+
         msg = ''
         # get/create user
         try:
