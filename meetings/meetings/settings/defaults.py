@@ -178,6 +178,7 @@ SITE_ID = 1
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
+OSF_MEETINGS_API_URL = 'http://localhost:8000'
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'
 

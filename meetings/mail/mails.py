@@ -7,25 +7,29 @@ from django.conf import settings
 def create_mailgun_conference_poster_route(conference_identifer):
     route_address = "match_recipient('" + conference_identifer + \
         '-poster' + "@" + settings.EMAIL_DOMAIN + "')"
+    forward_url = "forward(" + \
+        settings.OSF_MEETINGS_API_URL + '/mail/inbound/' + ")"
     return requests.post(
         "https://api.mailgun.net/v3/routes",
         auth=("api", settings.MAILGUN_API_KEY),
         data={"priority": 0,
               "description": "Conference submission by email",
               "expression": route_address,
-              "action": ["forward('http://myhost.com/messages/')", "stop()"]})
+              "action": [forward_url, "stop()"]})
 
 
 def create_mailgun_conference_talk_route(conference_identifer):
     route_address = "match_recipient('" + conference_identifer + \
         '-talk' + "@" + settings.EMAIL_DOMAIN + "')"
+    forward_url = "forward(" + \
+        settings.OSF_MEETINGS_API_URL + '/mail/inbound/' + ")"
     return requests.post(
         "https://api.mailgun.net/v3/routes",
         auth=("api", settings.MAILGUN_API_KEY),
         data={"priority": 0,
               "description": "Conference submission by email",
               "expression": route_address,
-              "action": ["forward('http://myhost.com/messages/')", "stop()"]})
+              "action": [forward_url, "stop()"]})
 
 
 class SubmissionSuccessEmail(EmailMultiAlternatives):
