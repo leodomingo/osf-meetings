@@ -18,3 +18,4 @@ requests-oauthlib==0.6.1
 six==1.10.0
 django-autofixture==0.12.1
 invoke==0.13.0
+django-haystack==2.0.0

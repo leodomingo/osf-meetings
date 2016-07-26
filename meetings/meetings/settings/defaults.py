@@ -47,11 +47,12 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'rest_framework_json_api',
     'oauth2_provider',
+    'haystack',
+    'autofixture',
     'api',
     'approvals',
     'conferences',
     'submissions',
-    'autofixture',
     'osf_oauth2_adapter',
 ]
 
