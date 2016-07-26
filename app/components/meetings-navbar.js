@@ -53,7 +53,7 @@ export default Ember.Component.extend({
             this.sendAction('login');
         },
         unFix: function() {
-            if (this.get("fixed") == true)
+            if (this.get("fixed") === true)
             {
                  Ember.$('#create').removeClass("navbar-fixed-top");
                  this.set('fixed', false);
@@ -61,7 +61,7 @@ export default Ember.Component.extend({
             else
             {
                 Ember.$('#create').addClass("navbar-fixed-top");
-                this.set('fixed', true)
+                this.set('fixed', true);
             }
         }
     }
