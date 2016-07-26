@@ -8,8 +8,7 @@ class Submission(models.Model):
     node_id = models.CharField(max_length=10)
     date_created = models.DateTimeField(auto_now_add=True)
     title = models.CharField(max_length=100)
-    contributor = models.ForeignKey(
-        User, blank=True, related_name="contributor")
+    contributor = models.ForeignKey(User, related_name='submission_contributor')
     description = models.TextField()
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     approval = models.OneToOneField('approvals.Approval')
@@ -17,7 +16,6 @@ class Submission(models.Model):
     class Meta:
         ordering = ('date_created',)
         permissions = (
-            ('can_set_contributor',
-             'Can set the contributor for a submission'),
+            ('can_set_contributor', 'Can set the contributor for a submission'),
             ('view_submission', 'Can view submission'),
         )
