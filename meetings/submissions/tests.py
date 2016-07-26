@@ -19,11 +19,11 @@ class TestSerializers(TestCase):
 
 
 class TestSignals(TestCase):
-    @skip('Test adding permssions via signal')
+    @skip('Test adding permissions via signal')
     def test_add_permissions_approved(self):
         pass
 
-    @skip('Test adding permssions via signal')
+    @skip('Test adding permissions via signal')
     def test_add_permissions_rejected(self):
         pass
 
