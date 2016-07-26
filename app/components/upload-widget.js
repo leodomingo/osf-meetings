@@ -8,10 +8,6 @@ export default Ember.Component.extend({
         method : 'PUT'
     },
     resolve : null,
-
-    submit(event) {
-
-    },
     actions : {
         preUpload(comp, drop, file) {
             return new Ember.RSVP.Promise(resolve => {

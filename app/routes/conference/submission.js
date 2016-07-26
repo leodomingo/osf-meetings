@@ -15,12 +15,13 @@ export default Ember.Route.extend(CheckLoginMixin, {
     actions : {
         saveSubmission(newSubmission, resolve) {
             if(resolve) {
-                newSubmission.save().then(function(newRecord){
-                    console.log(newRecord);
-                    console.log(resolve);
+                newSubmission.save().then((newRecord) => {
+                    resolve.then((file) => {
+                        console.log(file);
+                    });
                 });
             } else {
-                console.log("Not resolve");
+                console.log("resolve error");
             }
         }
     }
