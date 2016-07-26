@@ -7,16 +7,18 @@ export default Ember.Component.extend({
     authenticated: false,
     frontPage: null,
     user: null,
-    init: function(){   
+    init: function() {
         this._super(...arguments);
         var self = this;
         var currentRoute = this.get('routing').get('currentRouteName');
+
         if (currentRoute === 'index'){
             self.set('frontPage', true);
         }
         else {
             self.set('frontPage', false);
         }
+
         Ember.$.ajax({
             url: config.currentUser,
             dataType: 'json',
@@ -25,35 +27,28 @@ export default Ember.Component.extend({
                 withCredentials: true,
             }
         }).then(function(loggedIn) {
-            if (!(loggedIn.data.errors) && (loggedIn.data !== 'false'))
-            {
+            if (!(loggedIn.data.errors) && (loggedIn.data !== 'false')) {
                 self.set('authenticated', true);
                 self.set('user', loggedIn.data.data);
             }
-            else 
-            {
+            else {
                 self.set('authenticated', false);
                 self.set('user', null);
             }
         });
     },
-	actions: 
-	{
-		filter: function() 
-		{
-			this.sendAction('filter', this.get("searchQuery"));
-		},
-		search: function() 
-		{
-			this.sendAction('search', this.get("searchQuery"));
-		},
-        logout: function() 
-        {   
+    actions: {
+        filter: function() {
+            this.sendAction('filter', this.get("searchQuery"));
+        },
+        search: function() {
+            this.sendAction('search', this.get("searchQuery"));
+        },
+        logout: function() {
             this.sendAction('logout');
         },
-        login: function() 
-        {
+        login: function() {
             this.sendAction('login');
         }
-	}
+    }
 });

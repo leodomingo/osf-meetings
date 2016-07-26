@@ -37,6 +37,10 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
         #
         # has_object_permission() in DjangoObjectPermissions ensures users can only
         # GET, POST, PATCH etc. on objects they have the required permissions for
+        # -----------------------------------------------------------
+        # Workaround to ensure DjangoModelPermissions are not applied
+        # to the root view when using DefaultRouter.
+
         #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied

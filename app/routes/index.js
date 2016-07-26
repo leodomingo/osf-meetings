@@ -26,12 +26,12 @@ default Ember.Route.extend({
         });
         return foundConferences;
     },
-    deactivate: function() {
+
+    deactivate: function(){
         Ember.$('body').removeClass('hide-scroll');
-        Ember.$('html').css({
-            "overflow-y": 'scroll'
-        });
+        Ember.$('html').css({"overflow-y": 'scroll'});
     },
+
     actions: {
         create() {
             this.transitionTo('conference.new').then(function(newRoute) {
