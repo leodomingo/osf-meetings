@@ -12,7 +12,7 @@ from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 import requests
 
 
-class checkLoggedIn(APIView):
+class CheckLoggedInView(APIView):
 
     def get(self, request, format=None):
         if request.user.is_authenticated():
@@ -21,7 +21,7 @@ class checkLoggedIn(APIView):
             return Response('false')
 
 
-class viewCurrentUser(APIView):
+class CurrentUserView(APIView):
     base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
     access_token_url = base_url.format('token')
     authorize_url = base_url.format('authorize')
