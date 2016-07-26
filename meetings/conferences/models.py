@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+
 from django_countries.fields import CountryField
 from django.contrib.auth.models import User
 
@@ -13,7 +14,7 @@ class Conference(models.Model):
     site = models.URLField(blank=True)
     city = models.CharField(max_length=100, default='')
     state = models.CharField(max_length=100, default='')
-    country = CountryField(blank_label='(select country)')
+    country = CountryField()
     event_start = models.DateTimeField(blank=True, null=True)
     event_end = models.DateTimeField(blank=True, null=True)
     submission_start = models.DateTimeField(blank=True, null=True)
@@ -23,7 +24,10 @@ class Conference(models.Model):
     admin = models.ForeignKey(User, blank=True, null=True)
 
     class Meta:
-        ordering = ('created',)
+        ordering = ('created', )
         permissions = (
             ('view_conference', 'Can view conference'),
         )
+
+    class JSONAPIMeta:
+        resource_name = "conferences"

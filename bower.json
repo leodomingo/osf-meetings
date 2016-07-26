@@ -19,6 +19,7 @@
     "perfect-scrollbar": ">=0.6.7 <2.0.0",
     "bootswatch": "^3.3.6",
     "toastr": "^2.1.2",
-    "font-awesome": "^4.6.3"
+    "font-awesome": "^4.6.3",
+    "dropzone": "^4.3.0"
   }
 }

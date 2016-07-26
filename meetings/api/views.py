@@ -22,8 +22,7 @@ class checkLoggedIn(APIView):
 
 
 class viewCurrentUser(APIView):
-    base_url = '{}oauth2/{}'.format(
-        OsfOauth2AdapterConfig.osf_accounts_url, '{}')
+    base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
     access_token_url = base_url.format('token')
     authorize_url = base_url.format('authorize')
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
