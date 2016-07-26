@@ -33,6 +33,10 @@ class SubmissionPermissions(permissions.DjangoObjectPermissions):
         #
         # has_object_permission() in DjangoObjectPermissions ensures users can only
         # GET, POST, PATCH etc. on objects they have the required permissions for
+        # -----------------------------------------------------------
+        # Workaround to ensure DjangoModelPermissions are not applied
+        # to the root view when using DefaultRouter.
+
         #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied
@@ -69,52 +73,35 @@ def remove_approved_submission_permissions_from_public(submission):
 
 
 def add_approved_submission_permissions_to_current_osf_user(submission):
-    current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
     assign_perm("submissions.view_submission", current_osf_users, submission)
 
 
 def remove_approved_submission_permissions_from_current_osf_user(submission):
-    current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+    current_osf_users = Group.objects.get(name=OsfOauth2AdapterConfig.osf_users_group)
     remove_perm("submissions.view_submission", current_osf_users, submission)
 
 
-def add_submission_permissions_to_submission_contributor(submission,
-                                                         submission_contributor):
-    assign_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.view_submission", submission_contributor, submission)
+def add_submission_permissions_to_submission_contributor(submission, submission_contributor):
+    assign_perm("submissions.change_submission", submission_contributor, submission)
+    assign_perm("submissions.delete_submission", submission_contributor, submission)
+    assign_perm("submissions.view_submission", submission_contributor, submission)
 
 
-def remove_submission_permissions_from_submission_contributor(submission,
-                                                              submission_contributor):
-    remove_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.view_submission", submission_contributor, submission)
+def remove_submission_permissions_from_submission_contributor(
+        submission, submission_contributor):
+    remove_perm("submissions.change_submission", submission_contributor, submission)
+    remove_perm("submissions.delete_submission", submission_contributor, submission)
+    remove_perm("submissions.view_submission", submission_contributor, submission)
 
 
-def add_submission_permissions_to_conference_admin(submission,
-                                                   submission_contributor):
-    assign_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    assign_perm(
-        "submissions.view_submission", submission_contributor, submission)
+def add_submission_permissions_to_conference_admin(submission, submission_contributor):
+    assign_perm("submissions.change_submission", submission_contributor, submission)
+    assign_perm("submissions.delete_submission", submission_contributor, submission)
+    assign_perm("submissions.view_submission", submission_contributor, submission)
 
 
-def remove_submission_permissions_from_conference_admin(submission,
-                                                        submission_contributor):
-    remove_perm(
-        "submissions.change_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.delete_submission", submission_contributor, submission)
-    remove_perm(
-        "submissions.view_submission", submission_contributor, submission)
+def remove_submission_permissions_from_conference_admin(submission, submission_contributor):
+    remove_perm("submissions.change_submission", submission_contributor, submission)
+    remove_perm("submissions.delete_submission", submission_contributor, submission)
+    remove_perm("submissions.view_submission", submission_contributor, submission)
