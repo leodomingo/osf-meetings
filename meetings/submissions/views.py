@@ -16,7 +16,7 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from api.apps import OsfOauth2AdapterConfig
+from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
 
 class SubmissionViewSet(viewsets.ModelViewSet):
