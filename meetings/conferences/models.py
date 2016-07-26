@@ -5,6 +5,7 @@ from django.db import models
 from django_countries.fields import CountryField
 from django.contrib.auth.models import User
 
+
 class Conference(models.Model):
     id = models.SlugField(primary_key=True, max_length=10)
     created = models.DateTimeField(auto_now_add=True)
@@ -23,8 +24,8 @@ class Conference(models.Model):
     admin = models.ForeignKey(User, blank=True, null=True)
 
     class Meta:
-        ordering = ('created',)
-        permissions= (
+        ordering = ('created', )
+        permissions = (
             ('view_conference', 'Can view conference'),
         )
 

@@ -3,6 +3,7 @@ from guardian.shortcuts import assign_perm, remove_perm
 from django.contrib.auth.models import User, Group
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
+
 class ConferencePermissions(permissions.DjangoObjectPermissions):
 
     """
@@ -58,9 +59,11 @@ class ConferencePermissions(permissions.DjangoObjectPermissions):
             # and request.user.has_perms(perms)
         )
 
+
 def add_conference_permissions_to_public(conference):
     public = User.objects.get(username="AnonymousUser")
     assign_perm("conferences.view_conference", public, conference)
+
 
 def remove_conference_permissions_from_public(conference):
     public = User.objects.get(username="AnonymousUser")
@@ -72,10 +75,12 @@ def add_conference_permissions_to_current_osf_user(conference):
         name=OsfOauth2AdapterConfig.osf_users_group)
     assign_perm("conferences.view_conference", current_osf_users, conference)
 
+
 def remove_conference_permissions_from_current_osf_user(conference):
     current_osf_users = Group.objects.get(
         name=OsfOauth2AdapterConfig.osf_users_group)
     remove_perm("conferences.view_conference", current_osf_users, conference)
+
 
 def add_conference_permissions_to_conference_admin(conference, conference_admin):
     assign_perm(
@@ -85,6 +90,7 @@ def add_conference_permissions_to_conference_admin(conference, conference_admin)
     assign_perm(
         "conferences.view_conference", conference_admin, conference)
 
+
 def remove_conference_permissions_from_conference_admin(conference, conference_admin):
     remove_perm(
         "conferences.change_conference", conference_admin, conference)
@@ -92,3 +98,15 @@ def remove_conference_permissions_from_conference_admin(conference, conference_a
         "conferences.delete_conference", conference_admin, conference)
     remove_perm(
         "conferences.view_conference", conference_admin, conference)
+
+
+def set_conference_permissions(conference, conference_admin):
+    # conference_admin
+    add_conference_permissions_to_conference_admin(
+        conference, conference_admin)
+
+    # current_osf_user:
+    add_conference_permissions_to_current_osf_user(conference)
+
+    # public:
+    add_conference_permissions_to_public(conference)

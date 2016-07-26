@@ -17,11 +17,13 @@ export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
             return this.get('_url');
         },
         preUpload(comp, drop, file) {
+            console.log(comp + drop + file);
             return new Ember.RSVP.Promise(resolve => {
                 this.set('resolve', resolve);
             });
         },
         success(ignore, dropzone, file, response) {
+            console.log(ignore + dropzone + file + response);
         },
         error(ignore, err) {
             console.log(err);
