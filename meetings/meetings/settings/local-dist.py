@@ -5,6 +5,7 @@ SECRET_KEY = ''  # Set to large random value in your local.py
 DEBUG = True
 CLIENT_ID = ''
 CLIENT_SECRET = ''
+MAILGUN_API_KEY = ''
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
