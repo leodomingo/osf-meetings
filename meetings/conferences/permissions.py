@@ -98,3 +98,15 @@ def remove_conference_permissions_from_conference_admin(conference, conference_a
         "conferences.delete_conference", conference_admin, conference)
     remove_perm(
         "conferences.view_conference", conference_admin, conference)
+
+
+def set_conference_permissions(conference, conference_admin):
+    # conference_admin
+    add_conference_permissions_to_conference_admin(
+        conference, conference_admin)
+
+    # current_osf_user:
+    add_conference_permissions_to_current_osf_user(conference)
+
+    # public:
+    add_conference_permissions_to_public(conference)
