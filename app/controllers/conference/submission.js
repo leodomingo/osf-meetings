@@ -4,7 +4,7 @@ import Ember from 'ember';
 
 export default Ember.Controller.extend(/*TaggableMixin, EmberValidations,*/ {
     toast : Ember.inject.service(),
-    _url : null,
+    _url : 'files',
     resolve : null,
     latestFileName : null,
     dropzoneOptions : {
