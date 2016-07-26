@@ -8,6 +8,7 @@ API = os.path.join(HERE, 'meetings')
 @task
 def test_all(ctx):
     flake(ctx)
+    test_api(ctx)
     # TODO: add more as they become available
     # ember_test(ctx)
     jshint(ctx)
@@ -22,6 +23,11 @@ def flake(ctx, echo=True):
 @task
 def api_server(ctx):
     ctx.run('python {}/manage.py runserver'.format(API), echo=True)
+
+
+@task
+def test_api(ctx):
+    ctx.run('python {}/manage.py test {}'.format(API, API), echo=True, pty=True)
 
 
 # EMBER
