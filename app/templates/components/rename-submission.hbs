@@ -1,0 +1,12 @@
+{{#if this.renaming}}
+	{{input value=submission.title}}
+	<button class='btn-danger' {{action "cancel"}}>cancel</button>
+	<button class='btn-success' {{action "confirm"}}>confirm</button>
+{{else}}
+	<a target="_blank" style="color: #0080ff;" href={{link-to-osf submission.id}}>
+	    {{submission.title}}
+	</a>
+	<br>
+	<button class="btn-warning" {{action "clickRename" submission}}>Rename</button>
+   	{{delete-submission submission=submission}}
+{{/if}}

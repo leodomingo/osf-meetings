@@ -70,11 +70,12 @@
                                         {{#each model.submissions as |item|}}
                                             <tr bgcolor="FFFFFF">
                                                 <th class="tableTitle" scope="row">
-                                                    <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
-                                                        {{item.title}}
-                                                    </a>
                                                     {{#if item.canEdit}}
-                                                        {{delete-submission submission=item}}
+                                                        {{rename-submission submission=item}}
+                                                    {{else}}
+                                                        <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
+                                                            {{item.title}}
+                                                        </a>
                                                     {{/if}}
                                                 </th>
                                                 <td style="color: black;">
