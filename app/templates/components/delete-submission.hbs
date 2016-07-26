@@ -1,0 +1,11 @@
+<button class='btn-danger' {{action "clickDelete" submission}}>
+    Delete
+</button>
+{{#if this.displayModal}}
+    {{#modal-dialog close="hideform" targetAttachment="center" translucentOverlay=true}}
+        Are you sure you want to delete the submission: <b>{{submission.title}}</b>?
+        <br>
+        <button class="btn-danger" {{action "cancel"}}>No</button>
+        <button class="btn-success" {{action "deleteSubmission"}}>Yes</button>
+    {{/modal-dialog}}
+{{/if}}
