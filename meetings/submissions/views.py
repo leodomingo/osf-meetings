@@ -60,14 +60,14 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     }
 
                 response = requests.post(
-                        self.node_url,
-                        data=json.dumps(node),
-                        headers={
-                            'Authorization': 'Bearer {}'.format(osf_token),
-                            'Content-Type': 'application/json; charset=UTF-8',
-                            'Accept': 'application/json, text/*'
-                            }
-                        )
+                    self.node_url,
+                    data=json.dumps(node),
+                    headers={
+                        'Authorization': 'Bearer {}'.format(osf_token),
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json, text/*'
+                    }
+                )
 
                 obj = response.json()
                 serializer.save(
