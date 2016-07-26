@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'guardian',
     'rest_framework',
     'corsheaders',
+    'anymail',
+    'osf_oauth2_adapter',  # must be before allauth to override templates
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -52,7 +54,6 @@ INSTALLED_APPS = [
     'conferences',
     'submissions',
     'autofixture',
-    'osf_oauth2_adapter',
 ]
 
 REST_FRAMEWORK = {
