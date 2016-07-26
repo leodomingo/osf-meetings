@@ -8,7 +8,7 @@ import uuid
 
 class File(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    osf_id = models.CharField(max_length=100)
+    osf_id = models.CharField(max_length=100, blank=True)
     owner = models.ForeignKey(User)
     osf_path = models.URLField(blank=True, null=True)
-    submission = models.OneToOneField(Submission, on_delete=models.CASCADE) 
+    submission = models.OneToOneField(Submission, on_delete=models.CASCADE)

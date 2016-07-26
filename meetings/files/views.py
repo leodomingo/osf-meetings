@@ -1,8 +1,6 @@
 import ipdb
 import json
 
-from django.shortcuts import render
-from conferences.models import Conference
 from submissions.models import Submission
 from rest_framework.viewsets import ModelViewSet
 from files.serializer import FileSerializer
@@ -12,7 +10,6 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from meetings.utils import OsfOauth2AdapterConfig
 from utils import OsfFileStorageUrls
 
 
@@ -38,7 +35,7 @@ class FileViewSet(ModelViewSet):
         response = requests.put(
             upload_url,
             data=file_stream,
-            headers = {
+            headers={
                 'Authorization': 'Bearer {}'.format(osf_token)
             }
         )
@@ -46,10 +43,7 @@ class FileViewSet(ModelViewSet):
         res_json = json.loads(response.content)
 
 
-
         ipdb.sset_trace()
-        #pull the submission related to an user
-        #multiple submissions?
+        # pull the submission related to an user
+        # multiple submissions?
         pass
-
-
