@@ -12,6 +12,12 @@ conference_detail = views.ConferenceViewSet.as_view({
     'patch': 'partial_update'
 })
 
+conference_detail = views.ConferenceViewSet.as_view({
+    'get': 'retrieve',
+    'delete': 'destroy',
+    'patch': 'partial_update'
+})
+
 urlpatterns = [
     url(r'^$', conference_list, name='list'),
     url(r'^(?P<pk>[-\w]+)/$', conference_detail, name='detail'),

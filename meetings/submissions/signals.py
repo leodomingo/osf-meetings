@@ -2,10 +2,8 @@ from django.dispatch import receiver
 from submissions.models import Submission
 from django.db.models.signals import post_save
 from submissions import permissions as perm
-from approvals.permissions import (
-    add_approval_permissions_to_submission_contributor,
-    add_approval_permissions_to_conference_admin
-)
+from approvals.permissions import (add_approval_permissions_to_submission_contributor,
+                                   add_approval_permissions_to_conference_admin)
 
 
 @receiver(post_save, sender=Submission)
