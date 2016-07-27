@@ -1,5 +1,5 @@
 Django==1.9.8
-django-allauth==0.25.2
+django-allauth==0.26.1
 django-braces==1.9.0
 django-cors-headers==1.1.0
 django-countries==3.4.1
@@ -9,12 +9,12 @@ djangorestframework==3.3.3
 djangorestframework-jsonapi==2.0.1
 inflection==0.3.1
 oauth2-provider==0.0
-oauthlib==1.0.3
+oauthlib==1.1.2
 Pillow==3.2.0
 python-openid==2.2.5
 requests==2.10.0
 requests-oauth2==0.2.0
-requests-oauthlib==0.6.1
+requests-oauthlib==0.6.2
 six==1.10.0
 django-autofixture==0.12.1
 django-anymail==0.4.2
