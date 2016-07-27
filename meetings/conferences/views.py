@@ -39,6 +39,10 @@ class ConferenceSerializer(HaystackSerializer):
         fields = [
             "text", "created", "modified", "title", "city","state", "description"
         ]
+        field_aliases = {
+            "q": "title",
+            "q": "description"
+        }
 
 
 class ConferenceSearchView(HaystackViewSet):
@@ -50,3 +54,4 @@ class ConferenceSearchView(HaystackViewSet):
     index_models = [Conference]
 
     serializer_class = ConferenceSerializer
+

@@ -10,11 +10,6 @@ export default Ember.Controller.extend({
     queryParams: ['q', 'p'],
     page: 1,
     actions: {
-        search() {
-            let query = this.get("searchQuery");
-            this.set('query', query);
-            this.transitionToRoute('search', {queryParams: {q: query, p: this.page }});
-        },
         toPage(pageNum){
             this.transitionToRoute('search', {queryParams: {p: pageNum }});
         }

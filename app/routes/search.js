@@ -14,7 +14,7 @@ export default Ember.Route.extend({
     },
     beforeModel: function(params) {
         this.set('results', this.store.query('conference', {
-            search: params.q,
+            query: params.q,
             page: params.p
         }));
     },
@@ -63,5 +63,16 @@ export default Ember.Route.extend({
         } else if (page >= (pages - 2)) {
             push.set('buttonArray', [pages - 5, pages - 4, pages - 3, pages - 2, pages - 1]);
         }
-    }
+    },
+    actions: {
+        search(params) {
+            this.transitionTo('search', {
+                queryParams: {
+                    q: params,
+                    p: 1
+                }
+            });
+        }
+    },
+    
 });

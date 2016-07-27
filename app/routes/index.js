@@ -12,7 +12,7 @@ default Ember.Route.extend({
     model(params) {
 
         let foundConferences = this.store.query('conference', {
-            search: params.q,
+            '/search': params.q,
             page: params.p
         }).then((result) => {
             this.set('results', true);

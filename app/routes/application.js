@@ -17,7 +17,7 @@ default Ember.Route.extend({
             });
         },
         search(params) {
-            this.transitionTo('search', {
+            this.transitionToRoute('search', {
                 queryParams: {
                     q: params,
                     p: 1

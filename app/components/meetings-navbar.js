@@ -45,6 +45,7 @@ export default Ember.Component.extend({
         },
         search: function() {
             this.sendAction('search', this.get("searchQuery"));
+            console.log('sent Action');
         },
         logout: function() {
             this.sendAction('logout');
