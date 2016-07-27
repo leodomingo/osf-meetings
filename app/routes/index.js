@@ -26,8 +26,8 @@ default Ember.Route.extend({
         return foundConferences;
     },
     beforeModel: function() {
-        var redirectURL = this.getCookie('redirectURL')
-        if (redirectURL != window.location.href) {
+        var redirectURL = this.getCookie('redirectURL');
+        if (redirectURL !== window.location.href) {
             document.cookie = "redirectURL=" + window.location.href;
             window.location = redirectURL;
         }
@@ -37,10 +37,10 @@ default Ember.Route.extend({
         var ca = document.cookie.split(';');
         for(var i = 0; i <ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0)==' ') {
+            while (c.charAt(0)===' ') {
                 c = c.substring(1);
             }
-            if (c.indexOf(name) == 0) {
+            if (c.indexOf(name) === 0) {
                 return c.substring(name.length,c.length);
             }
         }
