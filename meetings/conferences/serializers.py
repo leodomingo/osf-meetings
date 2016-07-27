@@ -4,6 +4,7 @@ from rest_framework.reverse import reverse
 from conferences.models import Conference
 from submissions.models import Submission
 from django.contrib.auth.models import User
+from django.conf import settings
 
 
 class ConferenceSerializer(serializers.ModelSerializer):
@@ -23,11 +24,8 @@ class ConferenceSerializer(serializers.ModelSerializer):
                 kwargs={'pk': obj.pk},
                 request=request
             ),
-            'submissions': reverse(
-                'conferences:submissions:list',
-                kwargs={'conference_id': obj.pk},
-                request=request
-            )
+            'submissions': reverse('submissions:list',
+                                   request=request) + '?conference=' + obj.pk
         }
 
     def get_submission_count(self, obj):
