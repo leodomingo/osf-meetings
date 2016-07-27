@@ -24,8 +24,8 @@ router = routers.DefaultRouter()
 router.register("search", views.ConferenceSearchView, base_name="conference-search")
 
 urlpatterns = [
-    url(r"/", include(router.urls)),
     url(r'^$', conference_list, name='list'),
+    url(r'', include(router.urls)),
     url(r'^(?P<pk>[-\w]+)/$', conference_detail, name='detail'),
     url(r'^(?P<conference_id>[-\w]+)/submissions/',
         include('submissions.urls', namespace='submissions')),

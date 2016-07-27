@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     'conferences',
     'submissions',
     'mail',
-    'osf_oauth2_adapter',
 ]
 
 REST_FRAMEWORK = {
