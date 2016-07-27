@@ -8,7 +8,7 @@ export default DS.JSONAPIAdapter.extend({
     host: config.OSF.apiUrl,
 
     buildURL(){
-        var url = this._super(...arguments)
+        var url = this._super(...arguments);
         if (url.lastIndexOf('/') !== url.length - 1) {
             url += '/';
         }
