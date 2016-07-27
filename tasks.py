@@ -30,6 +30,11 @@ def test_api(ctx):
     ctx.run('python {}/manage.py test {}'.format(API, API), echo=True, pty=True)
 
 
+@task(aliases=['req'])
+def requirements(ctx):
+    ctx.run('pip install -r requirements.txt', echo=True)
+
+
 # EMBER
 @task
 def npm_install(ctx):
