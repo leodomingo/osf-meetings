@@ -23,8 +23,10 @@ class ConferenceSerializer(serializers.ModelSerializer):
                 kwargs={'pk': obj.pk},
                 request=request
             ),
-            'submissions': reverse('submissions:list',
-                                   request=request) + '?conference=' + obj.pk
+            'submissions': '{}?conference={}'.format(
+                reverse('submissions:list', request=request),
+                obj.pk
+            )
         }
 
     def get_submission_count(self, obj):
