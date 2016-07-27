@@ -1,18 +1,6 @@
-{{#if this.visited}}
-{{auto-scroll}}
-{{/if}}
-<!--div id="indexTop" class="container-fluid big osf-standard-background">r
-<a href="https://osf.io"><img class="logo" src="https://osf.io/static/img/cos-white2.png"> </a>
-<div class="row title-row">
-<h1>OSF for Meetings</h1>
-<h4>A free sharing service for academic meetings and conferences</h4>
-<h5>Broaden your impact, create an open scholar environment</h5>
-<button {{action 'scrollit'}} type="button" value="continue" class="btn btn-success">Begin Sharing</button>
-</div>
-<img class="background" src="https://osf.io/static/img/front-page/bg-web.png">
-</div--> <!-- end container & splash page -->
-{{meetings-navbar logout='logout' login='login' search='search' filter='filter' currentRoute='currentRoute'}}
-<div class="container-fluid osf-light-background ">
+
+<div class="container-fluid osf-light-background">
+    {{meetings-navbar logout='logout' login='login' search='search' filter='filter' currentRoute='currentRoute'}}
   {{#if tileview}}
   <div class="row conference-view-outer-container" id="indexBottom">
     <div class="col-md-10 col-md-offset-1">
@@ -27,20 +15,38 @@
         <button id="listButton" class="btn btn-default navbar-btn" {{action "listView"}}>
           <span class="glyphicon glyphicon-th-list"></span>
         </button>
+        <div class="row">
         {{#if this.results}}
-                  {{#each model as |conf|}}
+              <div class="col-md-12 hidden-md hidden-lg hidden-xl">
+                {{#each model as |conf key|}}
                   {{#link-to "conference.index"  conf.id }}
-                  {{meeting-masonry title=conf.title
-                  description=conf.description logo=conf.logo
-                  location=(location-display
-                  conf.city conf.state conf.country)
-                  date=(date-display conf.start)
-                  submissions=conf.submissionCount}}
+                  {{meeting-masonry title=conf.title location = (location-display conf.city conf.state conf.country) description = conf.description date = (date-display conf.start) submission = conf.submissionCount}}
                   {{/link-to}}
                 {{/each}}
+                </div>
+            <div class="col-md-6 no-padding hidden-sm">
+            {{#each model as |conf key|}}
+                  {{#if (is-even key)}}
+                  {{#link-to "conference.index"  conf.id }}
+                  {{meeting-masonry title=conf.title location = (location-display conf.city conf.state conf.country) description = conf.description date = (date-display conf.start) submission = conf.submissionCount}}
+                  {{/link-to}}
+                  {{/if}}
+                {{/each}}
+            </div>
+            <div class="col-md-6 no-padding hidden-sm">
+            {{#each model as |conf key|}}
+                  {{#if (is-even key)}}
+                  {{else}}
+                  {{#link-to "conference.index"  conf.id }}
+                  {{meeting-masonry title=conf.title location = (location-display conf.city conf.state conf.country) description = conf.description date = (date-display conf.start) submission = conf.submissionCount}}
+                  {{/link-to}}
+                  {{/if}}
+                {{/each}}
+            </div>
         {{else}}
         <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
-                {{/if}}                
+        {{/if}}     
+        </div>
       </div> <!-- end tile view -->
     </div> <!-- end conference-view-inner-container-->
   </div><!-- end conference-view-outer-container-->
