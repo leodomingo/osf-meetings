@@ -1,4 +1,4 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from conferences import views
 
 conference_list = views.ConferenceViewSet.as_view({

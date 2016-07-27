@@ -4,7 +4,6 @@ from rest_framework.reverse import reverse
 from conferences.models import Conference
 from submissions.models import Submission
 from django.contrib.auth.models import User
-from django.conf import settings
 
 
 class ConferenceSerializer(serializers.ModelSerializer):
