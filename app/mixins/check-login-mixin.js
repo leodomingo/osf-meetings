@@ -15,10 +15,10 @@ export default Ember.Mixin.create({
             }
         }).then(function(loggedIn) {
             if (loggedIn.data === 'false') {
-                if (window.location.href !== "http://localhost:4200/") {
+                if (window.location.href !== config.meetingsHomeUrl) {
                     document.cookie = "redirectURL=" + window.location.href;
                 } else {
-                    document.cookie = "redirectURL=http://localhost:4200/conference/new/";
+                    document.cookie = "redirectURL=" + config.meetingsHomeUrl + "conference/new/";
                 }
                 self.transitionTo('login');
             }
