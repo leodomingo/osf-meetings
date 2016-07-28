@@ -59,11 +59,10 @@ html, body
 }
 .meetings-navbar-background
 {
-  position: fixed;
   width: 100%;
-  background-color: transparent;
-  background-image: linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,0.95));
   border: none;
+  border-radius: 0;
+  background-color: #273A48;
   z-index: 500;
 }
 .tile-view
@@ -73,10 +72,9 @@ html, body
 }
 .tile
 {
-  width: 450px;
-  margin: 5px;
   text-decoration: none;
   transition: 1s ease;
+  display: inline-block;
 }
 .tile-title
 {
@@ -143,7 +141,10 @@ td
   margin-bottom: 15px;
   padding: 5px;
   transition: 0.3s ease;
-
+}
+.no-padding
+{
+  padding: 0;
 }
 .pagination 
 {

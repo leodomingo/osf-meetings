@@ -13,9 +13,11 @@ router.register(r'users', apiViews.UserViewSet)
 urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^conferences/', include('conferences.urls', namespace='conferences')),
-    url(r'^checklogin/', apiViews.checkLoggedIn.as_view(), name='checklogin'),
-    url(r'^current/', apiViews.viewCurrentUser.as_view(), name='current'),
+    url(r'^submissions/', include('submissions.urls', namespace='submissions')),
+    url(r'^checklogin/', apiViews.CheckLoggedInView.as_view(), name='checklogin'),
+    url(r'^current/', apiViews.CurrentUserView.as_view(), name='current'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^mail/inbound/', include('mail.urls')),
     url(r'^o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]

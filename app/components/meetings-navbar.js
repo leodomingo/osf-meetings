@@ -3,6 +3,7 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Component.extend({
+    fixed: true,
     routing: Ember.inject.service('-routing'),
     host: config.osfUrl,
     authenticated: false,
@@ -50,6 +51,18 @@ export default Ember.Component.extend({
         },
         login: function() {
             this.sendAction('login');
+        },
+        unFix: function() {
+            if (this.get("fixed") === true)
+            {
+                 Ember.$('#create').removeClass("navbar-fixed-top");
+                 this.set('fixed', false);
+            }
+            else
+            {
+                Ember.$('#create').addClass("navbar-fixed-top");
+                this.set('fixed', true);
+            }
         }
     }
 });
