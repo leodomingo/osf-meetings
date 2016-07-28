@@ -1,0 +1,93 @@
+.osf-gravatar>img {
+    border: 1px solid #CDCDCD;
+    border-radius: 13px;
+    margin-right: 5px;
+}
+#navbarScope a.nav-user-dropdown {
+    padding-top: 12px;
+    padding-bottom: 11px;
+}
+
+.btn-top-signup {
+  padding: 2px 20px;
+  margin-top: 5px;
+  line-height: 1.7;
+  background-color: #5cb85c;
+  border-color: #4cae4c;  }
+
+
+/* Allow search-bar and nav-bar to support mutiple size of screen */
+@media (max-width: 767px) {
+    .navbar .search-query {
+        width: 100%;
+    }
+    .navbar-nav .open .dropdown-menu>li>a {
+        color: #FFF;
+    }
+
+    #searchControls > .osf-search {
+        z-index: 99;
+    }
+    .osf-xs-search {
+        text-decoration: none !important;
+        padding: 14px;
+    }
+
+    .navbar-brand {
+        margin-left: 0 !important;
+        height: 48px !important;
+        line-height: 27px !important;
+        padding: 11px 15px 10px 15px !important;
+    }
+    .osf-navbar-logo {
+        margin-top: 0px !important;
+    }
+
+    .name-div {
+        font-size: 20px;
+    }
+
+    .sign-in .btn-group {
+        width: 90%;
+        padding-left: 5%;
+    }
+    .sign-in .btn {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .osf-navbar .navbar-nav>li>a {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+    .navbar .search-query {
+        width: 190px;
+    }
+    .navbar-brand {
+        margin-left: 0 !important;
+        padding-left: 0;
+    }
+}
+
+@media (min-width: 992px) {
+    .osf-navbar .navbar-nav>li>a {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .navbar .search-query {
+        width: 360px;
+    }
+
+}
+@media (min-width: 1200px) {
+    .osf-navbar .navbar-nav>li>a {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .navbar .search-query {
+        width: 270px;
+    }
+
+}
