@@ -1,73 +1,3 @@
-<!--div class="osf-nav-wrapper">
-    <nav id="create" class="navbar navbar-inverse navbar-fixed-top meetings-navbar-background" id="navbarScope" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#content" aria-expanded="false" {{action "unFix"}}>
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                  </button>
-                <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
-                <a class="navbar-brand" href="/">Meetings</a>
-            </div>
-        <div class="collapse navbar-collapse" id="content">
-            <form class="navbar-form navbar-left form-group">
-                    {{input value=searchQuery placeholder="Search..." class="form-control" action="filter" on="key-up"}}
-                <button type="submit" class="btn btn-default" {{action "search"}}>
-                Search
-                </button>
-            </form>
-            {{# if authenticated }}
-                    <ul class="nav navbar-nav navbar-right">
-                        {{#if frontPage}}
-                            {{else}}
-                            <form class="navbar-form navbar-left form-group" action="/">
-                                <button type="submit" class="btn navbar-btn btn-warning">
-                                Back to Browse
-                                </button>
-                            </form>
-                            {{/if}}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle form-group" data-toggle="dropdown" role="button" aria-expanded="false">
-                                <span class="osf-gravatar">
-                                    <img src={{user.links.profile_image}} alt="User gravatar">
-                                </span> {{user.attributes.full_name}}
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>
-                                    <a href="{{user.links.html}}"><i class="fa fa-user fa-lg p-r-xs"></i> My Profile</a>
-                                </li>
-                                <li>
-                                    <a href="{{host}}support/" ><i class="fa fa-life-ring fa-lg p-r-xs"></i> Support</a>
-                                </li>
-
-                                <li>
-                                    <a href="{{host}}settings/"><i class="fa fa-cog fa-lg p-r-xs"></i> Settings</a>
-                                </li>
-                                <li>
-                                    <a onclick={{action 'logout'}}><i class="fa fa-sign-out fa-lg p-r-xs"></i> Log out</a>
-                                </li>
-
-                            </ul>
-                        </li>
-                    </ul>
-
-            {{else}}
-            <form class="navbar-form navbar-right" role="search">
-                <button type="submit" class="btn navbar-btn btn-success" {{action 'login'}}>
-                Login
-                </button>
-                <button type="submit" class="btn navbar-btn btn-info" {{action "login"}}>
-                Signup
-                </button>
-            </form>
-            {{/if}}
-        </div>
-        </div>
-    </nav>
-</div-->
 
 <div class="osf-nav-wrapper">
     <nav class="navbar navbar-inverse navbar-fixed-top" id="navbarScope" role="navigation">
@@ -86,8 +16,8 @@
                         </a>
                     </span>
                 {{/unless}}
-                <a class="navbar-brand hidden-sm hidden-xs" href="/"><span class="osf-navbar-logo" width="27"></span> Open Science Framework</a>
-                <a class="navbar-brand visible-sm visible-xs" href="/"><span class="osf-navbar-logo" width="27"></span> OSF</a>
+                <a class="navbar-brand hidden-sm hidden-xs" href="/"><span class="osf-navbar-logo" width="27"></span> Open Science Framework | Meetings</a>
+                <a class="navbar-brand visible-sm visible-xs" href="/"><span class="osf-navbar-logo" width="27"></span> OSF | Meetings</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
@@ -146,7 +76,7 @@
                         {{#if institution}}  {{!-- TODO: Find a source for this info (eg may only be on node pages? Make work with nested router --}}
                             <li class="dropdown sign-in" data-bind="with: $root.signIn">
                                 <div class="btn-group">
-                                <a href="/register/" class="btn btn-success btn-top-signup m-r-xs">Sign Up</a>
+                                <a href="{{host}}register/" class="btn btn-success btn-top-signup m-r-xs">Sign Up</a>
                                     <a onclick={{action 'login'}} class="btn btn-info btn-top-login">
                                         Sign in <span class="hidden-xs"><i class="fa fa-arrow-right"></i></span>
                                     </a>
