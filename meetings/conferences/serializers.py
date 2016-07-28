@@ -23,10 +23,9 @@ class ConferenceSerializer(serializers.ModelSerializer):
                 kwargs={'pk': obj.pk},
                 request=request
             ),
-            'submissions': reverse(
-                'conferences:submissions:list',
-                kwargs={'conference_id': obj.pk},
-                request=request
+            'submissions': '{}?conference={}'.format(
+                reverse('submissions:list', request=request),
+                obj.pk
             )
         }
 
