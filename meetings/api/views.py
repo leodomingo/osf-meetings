@@ -1,11 +1,5 @@
-from django.contrib.auth.models import User
-from api.serializers import UserSerializer
-from rest_framework import viewsets
-from api.serializers import AuthenticationSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from django.contrib.auth import authenticate, login
-from rest_framework import status
 from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig

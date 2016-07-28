@@ -1,7 +1,6 @@
 from django.conf.urls import url, include
 from api import views as apiViews
 from django.contrib import admin
-from rest_framework import routers
 
 # Wire up our API using automatic URL routing.
 
