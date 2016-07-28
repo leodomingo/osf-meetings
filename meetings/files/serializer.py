@@ -4,8 +4,7 @@ from files.models import File
 
 
 class FileSerializer(ser.ModelSerializer):
-    temp_file = ser.FileField(read_only=True)
-    submission_id = ser.IntegerField(read_only=True)
+    temp_file = ser.FileField()
 
     class Meta:
         model = File

@@ -12,13 +12,12 @@ from submissions.serializers import SubmissionSerializer
 
 from submissions.models import Submission
 from approvals.models import Approval
-from conferences.models import Conference
-from django.contrib.auth.models import User
 from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
 from meetings.utils import OsfOauth2AdapterConfig
+
 
 class SubmissionViewSet(viewsets.ModelViewSet):
     resource_name = 'submissions'
@@ -39,8 +38,10 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
-        serializer = SubmissionSerializer(data=request.data,
-                context={'request': request})
+        serializer = SubmissionSerializer(
+            data=request.data,
+            context={'request': request}
+        )
         new_approval = Approval.objects.create()
         contributor = request.user
 
@@ -51,35 +52,37 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         if not request.user.has_perm('submissions.can_set_contributor'):
             if serializer.is_valid():
                 node = {
-                    'data' : {
-                        'attributes' : {
-                            'category' : 'project',
-                            'description' : request.data['description'],
-                            'title' : request.data['title']
+                    'data': {
+                        'attributes': {
+                            'category': 'project',
+                            'description': request.data['description'],
+                            'title': request.data['title']
                         },
-                        'type' : 'nodes'
+                        'type': 'nodes'
                     }
                 }
 
                 response = requests.post(
                         self.node_url,
                         data=json.dumps(node),
-                        headers = {
-                            'Authorization' : 'Bearer {}'.format(osf_token),
-                            'Content-Type' : 'application/json; charset=UTF-8'
+                        headers={
+                            'Authorization': 'Bearer {}'.format(osf_token),
+                            'Content-Type': 'application/json; charset=UTF-8'
                         }
                 )
 
                 obj = response.json()
-                submission = serializer.save(contributor=contributor,
-                        approval=new_approval, node_id=obj['data']['id'])
+                serializer.save(
+                    contributor=contributor,
+                    approval=new_approval, node_id=obj['data']['id'])
 
                 return Response(serializer.data)
         else:
             if serializer.is_valid():
-                new_submission = serializer.save(approval=new_approval)
+                serializer.save(approval=new_approval)
                 return Response(serializer.data)
         return Response(serializer.errors)
+
 
 class SubmissionRelationshipView(RelationshipView):
     encoding = 'utf-8',

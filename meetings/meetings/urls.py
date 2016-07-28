@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^conferences/', include('conferences.urls', namespace='conferences')),
     url(r'^files/', include('files.urls', namespace='files')),
     url(r'^approvals/', include('approvals.urls', namespace='approvals')),
-    url(r'^checklogin/', apiViews.checkLoggedIn.as_view(), name='checklogin'), 
+    url(r'^checklogin/', apiViews.checkLoggedIn.as_view(), name='checklogin'),
     url(r'^current/', apiViews.viewCurrentUser.as_view(), name='current'),
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),

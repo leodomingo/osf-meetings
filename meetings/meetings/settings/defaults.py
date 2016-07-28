@@ -69,12 +69,12 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework_json_api.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.MultiPartRenderer',
     ),
     'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
 }
 
 JSON_API_FORMAT_KEYS = 'dasherize'
-#JSON_API_PLURALIZE_TYPES = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -150,7 +150,15 @@ AUTHENTICATION_BACKENDS = (
 # http://blog.hugethoughts.com/allow-cors-specific-domain-django/
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control'
+)
 CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
 )
@@ -178,8 +186,10 @@ SITE_ID = 1
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
-OSF_FILES_URL = os.environ.get('OSF_FILES_URL', 'https://staging-files.osf.io').rstrip('/') + '/'
-OSF_STAGING_URL = os.environ.get('OSF_STAGE_URL', 'https://staging.osf.io').rstrip('/') + '/'
+OSF_FILES_URL = os.environ.get(
+    'OSF_FILES_URL', 'https://staging-files.osf.io').rstrip('/') + '/'
+OSF_STAGING_URL = os.environ.get(
+    'OSF_STAGE_URL', 'https://staging.osf.io').rstrip('/') + '/'
 
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'

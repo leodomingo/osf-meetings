@@ -24,7 +24,10 @@ class FileViewSet(ModelViewSet):
         account = SocialAccount.objects.get(uid=current_user)
         osf_token = SocialToken.objects.get(account=account)
 
-        submission_obj = Submission.objects.get(id=request.data['submission_id'])
+        ipdb.set_trace()
+
+        submission_obj = Submission.objects.get(
+            id=request.data['submission_id'])
         file_url = '{}{}/providers/osfstorage'.format(
             OsfFileStorageUrls.WATERBUTLER_URL, submission_obj.node_id)
 
@@ -40,10 +43,10 @@ class FileViewSet(ModelViewSet):
             }
         )
 
-        res_json = json.loads(response.content)
+        # res_json = json.loads(response.content)
+        json.loads(response.content)
+        ipdb.set_trace()
 
-
-        ipdb.sset_trace()
         # pull the submission related to an user
         # multiple submissions?
         pass
