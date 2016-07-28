@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+from rest_framework import status
 import requests
 import json
 
@@ -35,4 +36,4 @@ class CurrentUserView(APIView):
             data['attributes']['token'] = str(token)
             return Response(data)
         else:
-            return Response('false')
+            return Response('User is not logged in', status=status.HTTP_401_UNAUTHORIZED)
