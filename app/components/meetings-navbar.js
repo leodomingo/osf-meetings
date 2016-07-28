@@ -9,6 +9,8 @@ export default Ember.Component.extend({
     authenticated: false,
     frontPage: null,
     user: null,
+    onSearchPage: false,
+    institution: true,
     init: function() {
         this._super(...arguments);
         var self = this;
