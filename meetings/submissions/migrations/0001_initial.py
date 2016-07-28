@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-<<<<<<< HEAD
 
 from __future__ import unicode_literals
 
