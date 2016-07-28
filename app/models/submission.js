@@ -7,5 +7,7 @@ export default Model.extend({
     title : attr('string'),
     description : attr('string'),
     canEdit: attr('boolean'),
+    nodeId: attr('string'),
+    category: attr('string', { defaultValue : 'project' }),
     file : belongsTo('file')
 });
