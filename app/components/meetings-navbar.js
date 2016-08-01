@@ -3,6 +3,7 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Component.extend({
+    store: Ember.inject.service('store'),
     fixed: true,
     routing: Ember.inject.service('-routing'),
     host: config.osfUrl,
@@ -32,6 +33,7 @@ export default Ember.Component.extend({
             if (!(loggedIn.errors)) {
                 self.set('authenticated', true);
                 self.set('user', loggedIn.data);
+                self.get('store').pushPayload('user', loggedIn);
             }
             else {
                 self.set('authenticated', false);

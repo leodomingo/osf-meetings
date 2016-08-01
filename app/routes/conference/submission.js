@@ -12,8 +12,10 @@ export default Ember.Route.extend(CheckLoginMixin, {
 
     actions : {
         saveSubmission(newSubmission) {
+            var router = this;
             newSubmission.save().then(function(newRecord){
-                console.log(newRecord);
+                var newRecord_Conf = newRecord.get('conference');
+                router.transitionTo('conference.index', newRecord_Conf.get('id'));
             });
         }
     }
