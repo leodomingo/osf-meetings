@@ -1,10 +1,15 @@
 import Ember from 'ember';
 import config from '../config/environment';
 
-export default Ember.Mixin.create({
-    //Overwrite redirectRoute function to return the route the user should transition to after logging in
-    beforeModel: function() {
 
+// The check-login-mixin should be included on routes for which only logged-in users can see.
+// The mixin checks if the user is logged in and redirects them to the login workflow if they
+// are not logged in. It also stores the current URL in a cookie and after logging in, checks
+// the cookie and gets back to the original page.
+
+
+export default Ember.Mixin.create({
+    beforeModel: function() {
         var self = this;
         Ember.$.ajax({
             url: config.currentUser,
