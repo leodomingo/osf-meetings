@@ -1,31 +1,25 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-    page: null,
-    pages: null,
-    results: null,
-    queryParams: {
+    page: null, /* holds current page number */
+    pages: null, /* holds total number of pages in results */
+    results: null, /* true if there are any results at all */
+    queryParams: {  /* refresh model connects the model hook to a change in the query parameter */
         q: {
-            refreshModel: true
+            refreshModel: true 
         },
         p: {
             refreshModel: true
         }
     },
-    beforeModel: function(params) {
-        this.set('results', this.store.query('conference', {
-            search: params.q,
-            page: params.p
-        }));
-    },
     model: function(params) {
-        this.controllerFor('search').set('query', params.q);
-        let foundConferences = this.store.query('conference', {
+        this.controllerFor('search').set('query', params.q); /* sets current query in controller */
+        let foundConferences = this.store.query('conference', {  /* queries search endpoint */
             search: params.q,
             page: params.p
         }).then((result) => {
-            this.set('results', true);
-            let meta = result.get('meta');
+            this.set('results', true);    /* sets results variable in controller */
+            let meta = result.get('meta'); /* gets request metadata and sets pagination variables */
             this.set('pages', meta.pagination.pages);
             this.set('page', meta.pagination.page);
             if (meta.pagination.count === 0) {
@@ -36,6 +30,10 @@ export default Ember.Route.extend({
         return foundConferences;
     },
     setupController: function(controller, model) {
+        /*
+        *   sets controller variables for pagination
+        *   creates pagination button array based on results pages
+        */
         let page = this.get('page');
         let pages = this.get('pages');
         let push = this.controllerFor('search');
