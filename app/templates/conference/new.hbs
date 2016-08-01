@@ -9,11 +9,11 @@
                         <div class="section-header">IDENTIFY</div>
                         <hr>
                         <div class="col-lg-6">
-                            <label for="city" class="form-control-label">Conference Identifier</label>
+                            <label for="city" >Conference Identifier</label>
                             {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
                         </div>
                         <div class="col-lg-6 {{"has-success"}}" id="titleScroll">
-                            <label for="title" class="form-control-label">Title</label>
+                            <label for="title">Title</label>
                             {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
                             <br>
                             {{#if this.displayErrors}}
@@ -21,13 +21,13 @@
                                     <div class="alert alert-danger" role="alert">{{error}}</div>
                                 {{/each}}
                             {{/if}}
-                            <label for="website" class="form-control-label">Website</label>
+                            <label for="website">Website</label>
                             {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
-                            <label for="city" class="form-control-label">Logo</label>
+                            <label for="city">Logo</label>
                             {{input type="file" accept="image/*" id="image"}}
 
-                            <label for="description" class="form-control-label" id="descriptionScroll">
+                            <label for="description"  id="descriptionScroll">
                                 Description:</label>
                             {{textarea value=model.newConf.description class="form-control resize" id="description"}}
                             <!-- {{#if this.displayErrors}}
@@ -44,7 +44,7 @@
                         <hr>
                         <div class="col-lg-6">
                             <div class ="{{"has-success"}}">
-                                <label for="country" class="form-control-label" id="countryScroll">
+                                <label for="country" id="countryScroll">
                                     Country
                                 </label>
                                 <select class="form-control form-spacing"
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="{{"has-success"}}">
-                                <label for="state" class="form-control-label" id="stateScroll">
+                                <label for="state" id="stateScroll">
                                     State
                                 </label>
                                 {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
@@ -76,7 +76,7 @@
                                     {{/if}} -->
                             </div>
                             <div class="{{"has-success"}}">
-                                <label for="city" class=" form-control-label" id="cityScroll">City</label>
+                                <label for="city" id="cityScroll">City</label>
                                 {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
                                 <!-- {{#if this.displayErrors}}
                                         {{#each errors.model.newConf.city as |error|}}
@@ -93,11 +93,11 @@
                         <div class="section-header" id="dateScroll">CONFERENCE WINDOW</div>
                         <hr>
                         <div class="col-lg-6">
-                            <label for="city" class="form-control-label">Start</label>
+                            <label for="city">Start</label>
                             {{bs-datetimepicker date=model.newConf.eventStart class="form-control" id='startDate'}}
                         </div>
                         <div class="col-lg-6">
-                            <label for="city" class="form-control-label">End</label>
+                            <label for="city">End</label>
                             {{bs-datetimepicker date=model.newConf.eventEnd class="form-control" id='endDate'}}
                             {{#if this.displayErrors}}
                                 {{#each errors.model.newConf.eventStart as |error|}}
@@ -112,13 +112,13 @@
                         <div class="section-header">SUBMISSION WINDOW</div>
                         <hr>
                         <div class="col-lg-6">
-                            <label for="city" class="form-control-label">Start</label>
+                            <label for="city">Start</label>
                             {{bs-datetimepicker
                             date=model.newConf.submissionStart
                             class="form-control" id='submissionDate'}}
                         </div>
                         <div class="col-lg-6">
-                            <label for="city" class="form-control-label">End</label>
+                            <label for="city">End</label>
                             {{bs-datetimepicker date=model.newConf.submissionEnd class="form-control" id='closeDate'}}
                             {{#if this.displayErrors}}
                                 {{#each errors.model.newConf.submissionStart as |error|}}

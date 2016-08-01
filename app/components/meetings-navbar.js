@@ -11,6 +11,7 @@ export default Ember.Component.extend({
     user: null,
     onSearchPage: false,
     institution: true,
+    showSearch: false,
     init: function() {
         this._super(...arguments);
         var self = this;
@@ -43,28 +44,30 @@ export default Ember.Component.extend({
     },
     actions: {
         filter: function() {
-            this.sendAction('filter', this.get("searchQuery"));
-        },
+            this.sendAction('filter', this.get("searchQuery"));},
+
         search: function() {
-            this.sendAction('search', this.get("searchQuery"));
-        },
+            this.sendAction('search', this.get("searchQuery"));},
+
         logout: function() {
-            this.sendAction('logout');
-        },
+            this.sendAction('logout');},
+
         login: function() {
-            this.sendAction('login');
-        },
+            this.sendAction('login');},
+
         unFix: function() {
-            if (this.get("fixed") === true)
-            {
+            if (this.get("fixed") === true){
                  Ember.$('#create').removeClass("navbar-fixed-top");
-                 this.set('fixed', false);
-            }
-            else
-            {
+                 this.set('fixed', false);}
+            else{
                 Ember.$('#create').addClass("navbar-fixed-top");
-                this.set('fixed', true);
-            }
+                this.set('fixed', true);}
+            },
+        toggleSearch: function(){
+            if (this.get("showSearch") === false){
+                this.set("showSearch", true);}
+            else{
+                this.set("showSearch", false);}
         }
     }
 });

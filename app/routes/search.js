@@ -27,6 +27,7 @@ export default Ember.Route.extend({
             this.set('results', true);
             let meta = result.get('meta');
             this.set('pages', meta.pagination.pages);
+            console.log(meta.pagination.pages);
             this.set('page', meta.pagination.page);
             if (meta.pagination.count === 0) {
                 this.set('results', false);

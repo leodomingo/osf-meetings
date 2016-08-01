@@ -7,10 +7,19 @@
 {
   margin: 0 0 1px 30px;
 }
-.conference-description {
+.conference-description 
+{
   padding: 15px 15px 15px 0;
 }
 .conference-photo img
 {
   max-width: 100%;
+}
+
+.node-title 
+{
+    line-height: 44px;
+    border-bottom: none;
+    margin-top: .3em;
+    font-size: 36px;
 }
