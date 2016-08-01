@@ -11,5 +11,5 @@ def add_permissions(sender, **kwargs):
     conference_admin = conference.admin
     if created:
         permissions.set_conference_permissions(conference, conference_admin)
-        mails.create_mailgun_conference_poster_route(conference.id)
-        mails.create_mailgun_conference_talk_route(conference.id)
+        mails.create_mailgun_conference_route(conference.id, 'poster')
+        mails.create_mailgun_conference_route(conference.id, 'talk')
