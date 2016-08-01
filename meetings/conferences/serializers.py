@@ -38,7 +38,7 @@ class ConferenceSerializer(serializers.ModelSerializer):
         user = User.objects.get(username=request.user)
         count = 0
         if (user == obj.admin):
-            count = len(Submissions.objects.filter(conference=obj))
+            count = len(Submission.objects.filter(conference=obj))
         else:
             count = len(Submission.objects.filter(conference=obj, contributor=user))
         return count
