@@ -41,7 +41,7 @@
 
                     {{# unless onSearchPage}}
                         <li class="hidden-xs">
-                            <a onclick={{!--action "toggleSearch"--}}>
+                            <a onclick={{action "toggleSearch"}}>
                                 <span rel="tooltip" data-placement="bottom" title="Search OSF" class="fa fa-search fa-lg" ></span>
                             </a>
                         </li>
@@ -111,7 +111,24 @@
         </div>
     </nav>
     {{#if showSearch}}
-        {{#search-dropdown action='toggleSearch'}}
-        {{/search-dropdown}}
+    <div class="osf-search">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+            <form class="input-group" {{action "search" on="submit"}}>
+            {{input value=searchQuery id="searchPageFullBar" name="search-placeholder" type="text" class="osf-search-input form-control" placeholder="Search"}}
+                    <label id="searchBarLabel" class="search-label-placeholder" for="search-placeholder">Search</label>
+                    <span class="input-group-btn">
+                        <button  class="btn osf-search-btn"{{action "search"}}><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                        <button type="button" class="btn osf-search-btn" data-toggle="modal" data-target="#search-help-modal"><i class="fa fa-question fa-lg"></i></button>
+                        <button type="button" class="btn osf-search-btn" onclick={{action "toggleSearch"}}><i class="fa fa-times fa-lg"></i></button>
+                    </span>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+        {{!--#search-dropdown toggleSearch='toggleSearch' action='search'}}
+        {{/search-dropdown--}}
     {{/if}}
 </div>
