@@ -1,8 +1,7 @@
 import Ember from 'ember';
-import CheckLoginMixin from 'osf-meetings/mixins/check-login-mixin';
 import config from '../../config/environment';
 
-export default Ember.Route.extend(CheckLoginMixin, {
+export default Ember.Route.extend({
     model() {
         return Ember.RSVP.hash({
             meta : Ember.$.ajax({
