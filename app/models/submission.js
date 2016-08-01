@@ -6,5 +6,9 @@ export default Model.extend({
     conference : belongsTo('conference', { async : true }),
     title : attr('string'),
     description : attr('string'),
-    canEdit: attr('boolean')
+    canEdit: attr('boolean'),
+    category: attr('string'),
+    dateCreated: attr(),
+    downloadLink: attr('string'),
+    downloadCount: attr('string')
 });

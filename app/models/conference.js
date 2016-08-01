@@ -18,4 +18,5 @@ export default Model.extend({
     submissions : hasMany('submission', { async : true }),
     canEdit: attr('boolean', { defaultValue : ''}),
     submissionCount: attr('number'),
+    mySubmissionCount: attr('number')
 });
