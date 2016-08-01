@@ -1,29 +1,29 @@
-{{meetings-navbar logout='logout' login='login' search='search'}}
-<div class="container-fluid osf-light-background">
+<div class="container-fluid">
     <div class="row conference-view-outer-container">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="conference-info">
-                            <div class="form-group row">
-                                <div class="col-md-6 ">
-                                    <h1 class="break-word" style="margin:
-                                    15px" style="font-size:40px">
-                                        {{model.conf.title}}</h1>
-                                    <h8 style="margin:15px 0 0 0">
-                                        {{this.conferenceDates}}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 class="node-title">
+                                     {{model.conf.title}}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <h6 style="margin:15px 0 0 0">
+                                        Date: {{this.conferenceDates}}
                                         {{date-display model.conf.eventStart}} - {{date-display model.conf.eventEnd}}
-                                    </h8>
-                                    <h4 style="margin:15px 0 0 0">
-                                        {{model.conf.city}},
-                                        {{model.conf.state}}, {{model.conf.country}}</h4>
+                                    </h6>
+                                    <h6>
+                                        Location: {{model.conf.city}},
+                                        {{model.conf.state}}, {{model.conf.country}}</h6>
                                     <div class="logo-view" align="center"></div>
                                     <p class="conference-description"
-                                       style="font-size: 16px">{{model.conf.description}}</p>
-                                </div>
-                                <div class="col-md-6 conference-photo">
-                                    <img src={{model.conf.logo}}>
+                                       style="font-size: 16px">Description: {{model.conf.description}}</p>
                                 </div>
                             </div>
                             <div class="row">
