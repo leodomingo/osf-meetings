@@ -5,8 +5,8 @@ import { hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
     title: attr('string'),
-    city: attr('string', { defaultValue : '' }),
-    state: attr('string', { defaultValue : '' }),
+    city: attr('string'),
+    state: attr('string'),
     country: attr('string'),
     eventStart: attr('isodate', { defaultValue : (new Date()).toISOString() }),
     eventEnd: attr('isodate', { defaultValue : (new Date()).toISOString() }),
