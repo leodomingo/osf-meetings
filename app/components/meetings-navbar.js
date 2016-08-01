@@ -48,6 +48,14 @@ export default Ember.Component.extend({
         search: function() {
             this.sendAction('search', this.get("searchQuery"));},
 
+        /*********************************************************/
+        /*
+        filter: function(){
+            console.log('Filtering');
+            this.sendAction('filter', this.get("searchQuery"));},
+         */
+        /*********************************************************/
+
         /*
         *   logout()
         *   sends action to the application level,
@@ -55,6 +63,7 @@ export default Ember.Component.extend({
         */
         logout: function() {
             this.sendAction('logout');},
+        /*********************************************************/
 
         /*
         *   logout()
@@ -63,6 +72,7 @@ export default Ember.Component.extend({
         */
         login: function() {
             this.sendAction('login');},
+        /*********************************************************/
         /*
         * unFix()
         * Toggles position status of navbar depending on mobile or desktop view
@@ -75,6 +85,7 @@ export default Ember.Component.extend({
                 Ember.$('#create').addClass("navbar-fixed-top");
                 this.set('fixed', true);}
             },
+        /*********************************************************/
             /*
             * Toggles view of the dropdown search bar based on search icon click
             */
@@ -84,5 +95,6 @@ export default Ember.Component.extend({
             else{
                 this.set("showSearch", false);}
         }
+        /*********************************************************/
     }
 });
