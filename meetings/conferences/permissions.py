@@ -28,11 +28,12 @@ class ConferencePermissions(permissions.DjangoObjectPermissions):
         # This method gets called on list view and normally fails due to
         # the commented out line in the return statement.
         #
-        # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
-        # to be able to see
+        # DjangoObjectPermissionsFilter ensures users can only see what they
+        # are supposed to be able to see
         #
-        # has_object_permission() in DjangoObjectPermissions ensures users can only
-        # GET, POST, PATCH etc. on objects they have the required permissions for
+        # has_object_permission() in DjangoObjectPermissions ensures users
+        # can only GET, POST, PATCH etc. on objects they have the required
+        # permissions for
         #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied
@@ -82,7 +83,8 @@ def remove_conference_permissions_from_current_osf_user(conference):
     remove_perm("conferences.view_conference", current_osf_users, conference)
 
 
-def add_conference_permissions_to_conference_admin(conference, conference_admin):
+def add_conference_permissions_to_conference_admin(
+        conference, conference_admin):
     assign_perm(
         "conferences.change_conference", conference_admin, conference)
     assign_perm(
@@ -91,7 +93,8 @@ def add_conference_permissions_to_conference_admin(conference, conference_admin)
         "conferences.view_conference", conference_admin, conference)
 
 
-def remove_conference_permissions_from_conference_admin(conference, conference_admin):
+def remove_conference_permissions_from_conference_admin(
+        conference, conference_admin):
     remove_perm(
         "conferences.change_conference", conference_admin, conference)
     remove_perm(
