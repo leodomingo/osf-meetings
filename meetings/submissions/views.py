@@ -2,7 +2,7 @@ import json
 
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
-from rest_framework_json_api.views import RelationshipView
+# from rest_framework_json_api.views import RelationshipView
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -17,6 +17,7 @@ from allauth.socialaccount.models import SocialAccount
 
 import requests
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+
 
 class SubmissionViewSet(viewsets.ModelViewSet):
     resource_name = 'submissions'
