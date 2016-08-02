@@ -46,11 +46,6 @@ default Ember.Route.extend({
         }
         return "";
     },
-    deactivate: function(){
-        Ember.$('body').removeClass('hide-scroll');
-        Ember.$('html').css({"overflow-y": 'scroll'});
-    },
-
     actions: {
         create() {
             this.transitionTo('conference.new').then(function(newRoute) {
@@ -62,18 +57,26 @@ default Ember.Route.extend({
             shift.set('visited', true);
             Ember.$('#indexTop').hide(2000);
         },
+        /***************************************/
+
+
+        /*
+        *  Switches main view to tiles
+        */
         tileView() {
             Ember.$('#tileButton').addClass('disabled');
             Ember.$('#listButton').removeClass('disabled');
             let shift = this.controllerFor('index');
             shift.set('tileview', true);
         },
+        /***************************************/
         listView() {
             Ember.$('#listButton').addClass('disabled');
             Ember.$('#tileButton').removeClass('disabled');
             let shift = this.controllerFor('index');
             shift.set('tileview', false);
         },
+        /*
         filter(params) {
             let shift = this.controllerFor('index');
             shift.set('query', params);
@@ -83,6 +86,7 @@ default Ember.Route.extend({
                 }
             });
         },
+        */
         search(params) {
             this.transitionTo('search', {
                 queryParams: {

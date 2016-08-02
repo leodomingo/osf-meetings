@@ -1,10 +1,15 @@
+/*
+* importing individual stylesheets
+*/
 @import "ember-modal-dialog/ember-modal-structure";
 @import "ember-modal-dialog/ember-modal-appearance";
-@import "breakpoints";
+@import "osf-navbar";
 @import "index";
 @import "register";
 @import "conference";
-
+/*
+* Header Sizes 
+*/
 h1
 {
   font-size: 11.089em;
@@ -43,16 +48,8 @@ p
 {
   padding: 0;
 }
-.meetings-navbar
-{
-  position: absolute;
-  left: 0;
-  top: 0;
-  background-color: transparent;
-  background-image: linear-gradient(to top,rgba(255,255,255,0),rgba(255,255,255,0.7),rgba(255,255,255,0.95));
-  border: none;
-}
-.osf-light-background
+
+.osf-light-background /* standard background */
 {
   padding: 0;
   background-image: url("/assets/bg6.jpg");
@@ -62,44 +59,8 @@ p
   background-position-x: center;
   background-position-y: top;
   min-height: 100%;
-}
-.osf-standard-background
-{
-  background-image: linear-gradient(to bottom left, #000305, #0E4364, #4A8DB0);
-  background-size: contain;
-  color: white;
-}
-.big
-{
-  height: 100vh;
-  overflow-y: hidden;
-}
-.big .background
-{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  opacity: 0.3;
-  max-width: 95%;
-  z-index: 2;
-}
-.big .logo
-{
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-textarea
-{
-    max-width: 100%;
+  margin-top: 50px;
 }
 
-html
-{
-  word-wrap: break-word;
-}
-.osf-gravatar img
-{
-  height: 27px;
-}
+
 
