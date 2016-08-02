@@ -24,8 +24,6 @@ class FileViewSet(ModelViewSet):
         account = SocialAccount.objects.get(uid=current_user)
         osf_token = SocialToken.objects.get(account=account)
 
-        ipdb.set_trace()
-
         submission_obj = Submission.objects.get(
             id=request.data['submission_id'])
         file_url = '{}{}/providers/osfstorage'.format(

@@ -11,7 +11,7 @@ export default Model.extend({
     category: attr('string', { defaultValue : 'project' }),
     file : belongsTo('file'),
     //category: attr('string'),
-    //dateCreated: attr(),
+    dateCreated: attr(),
     downloadLink: attr('string'),
     downloadCount: attr('string')
 });
