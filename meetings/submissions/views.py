@@ -25,16 +25,16 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = 'submission_id'
     lookup_field = 'pk'
     permission_classes = (SubmissionPermissions,)
-    filter_backends = (filters.DjangoObjectPermissionsFilter,)
+    filter_backends = (
+        filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter)
+    filter_fields = ('conference', 'contributor')
+    queryset = Submission.objects.all()
 
-    base_url = '{}oauth2/{}'.format(OsfOauth2AdapterConfig.osf_accounts_url, '{}')
+    base_url = '{}oauth2/{}'.format(
+        OsfOauth2AdapterConfig.osf_accounts_url, '{}')
     access_token_url = base_url.format('token')
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
     node_url = '{}v2/nodes/'.format(OsfOauth2AdapterConfig.osf_api_url)
-
-    def get_queryset(self):
-        conference_id = self.kwargs.get('conference_id')
-        return Submission.objects.filter(conference_id=conference_id)
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
@@ -75,7 +75,6 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 serializer.save(
                     contributor=contributor,
                     approval=new_approval, node_id=obj['data']['id'])
-
                 return Response(serializer.data)
         else:
             if serializer.is_valid():

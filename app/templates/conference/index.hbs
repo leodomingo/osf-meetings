@@ -1,29 +1,29 @@
-{{meetings-navbar logout='logout' login='login' search='search'}}
-<div class="container-fluid osf-light-background">
+<div class="container-fluid">
     <div class="row conference-view-outer-container">
         <div class="col-md-12">
             <div class="row">
                 <div class="col-md-12">
                     <div class="col-md-8 col-md-offset-2">
                         <div class="conference-info">
-                            <div class="form-group row">
-                                <div class="col-md-6 ">
-                                    <h1 class="break-word" style="margin:
-                                    15px" style="font-size:40px">
-                                        {{model.conf.title}}</h1>
-                                    <h8 style="margin:15px 0 0 0">
-                                        {{this.conferenceDates}}
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <h2 class="node-title">
+                                     {{model.conf.title}}
+                                    </h2>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 ">
+                                    <h6 style="margin:15px 0 0 0">
+                                        Date: {{this.conferenceDates}}
                                         {{date-display model.conf.eventStart}} - {{date-display model.conf.eventEnd}}
-                                    </h8>
-                                    <h4 style="margin:15px 0 0 0">
-                                        {{model.conf.city}},
-                                        {{model.conf.state}}, {{model.conf.country}}</h4>
+                                    </h6>
+                                    <h6>
+                                        Location: {{model.conf.city}},
+                                        {{model.conf.state}}, {{model.conf.country}}</h6>
                                     <div class="logo-view" align="center"></div>
                                     <p class="conference-description"
-                                       style="font-size: 16px">{{model.conf.description}}</p>
-                                </div>
-                                <div class="col-md-6 conference-photo">
-                                    <img src={{model.conf.logo}}>
+                                       style="font-size: 16px">Description: {{model.conf.description}}</p>
                                 </div>
                             </div>
                             <div class="row">
@@ -39,30 +39,72 @@
 
                             <!-- This is the basic code for a table of submissions without images -->
                             {{#if model.conf.submissionCount}}
-                                <table class="table table-hover">
-                                    <thead class="thead">
-                                        <tr>
-                                            <th class="heading" bgcolor="#E0E0E0" width="30%" data-sortable="true">Title</th>
-                                            <th class="heading" bgcolor="#E0E0E0" width="20%">Author</th>
-                                            <th class="heading" bgcolor="#E0E0E0" width="50%">Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#each model.submissions as |item|}}
-                                            <tr bgcolor="FFFFFF">
-                                                <th class="tableTitle" scope="row">
-                                                    <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
-                                                        {{item.title}}
-                                                    </a></th>
-                                                    <td style="color: black;">{{#each item.contributors as |contributor|}}
-                                                            {{contributor.users.fullName}}
-                                                        {{/each}}
-                                                    </td>
-                                                    <td class="tableDescription" style="color: #000000">{{item.description}}</td>
+                                {{#if model.conf.mySubmissionCount}}
+                                    <h4>My Submissions</h4>
+                                    <table class="table table-hover">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th class="heading" bgcolor="#E0E0E0" width="10%">Edit</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="20%" data-sortable="true">Title</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Author</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Category</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="19%">Submission Date</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Download</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="6%">#</th>
                                             </tr>
-                                        {{/each}}
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                            {{#each model.allSubmissions as |item|}}
+                                                {{#if item.canEdit}}
+                                                    {{my-submissions submission=item}}
+                                                {{/if}}
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                {{/if}}
+                                {{#unless (isEqual model.conf.submissionCount model.conf.mySubmissionCount)}}
+                                    <h4>Submissions to {{model.conf.title}}</h4>
+                                    <table class="table table-hover">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th class="heading" bgcolor="#E0E0E0" width="30%" data-sortable="true">Title</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Author</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Category</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="19%">Submission Date</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Download</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="6%">#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each model.allSubmissions as |item|}}
+                                                {{#unless item.canEdit}}
+                                                    <tr bgcolor="FFFFFF">
+                                                        <td class="tableTitle" scope="row">
+                                                            <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
+                                                                {{item.title}}
+                                                            </a>
+                                                        </td>
+                                                        <td style="color: black;">
+                                                            {{#each item.contributors as |contributor|}}
+                                                                {{contributor.users.fullName}}
+                                                            {{/each}}
+                                                        </td>
+                                                        <td class="tableCategory" style="color: #000000">{{item.category}}</td>
+                                                        <td class="tableDate" style="color: #000000">{{item.dateCreated}}</td>
+                                                        <td class="tableDownload" style="color: #000000 text-align: center">
+                                                            <button type='btn-success' {{action "download" item.downloadLink}}>
+                                                                ↓
+                                                            </button>
+                                                        </td>
+                                                        <td class="tableDownloadCount" style="color: #000000">
+                                                            {{item.downloadCount}}
+                                                        </td>
+                                                    </tr>
+                                                {{/unless}}
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                {{/unless}}
                             {{else}}
                                 <!-- This needs styling and probably rephrasing -->
                                 <div style="color:black; font-size:16px;">

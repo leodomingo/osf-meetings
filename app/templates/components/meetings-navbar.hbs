@@ -1,29 +1,51 @@
-<nav id="create" class="navbar navbar-default meetings-navbar-background">
-    <div class="container-fluid" id="browse">
-        <div class="navbar-header">
-            <img class="navbar-brand" src="https://osf.io/static/img/cos-white2.png">
-            <a class="navbar-brand" href="/">Meetings</a>
-        </div>
-        <form class="navbar-form navbar-left form-group">
-                {{input value=searchQuery placeholder="Search..." class="navbar-form form-control" action="filter" on="key-up"}}
-            <button type="submit" class="btn btn-default" {{action "search"}}>
-            Search
-            </button>
-        </form>
-        {{# if authenticated }}
-            {{!-- TODO: Replace display name functionality if possible- for now truncate via CSS at end of label --}}
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    {{#if frontPage}}
-                        {{else}}
-                        <form class="navbar-form navbar-left form-group" action="/">
-                            <button type="submit" class="btn navbar-btn btn-warning">
-                            Back to Browse
-                            </button>
-                        </form>
-                        {{/if}}
+<div class="osf-nav-wrapper">
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="navbarScope" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                </button>
+                <span class="visible-xs" data-bind="click : toggleSearch, css: searchCSS">
+                    <a class="osf-xs-search pull-right" {{action "toggleSearch"}} style="padding-top: 12px" >
+                        <span rel="tooltip" data-placement="bottom" title="Search OSF" class="fa fa-search fa-lg fa-inverse" ></span>
+                    </a>
+                </span>
+                {{#link-to 'index' class="navbar-brand hidden-sm hidden-xs"}}
+                    <span class="osf-navbar-logo" width="27"></span>
+                    Open Science Framework | Meetings
+                {{/link-to}}
+            </div>
+            <div id="navbar" class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    {{#if authenticated}}
+                    <li id="osfNavDashboard"><a href={{host}}>Dashboard</a></li>
+                    <li id="osfNavMyProjects"><a href="{{host}}myprojects/">My Projects</a></li>
+                    {{/if}}
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle form-group" data-toggle="dropdown" role="button" aria-expanded="false">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Browse <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="{{host}}explore/activity/">New Projects</a></li>
+                            <li><a href="{{host}}search/?q=*&amp;filter=registration">Registry</a></li>
+                            <li><a href="{{host}}meetings/">Meetings</a></li>
+                        </ul>
+                    </li>
+                    {{# unless authenticated}}
+                    <li class="dropdown">
+                        <a href="${domain}support/" >Support</a>
+                    </li>
+                    {{/unless}}
+                    <li class="hidden-xs">
+                        <a onclick={{action "toggleSearch"}}>
+                            <span rel="tooltip" data-placement="bottom" title="Search OSF" class="fa fa-search fa-lg" ></span>
+                        </a>
+                    </li>
+                    {{#if authenticated }}
+                    {{!-- TODO: Replace display name functionality if possible- for now truncate via CSS at end of label --}}
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle nav-user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="osf-gravatar">
                                 <img src={{user.links.profile_image}} alt="User gravatar">
                             </span> {{user.attributes.full_name}}
@@ -31,33 +53,51 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="{{user.links.html}}"><i class="fa fa-user fa-lg p-r-xs"></i> My Profile</a>
+                                <a href="{{host}}profile/"><i class="fa fa-user fa-lg p-r-xs"></i> My Profile</a>
                             </li>
                             <li>
                                 <a href="{{host}}support/" ><i class="fa fa-life-ring fa-lg p-r-xs"></i> Support</a>
                             </li>
-
                             <li>
                                 <a href="{{host}}settings/"><i class="fa fa-cog fa-lg p-r-xs"></i> Settings</a>
                             </li>
                             <li>
                                 <a onclick={{action 'logout'}}><i class="fa fa-sign-out fa-lg p-r-xs"></i> Log out</a>
                             </li>
-
                         </ul>
                     </li>
+                    {{else}}
+                    <li class="dropdown sign-in" data-bind="with: $root.signIn">
+                        <div class="btn-group">
+                            <a href="{{host}}register/" class="btn btn-success btn-top-signup m-r-xs">Sign Up</a>
+                            <a onclick={{action 'login'}} class="btn btn-info btn-top-login">
+                                Sign in <span class="hidden-xs"><i class="fa fa-arrow-right"></i></span>
+                            </a>
+                        </div>
+                    </li>
+                    {{/if}}
                 </ul>
+            </div>{{!--/.navbar-collapse --}}
         </div>
-        {{else}}
-        <form class="navbar-form navbar-right" role="search">
-            <button type="submit" class="btn navbar-btn btn-success" {{action 'login'}}>
-            Login
-            </button>
-            <button type="submit" class="btn navbar-btn btn-info" {{action "login"}}>
-            Signup
-            </button>
-        </form>
-        {{/if}}
-
+    </nav>
+    {{#if showSearch}}
+    <div class="osf-search">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form class="input-group" {{action "search" on="submit"}}>
+                        {{input value=searchQuery id="searchPageFullBar"
+                        name="search-placeholder" type="text" class="osf-search-input form-control" placeholder="Search" key-up="filter"}}
+                        <label id="searchBarLabel" class="search-label-placeholder" for="search-placeholder">Search</label>
+                        <span class="input-group-btn">
+                            <button  class="btn osf-search-btn"{{action "search"}}><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                            <button type="button" class="btn osf-search-btn" data-toggle="modal" data-target="#search-help-modal"><i class="fa fa-question fa-lg"></i></button>
+                            <button type="button" class="btn osf-search-btn" onclick={{action "toggleSearch"}}><i class="fa fa-times fa-lg"></i></button>
+                        </span>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-</nav>
+    {{/if}}
+</div>

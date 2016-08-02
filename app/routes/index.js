@@ -10,7 +10,6 @@ default Ember.Route.extend({
         }
     },
     model(params) {
-
         let foundConferences = this.store.query('conference', {
             search: params.q,
             page: params.p
@@ -26,12 +25,27 @@ default Ember.Route.extend({
         });
         return foundConferences;
     },
-
-    deactivate: function(){
-        Ember.$('body').removeClass('hide-scroll');
-        Ember.$('html').css({"overflow-y": 'scroll'});
+    beforeModel: function() {
+        var redirectURL = this.getCookie('redirectURL');
+        if (redirectURL !== window.location.href) {
+            document.cookie = "redirectURL=" + window.location.href;
+            window.location = redirectURL;
+        }
     },
-
+    getCookie: function(cname) {
+        var name = cname + "=";
+        var ca = document.cookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0)===' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) === 0) {
+                return c.substring(name.length,c.length);
+            }
+        }
+        return "";
+    },
     actions: {
         create() {
             this.transitionTo('conference.new').then(function(newRoute) {
@@ -43,18 +57,26 @@ default Ember.Route.extend({
             shift.set('visited', true);
             Ember.$('#indexTop').hide(2000);
         },
+        /***************************************/
+
+
+        /*
+        *  Switches main view to tiles
+        */
         tileView() {
             Ember.$('#tileButton').addClass('disabled');
             Ember.$('#listButton').removeClass('disabled');
             let shift = this.controllerFor('index');
             shift.set('tileview', true);
         },
+        /***************************************/
         listView() {
             Ember.$('#listButton').addClass('disabled');
             Ember.$('#tileButton').removeClass('disabled');
             let shift = this.controllerFor('index');
             shift.set('tileview', false);
         },
+        /*
         filter(params) {
             let shift = this.controllerFor('index');
             shift.set('query', params);
@@ -64,6 +86,7 @@ default Ember.Route.extend({
                 }
             });
         },
+        */
         search(params) {
             this.transitionTo('search', {
                 queryParams: {

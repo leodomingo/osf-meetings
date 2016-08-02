@@ -20,7 +20,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = 'CHANGEME'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'guardian',
     'rest_framework',
     'corsheaders',
+    'anymail',
+    'osf_oauth2_adapter',  # must be before allauth to override templates
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -53,7 +55,7 @@ INSTALLED_APPS = [
     'submissions',
     'files',
     'autofixture',
-    'osf_oauth2_adapter',
+    'mail'
 ]
 
 REST_FRAMEWORK = {
@@ -193,7 +195,19 @@ OSF_STAGING_URL = os.environ.get(
 
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'
+OSF_MEETINGS_API_URL = 'http://localhost:8000'
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
 ACCOUNT_LOGOUT_REDIRECT_URL = 'http://localhost:4200'
+
+CLIENT_ID = ''
+CLIENT_SECRET = ''
+
+# https://github.com/anymail/django-anymail
+EMAIL_BACKEND = "anymail.backends.mailgun.MailgunBackend"
+
+MAILGUN_API_KEY = ''
+ANYMAIL = {
+    "MAILGUN_API_KEY": MAILGUN_API_KEY,
+}

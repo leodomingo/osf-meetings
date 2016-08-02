@@ -13,22 +13,26 @@ import meetings.settings.local as local
 CLIENT_ID = local.CLIENT_ID
 CLIENT_SECRET = local.CLIENT_SECRET
 
+
 def make_social_app(apps, schema_editor):
     mysite = Site.objects.create(domain="osf.io", name="OSF")
     mysite.save()
-    mysocialapp = SocialApp.objects.create(name="OSF", client_id=CLIENT_ID, secret=CLIENT_SECRET, key="", provider="osf")
+    mysocialapp = SocialApp.objects.create(
+        name="OSF", client_id=CLIENT_ID, secret=CLIENT_SECRET, key="", provider="osf")
     mysocialapp.sites.add(mysite)
     mysocialapp.save()
+
 
 def create_human_group(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
     Group.objects.create(name=OsfOauth2AdapterConfig.humans_group_name)
 
+
 class Migration(migrations.Migration):
 
     dependencies = [
         ('sites', '0001_initial'),
-        ('socialaccount','0001_initial'),
+        ('socialaccount', '0001_initial'),
     ]
 
     operations = [

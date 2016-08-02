@@ -1,15 +1,9 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from conferences import views
 
 conference_list = views.ConferenceViewSet.as_view({
     'get': 'list',
-    'post':'create',
-})
-
-conference_detail = views.ConferenceViewSet.as_view({
-    'get': 'retrieve',
-    'delete':'destroy',
-    'patch':'partial_update'
+    'post': 'create',
 })
 
 conference_detail = views.ConferenceViewSet.as_view({
@@ -21,6 +15,4 @@ conference_detail = views.ConferenceViewSet.as_view({
 urlpatterns = [
     url(r'^$', conference_list, name='list'),
     url(r'^(?P<pk>[-\w]+)/$', conference_detail, name='detail'),
-    url(r'^(?P<conference_id>[-\w]+)/submissions/',
-        include('submissions.urls', namespace='submissions')),
 ]

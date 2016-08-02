@@ -3,5 +3,5 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class FilesConfig(AppConfig):
-    name = 'files'
+class MailConfig(AppConfig):
+    name = 'mail'

@@ -6,6 +6,7 @@ from submissions.models import Submission
 from approvals.models import Approval
 from django.contrib.auth.models import User
 
+
 class SubmissionSerializer(ser.ModelSerializer):
     links = ser.SerializerMethodField()
     can_edit = ser.SerializerMethodField()
@@ -22,9 +23,8 @@ class SubmissionSerializer(ser.ModelSerializer):
         request = self.context.get('request')
         return {
             'self': reverse(
-                'conferences:submissions:detail',
+                'submissions:detail',
                 kwargs={
-                    'conference_id': obj.conference.id,
                     'submission_id': obj.pk
                 },
                 request=request
