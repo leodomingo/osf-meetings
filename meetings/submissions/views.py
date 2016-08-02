@@ -18,8 +18,69 @@ from allauth.socialaccount.models import SocialAccount
 import requests
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
-
 class SubmissionViewSet(viewsets.ModelViewSet):
+
+    """
+    A simple ViewSet for viewing and editing submissions. ConferenceViewSet has two endpoints: 
+    `/submissions` and `/submissions/{submission_id}`.
+
+    ###Submission List Attributes
+    TODO
+
+    ###Submission Detail Attributes
+    
+    This is a list of the fields for the `/submissions/{submission_id}` endpoint.
+
+        name            type         description
+        ======================================================================================================
+        node_id         string       Unique identifier used to refer OSF node associated with the submission
+        date_created    dateTime     Time when item was created
+        title           string       Title of submission
+        contributor     string       GUID of user who created the submission
+        description     string       Description of submission
+        conference      string       id of the conference that the submission was uploaded to
+        approval        TODO         TODO
+
+    ###Create
+
+        Method: POST
+        URL:    /submissions
+        Query Params:  <none> TODO: Make sure these are none
+        Body (JSONAPI): {
+            // mandatory
+            "title":         string
+            "description":   string
+        }
+
+    ###Get Submission List
+        
+        Method: GET
+        URL: /submissions
+        Params: TODO: Pretty sure I mention that you filter by conference here but who knows...
+        Success: 200 OK TODO: Find out if I need more than 200 OK on these
+
+    ###Get Submission
+
+        Method: GET
+        URL: /submissions/{submission_id}
+        Params: none
+        Success: 200 OK
+
+    ###Delete
+
+        Method: DELETE
+        URL: /submissions/{submission_id}
+        Query Params:  <none>
+        Success: 204 No Content
+
+    ##Edit
+
+        Method: PATCH
+        URL:    /submissions/{sucmission_id}
+
+
+    """
+
     resource_name = 'submissions'
     serializer_class = SubmissionSerializer
     lookup_url_kwarg = 'submission_id'
@@ -80,8 +141,3 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 serializer.save(approval=new_approval)
                 return Response(serializer.data)
         return Response(serializer.errors)
-
-
-class SubmissionRelationshipView(RelationshipView):
-    encoding = 'utf-8',
-    queryset = Submission.objects.all()

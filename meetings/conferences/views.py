@@ -13,11 +13,11 @@ class ConferenceViewSet(viewsets.ModelViewSet):
     `/conferences` and `/conferences/{conference_id}`.
 
     ###Conference List Attributes
-
+    TODO
 
     ###Conference Detail Attributes
         
-    This is a list of the fields for the `/conference/{conference_id}` endpoint.
+    This is a list of the fields for the `/conferences/{conference_id}` endpoint.
     
         name                type          description
         =======================================================================================================
@@ -42,10 +42,10 @@ class ConferenceViewSet(viewsets.ModelViewSet):
 
         Method:        POST
         URL:           /conferences
-        Query Params:  <none>
+        Query Params:  <none> TODO: Make sure these are none
         Body (JSONAPI): {  
             // mandatory
-            "title":             string
+            "title":             string   TOOD: Find out if I need the types again?
             "city":              string
             "state":             string
             "country":           string
@@ -71,20 +71,21 @@ class ConferenceViewSet(viewsets.ModelViewSet):
 
         Method:   GET
         URL:      /conferences/{conference_id}
-        params:   none
-        Success: 200 OK
+        Params:   none
+        Success:  200 OK
 
     ###Delete
 
-        Method:   DELETE
-        URL:      /conferences/{conference_id}
+        Method:        DELETE
+        URL:           /conferences/{conference_id}
         Query Params:  <none>
-        Success: 204 No Content
+        Success:       204 No Content
 
     ###Edit
 
         Method:   PATCH
-        ???
+        URL:      /conferences/{conference_id}
+        TODO
 
 
     """
