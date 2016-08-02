@@ -21,16 +21,11 @@ from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 class SubmissionViewSet(viewsets.ModelViewSet):
 
     """
-    A simple ViewSet for viewing and editing submissions. ConferenceViewSet has two endpoints: 
+    A simple ViewSet for viewing and editing submissions. SubmissionViewSet has two endpoints: 
     `/submissions` and `/submissions/{submission_id}`.
 
-    ###Submission List Attributes
-    TODO
-
-    ###Submission Detail Attributes
+    ###Attributes
     
-    This is a list of the fields for the `/submissions/{submission_id}` endpoint.
-
         name            type         description
         ======================================================================================================
         node_id         string       Unique identifier used to refer OSF node associated with the submission
@@ -39,7 +34,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         contributor     string       GUID of user who created the submission
         description     string       Description of submission
         conference      string       id of the conference that the submission was uploaded to
-        approval        TODO         TODO
+        approval        boolean      boolean describing whether the submission has been approved to the conference
 
     ###Create
 

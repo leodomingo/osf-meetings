@@ -12,13 +12,8 @@ class ConferenceViewSet(viewsets.ModelViewSet):
     A simple ViewSet for viewing and editing conferences. ConferenceViewSet has two endpoints: 
     `/conferences` and `/conferences/{conference_id}`.
 
-    ###Conference List Attributes
-    TODO
-
-    ###Conference Detail Attributes
-        
-    This is a list of the fields for the `/conferences/{conference_id}` endpoint.
-    
+    ###Attributes
+            
         name                type          description
         =======================================================================================================
         id                  string        Unique identifier used to refer to specific conference
