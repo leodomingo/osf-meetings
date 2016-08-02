@@ -8,6 +8,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
+    url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^conferences/',
         include('conferences.urls', namespace='conferences')),
     url(r'^submissions/',
