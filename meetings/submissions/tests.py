@@ -1,5 +1,19 @@
 from django.test import TestCase
 from unittest import skip
+import factory
+from datetime import datetime
+
+from submissions.models import Submission
+
+
+class SubmissionFactory(factory.Factory):
+    class Meta:
+        model = Submission
+
+    node_id = '12345'
+    date_created = factory.LazyFunction(datetime.now)
+    title = 'Even more'
+    description = 'More text'
 
 
 class TestPermissions(TestCase):
