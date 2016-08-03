@@ -10,8 +10,8 @@ export default Model.extend({
     nodeId: attr('string'),
     category: attr('string', { defaultValue : 'project' }),
     file : belongsTo('file'),
-    //category: attr('string'),
     dateCreated: attr(),
     downloadLink: attr('string'),
-    downloadCount: attr('string')
+    downloadCount: attr('string'),
+    contributor : belongsTo('user')
 });

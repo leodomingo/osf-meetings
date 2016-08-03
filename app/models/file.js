@@ -4,5 +4,8 @@ import { belongsTo } from 'ember-data/relationships';
 
 export default Model.extend({
     submission : belongsTo('submission'),
-    file : attr('file'),
+    owner : belongsTo('user'),
+    osfId : attr('string'),
+    osfUrl : attr('string'),
+    fileName : attr('string')
 });
