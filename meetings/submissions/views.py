@@ -2,7 +2,6 @@ import json
 
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
-from rest_framework_json_api.views import RelationshipView
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -72,6 +71,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 )
 
                 obj = response.json()
+
                 serializer.save(
                     contributor=contributor,
                     approval=new_approval, node_id=obj['data']['id'])
@@ -81,8 +81,3 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 serializer.save(approval=new_approval)
                 return Response(serializer.data)
         return Response(serializer.errors)
-
-
-class SubmissionRelationshipView(RelationshipView):
-    encoding = 'utf-8',
-    queryset = Submission.objects.all()
