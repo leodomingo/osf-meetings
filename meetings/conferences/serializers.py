@@ -41,10 +41,9 @@ class ConferenceSerializer(serializers.ModelSerializer):
             count = len(Submission.objects.filter(conference=obj))
         else:
             count = len(Submission.objects.filter(
-                            conference=obj,
-                            contributor=user
-                            )
-                        )
+                conference=obj,
+                contributor=user
+            ))
         return count
 
     def get_can_edit(self, obj):
