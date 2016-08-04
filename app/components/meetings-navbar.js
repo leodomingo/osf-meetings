@@ -3,6 +3,7 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Component.extend({
+    store: Ember.inject.service('store'),
     fixed: true, /* holds status of navbar -> fixed or unfixed <- depending on mobile view or not */
     host: config.osfUrl, /* root URL for Osf redirection */
     authenticated: false, /* authentication status */
@@ -32,6 +33,7 @@ export default Ember.Component.extend({
             if (!(loggedIn.errors)) {
                 self.set('authenticated', true);
                 self.set('user', loggedIn.data);
+                self.get('store').pushPayload('user', loggedIn);
             }
             else {
                 self.set('authenticated', false);

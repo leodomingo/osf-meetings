@@ -18,17 +18,17 @@
         {{#if this.results}}
               <div class="col-md-12 hidden-md hidden-lg hidden-xl">
                 {{#each model as |conf key|}}
-                  {{#link-to "conference.index"  conf.id }}
-                  {{meeting-masonry title=conf.title location = (location-display conf.city conf.state conf.country) description = conf.description date = (date-display conf.start) submission = conf.submissionCount}}
+                  {{#link-to "conference.index" conf.id }}
+                      {{meeting-masonry model=conf}}
                   {{/link-to}}
                 {{/each}}
                 </div>
             <div class="col-md-6 no-padding hidden-sm">
             {{#each model as |conf key|}}
                   {{#if (is-even key)}}
-                  {{#link-to "conference.index"  conf.id }}
-                  {{meeting-masonry title=conf.title location = (location-display conf.city conf.state conf.country) description = conf.description date = (date-display conf.start) submission = conf.submissionCount}}
-                  {{/link-to}}
+                      {{#link-to "conference.index" conf.id }}
+                          {{meeting-masonry model=conf}}
+                      {{/link-to}}
                   {{/if}}
                 {{/each}}
             </div>
@@ -36,9 +36,9 @@
             {{#each model as |conf key|}}
                   {{#if (is-even key)}}
                   {{else}}
-                  {{#link-to "conference.index"  conf.id }}
-                  {{meeting-masonry title=conf.title location = (location-display conf.city conf.state conf.country) description = conf.description date = (date-display conf.start) submission = conf.submissionCount}}
-                  {{/link-to}}
+                      {{#link-to "conference.index" conf.id }}
+                          {{meeting-masonry model=conf}}
+                      {{/link-to}}
                   {{/if}}
                 {{/each}}
             </div>
