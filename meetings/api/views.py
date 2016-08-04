@@ -47,4 +47,7 @@ class CurrentUserView(APIView):
             data['attributes']['token'] = str(token)
             return Response(data)
         else:
-            return Response('User is not logged in', status=status.HTTP_401_UNAUTHORIZED)
+            return Response(
+                'User is not logged in',
+                status=status.HTTP_401_UNAUTHORIZED
+            )

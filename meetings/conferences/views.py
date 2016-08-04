@@ -10,7 +10,9 @@ class ConferenceViewSet(viewsets.ModelViewSet):
     resource_name = 'conferences'
     queryset = Conference.objects.all()
     serializer_class = ConferenceSerializer
-    filter_backends = (filters.SearchFilter, filters.DjangoObjectPermissionsFilter,)
+    filter_backends = (
+        filters.SearchFilter,
+        filters.DjangoObjectPermissionsFilter,)
     permission_classes = (ConferencePermissions, )
     search_fields = ('title', 'description')
 

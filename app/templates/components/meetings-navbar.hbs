@@ -13,8 +13,10 @@
                         <span rel="tooltip" data-placement="bottom" title="Search OSF" class="fa fa-search fa-lg fa-inverse" ></span>
                     </a>
                 </span>
-                <a class="navbar-brand hidden-sm hidden-xs" href="/"><span class="osf-navbar-logo" width="27"></span> OSF | Meetings</a>
-                <a class="navbar-brand visible-sm visible-xs" href="/"><span class="osf-navbar-logo" width="27"></span> OSF</a>
+                {{#link-to 'index' class="navbar-brand hidden-sm hidden-xs"}}
+                    <span class="osf-navbar-logo" width="27"></span>
+                    Open Science Framework | Meetings
+                {{/link-to}}
             </div>
             <div id="navbar" class="navbar-collapse collapse navbar-right">
                 <ul class="nav navbar-nav">
@@ -40,7 +42,7 @@
                             <span rel="tooltip" data-placement="bottom" title="Search OSF" class="fa fa-search fa-lg" ></span>
                         </a>
                     </li>
-                    {{# if authenticated }}
+                    {{#if authenticated }}
                     {{!-- TODO: Replace display name functionality if possible- for now truncate via CSS at end of label --}}
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle nav-user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -84,7 +86,8 @@
             <div class="row">
                 <div class="col-md-12">
                     <form class="input-group" {{action "search" on="submit"}}>
-                        {{input value=searchQuery id="searchPageFullBar" name="search-placeholder" type="text" class="osf-search-input form-control" placeholder="Search" action="filter" on="key-up"}}
+                        {{input value=searchQuery id="searchPageFullBar"
+                        name="search-placeholder" type="text" class="osf-search-input form-control" placeholder="Search" key-up="filter"}}
                         <label id="searchBarLabel" class="search-label-placeholder" for="search-placeholder">Search</label>
                         <span class="input-group-btn">
                             <button  class="btn osf-search-btn"{{action "search"}}><i class="fa fa-arrow-circle-right fa-lg"></i></button>
