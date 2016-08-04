@@ -26,8 +26,8 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     lookup_field = 'pk'
     permission_classes = (SubmissionPermissions,)
     filter_backends = (
-        filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter,)
-    filter_fields = ('conference',)
+        filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter)
+    filter_fields = ('conference', 'contributor')
     queryset = Submission.objects.all()
 
     base_url = '{}oauth2/{}'.format(

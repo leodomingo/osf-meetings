@@ -37,32 +37,91 @@
                                 </div>
                             </div>
 
-                            <!-- This is the basic code for a table of submissions without images -->
-                            {{#if model.submissionCount}}
-                                <table class="table table-hover">
-                                    <thead class="thead">
-                                        <tr>
-                                            <th class="heading" bgcolor="#E0E0E0" width="30%" data-sortable="true">Title</th>
-                                            <th class="heading" bgcolor="#E0E0E0" width="20%">Author</th>
-                                            <th class="heading" bgcolor="#E0E0E0" width="50%">Description</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {{#each model.submissions as |item|}}
-                                            <tr bgcolor="FFFFFF">
-                                                <th class="tableTitle" scope="row">
-                                                    <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
-                                                        {{item.title}}
-                                                    </a></th>
-                                                    <td style="color: black;">{{#each item.contributors as |contributor|}}
-                                                            {{contributor.users.fullName}}
-                                                        {{/each}}
-                                                    </td>
-                                                    <td class="tableDescription" style="color: #000000">{{item.description}}</td>
-                                            </tr>
-                                        {{/each}}
-                                    </tbody>
+                            <!-- This is the basic code for a list with images -->
+                            <!--                                   <div id="table" class="row">
+                                <div class="col-md-12">
+                                {{!-- models-table data=model columns=columns useFilteringByColumns=false rowTemplate="row" --}}
+                                <table class="table  table-hover table-condensed table-bordered">
+                                <tbody>
+                                {{#each model.submissions as |item|}}
+                                    <a target="_blank" style="color: black;" href= {{link-to-osf item.id}}>
+                                    {{node-component title=item.title contributors=item.contributors description=item.description}}
+                                    </a>
+                                {{/each}}
+                                </tbody>
                                 </table>
+                                </div>
+                                </div>
+                            -->
+
+                            <!-- This is the basic code for a table of submissions without images -->
+                            {{#if model.conf.submissionCount}}
+                                {{#if model.conf.mySubmissionCount}}
+                                    <h4>My Submissions</h4>
+                                    <table class="table table-hover">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th class="heading" bgcolor="#E0E0E0" width="10%">Edit</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="20%" data-sortable="true">Title</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Author</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Category</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="19%">Submission Date</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Download</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="6%">#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each model.mySubmissions as |item|}}
+                                                {{#if item.canEdit}}
+                                                    {{my-submissions submission=item}}
+                                                {{/if}}
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                {{/if}}
+                                {{#unless (isEqual model.conf.submissionCount model.conf.mySubmissionCount)}}
+                                    <h4>Submissions to {{model.conf.title}}</h4>
+                                    <table class="table table-hover">
+                                        <thead class="thead">
+                                            <tr>
+                                                <th class="heading" bgcolor="#E0E0E0" width="30%" data-sortable="true">Title</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Author</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Category</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="19%">Submission Date</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="15%">Download</th>
+                                                <th class="heading" bgcolor="#E0E0E0" width="6%">#</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {{#each model.allSubmissions as |item|}}
+                                                {{#unless item.canEdit}}
+                                                    <tr bgcolor="FFFFFF">
+                                                        <td class="tableTitle" scope="row">
+                                                            <a target="_blank" style="color: #0080ff;" href={{link-to-osf item.id}}>
+                                                                {{item.title}}
+                                                            </a>
+                                                        </td>
+                                                        <td style="color: black;">
+                                                            {{#each item.contributors as |contributor|}}
+                                                                {{contributor.users.fullName}}
+                                                            {{/each}}
+                                                        </td>
+                                                        <td class="tableCategory" style="color: #000000">{{item.category}}</td>
+                                                        <td class="tableDate" style="color: #000000">{{item.dateCreated}}</td>
+                                                        <td class="tableDownload" style="color: #000000 text-align: center">
+                                                            <button type='btn-success' {{action "download" item.downloadLink}}>
+                                                                ↓
+                                                            </button>
+                                                        </td>
+                                                        <td class="tableDownloadCount" style="color: #000000">
+                                                            {{item.downloadCount}}
+                                                        </td>
+                                                    </tr>
+                                                {{/unless}}
+                                            {{/each}}
+                                        </tbody>
+                                    </table>
+                                {{/unless}}
                             {{else}}
                                 <!-- This needs styling and probably rephrasing -->
                                 <div style="color:black; font-size:16px;">
