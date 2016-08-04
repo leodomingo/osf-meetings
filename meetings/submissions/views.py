@@ -70,11 +70,12 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                         }
                 )
 
-                obj = response.json()
-
+                resObj = response.json()
                 serializer.save(
                     contributor=contributor,
-                    approval=new_approval, node_id=obj['data']['id'])
+                    approval=new_approval,
+                    node_id=resObj['data']['id']
+                )
                 return Response(serializer.data)
         else:
             if serializer.is_valid():

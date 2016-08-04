@@ -26,11 +26,12 @@ class ApprovalPermissions(permissions.DjangoObjectPermissions):
         # This method gets called on list view and normally fails due to
         # the commented out line below in the return statement.
         #
-        # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
-        # to be able to see
+        # DjangoObjectPermissionsFilter ensures users can only see what
+        # they are supposed to be able to see
         #
-        # has_object_permission() in DjangoObjectPermissions ensures users can only
-        # GET, POST, PATCH etc. on objects they have the required permissions for
+        # has_object_permission() in DjangoObjectPermissions ensures users
+        # can only GET, POST, PATCH etc. on objects they have the required
+        # permissions for
         #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied
@@ -58,12 +59,16 @@ class ApprovalPermissions(permissions.DjangoObjectPermissions):
         )
 
 
-def add_approval_permissions_to_submission_contributor(approval, submission_contributor):
+def add_approval_permissions_to_submission_contributor(
+        approval,
+        submission_contributor):
     assign_perm("approvals.delete_approval", submission_contributor, approval)
     assign_perm("approvals.view_approval", submission_contributor, approval)
 
 
-def remove_approval_permissions_from_submission_contributor(approval, submission_contributor):
+def remove_approval_permissions_from_submission_contributor(
+        approval,
+        submission_contributor):
     remove_perm("approvals.delete_approval", submission_contributor, approval)
     remove_perm("approvals.view_approval", submission_contributor, approval)
 
@@ -74,7 +79,9 @@ def add_approval_permissions_to_conference_admin(approval, conference_admin):
     assign_perm("approvals.view_approval", conference_admin, approval)
 
 
-def remove_approval_permissions_from_conference_admin(approval, conference_admin):
+def remove_approval_permissions_from_conference_admin(
+        approval,
+        conference_admin):
     remove_perm("approvals.change_approval", conference_admin, approval)
     remove_perm("approvals.delete_approval", conference_admin, approval)
     remove_perm("approvals.view_approval", conference_admin, approval)

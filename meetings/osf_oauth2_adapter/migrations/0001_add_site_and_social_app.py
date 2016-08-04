@@ -18,7 +18,10 @@ def make_social_app(apps, schema_editor):
     mysite = Site.objects.create(domain="osf.io", name="OSF")
     mysite.save()
     mysocialapp = SocialApp.objects.create(
-        name="OSF", client_id=CLIENT_ID, secret=CLIENT_SECRET, key="", provider="osf")
+        name="OSF",
+        client_id=CLIENT_ID,
+        secret=CLIENT_SECRET,
+        key="", provider="osf")
     mysocialapp.sites.add(mysite)
     mysocialapp.save()
 
