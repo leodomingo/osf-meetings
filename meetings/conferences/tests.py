@@ -5,7 +5,7 @@ from . import models
 from permissions import ConferencePermissions
 from serializers import ConferenceSerializer
 from views import ConferenceViewSet
-
+from django.utils.functional import SimpleLazyObject
 
 class UserFactory(factory.Factory):
     class Meta: 
@@ -40,14 +40,20 @@ class ConferenceFactory(factory.Factory):
 
 class TestSerializers(TestCase):
     def setUp(self):
-        user1 = UserFactory()
-        user2 = UserFactory()
-        conference = ConferenceFactory(
-            admin = user1
+        self.user1 = UserFactory(
+            username = 'Leo'
+            )
+        self.user2 = UserFactory()
+        self.conference = ConferenceFactory(
+            admin = self.user1
         )
-        self.request1 = RequestFactory().get('./fake_path')
-        self.request2 = RequestFactory().get('./fake_path')
-        
+        self.request1 = RequestFactory().post('./fake_path')
+        self.request1.user = SimpleLazyObject(self.user1)
+        self.request1.query_params = {}
+        self.request2 = RequestFactory().post('./fake_path')
+        self.request2.user = SimpleLazyObject(self.user2)
+        self.request2.query_params = {}
+
     @skip('Test links are formed correctly')
     def test_get_links(self):
         pass
@@ -57,9 +63,12 @@ class TestSerializers(TestCase):
         pass
 
     def test_get_can_edit(self):
-        pass
-
-
+        self.serializer1 = ConferenceSerializer(context={'request': self.request1})
+        self.serializer2 = ConferenceSerializer(context={'request': self.request2})
+        self.canEdit1 = self.serializer1.get_can_edit(self.conference)
+        self.canEdit2 = self.serializer2.get_can_edit(self.conference)
+        self.assertTrue(self.canEdit1)
+        self.assertTrue(self.canEdit2)
 
 
 class TestSignals(TestCase):
