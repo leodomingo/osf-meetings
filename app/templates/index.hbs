@@ -4,9 +4,9 @@
   <div class="row conference-view-outer-container" id="indexBottom">
     <div class="col-md-10 col-md-offset-1">
       <div class="col-md-10 col-md-offset-1 tile-view fade-background">
-        <button class="btn btn-success navbar-btn" {{action "create"}}>
+        <button class="btn btn-success navbar-btn" {{action "toggleInfo"}}>
           <span class="glyphicon glyphicon-plus"></span>
-          Create a Meeting
+          Register a Meeting
         </button>
         <button id="tileButton" class="btn btn-default navbar-btn" {{action "tileView"}}>
           <span class="glyphicon glyphicon-th-large"></span>
@@ -14,6 +14,26 @@
         <button id="listButton" class="btn btn-default navbar-btn" {{action "listView"}}>
           <span class="glyphicon glyphicon-th-list"></span>
         </button>
+        <div class="row" id="submission-instructions">
+          <div class="col-md-6">
+              <div class="submission-modal">
+              <strong>Create through email</strong>
+              <h6>OSF for Meetings is a product that we offer to academic conferences at no cost. To request poster and talk hosting for a conference:</h6>
+
+              <strong>Email us at <span style="color: blue;">contact@cos.io</span></strong>
+
+              <h6>We'll review and add your conference within one business day.</h6>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="btn-group submission-modal" role="group" aria-label="...">
+                  <strong>Create Here:</strong>
+                  <br>
+                  <h6>You can also use our conference creation form to set up your meeting here</h6>
+                      <button type="button" class="btn btn-success" style="margin: 0 0 5px 0; width: 200px;" {{action "create"}}><span class="glyphicon glyphicon-plus"></span>  Create a Conference</button>
+              </div>
+          </div>
+        </div>
         <div class="row">
         {{#if this.results}}
               <div class="col-md-12 hidden-md hidden-lg hidden-xl">
@@ -23,7 +43,7 @@
                   {{/link-to}}
                 {{/each}}
                 </div>
-            <div class="col-md-6 no-padding hidden-sm">
+            <div class="col-md-6 no-padding hidden-sm hidden-xs">
             {{#each model as |conf key|}}
                   {{#if (is-even key)}}
                       {{#link-to "conference.index" conf.id }}
@@ -32,7 +52,7 @@
                   {{/if}}
                 {{/each}}
             </div>
-            <div class="col-md-6 no-padding hidden-sm">
+            <div class="col-md-6 no-padding hidden-sm hidden-xs">
             {{#each model as |conf key|}}
                   {{#if (is-even key)}}
                   {{else}}
@@ -43,7 +63,7 @@
                 {{/each}}
             </div>
         {{else}}
-        <h4> There are no results for <em><strong>{{this.query}}</strong></em></h4>
+        <h4> There are no Conferences available <em><strong>{{this.query}}</strong></em></h4>
         {{/if}}     
         </div>
       </div> <!-- end tile view -->
@@ -53,7 +73,7 @@
   <div class="row conference-view-outer-container">
     <div class="col-md-10 col-md-offset-1 ">
       <div class="col-md-10 col-md-offset-1 fade-background table-view">
-        <button class="btn btn-success navbar-btn" {{action "create"}}>
+        <button class="btn btn-success navbar-btn" {{action "toggleInfo"}}>
           <span class="glyphicon glyphicon-plus"></span>
           Create a Meeting
         </button>
@@ -63,6 +83,27 @@
         <button id="listButton" class="btn btn-default navbar-btn" {{action "listView"}}>
           <span class="glyphicon glyphicon-th-list"></span>
         </button>
+        <div class= "row" id="submission-instructions">
+          <div class="col-md-6">
+              <div class="submission-modal">
+              <strong>Create through email</strong>
+              <h6>OSF for Meetings is a product that we offer to academic conferences at no cost. To request poster and talk hosting for a conference:</h6>
+
+              <strong>Email us at <span style="color: blue;">contact@cos.io</span></strong>
+
+              <h6>We'll review and add your conference within one business day.</h6>
+              </div>
+          </div>
+          <div class="col-md-6">
+              <div class="btn-group submission-modal" role="group" aria-label="...">
+                  <strong>Create Here:</strong>
+                  <br>
+                  <h6>You can also use our conference creation form to set up your meeting here</h6>
+                      <button type="button" class="btn btn-success" style="margin: 0 0 5px 0; width: 200px;" {{action "create"}}><span class="glyphicon glyphicon-plus"></span>  Create a Conference</button>
+              </div>
+          </div>
+        </div>
+        
         {{#if this.results}}
         <div class="col-md-12">
           <div class="row table-head">
@@ -77,7 +118,7 @@
             </div>
           </div>
           {{#each model as |conference|}}
-          {{#link-to "conference.index" conference.id tagName="div" class="row"}}
+          {{#link-to "conference.index" conference.id tagName="div" class="row" id="tablerow"}}
           <div class="col-md-4">
             <h5><strong><em>{{conference.title}} {{@key}}</em></strong></h5>
           </div>
