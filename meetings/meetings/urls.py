@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^mail/inbound/', include('mail.urls')),
+    url(r'^docs', apiViews.schema_view)
 ]
