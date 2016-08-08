@@ -9,6 +9,8 @@ from permissions import ConferencePermissions
 from serializers import ConferenceSerializer
 from views import ConferenceViewSet
 from django.utils.functional import SimpleLazyObject
+from django_countries import countries
+from signals import add_permissions
 
 
 class UserFactory(factory.DjangoModelFactory):
@@ -51,14 +53,30 @@ class TestSerializers(TestCase):
     def setUp(self):
         self.user1 = UserFactory(
             username = 'Leo',
-            id = '99'
             )
         self.user2 = UserFactory(
             username = 'LeoLeo'
             )
         self.conference = ConferenceFactory(
+            id = '38',
             admin = self.user1
         )
+        self.request1 = RequestFactory().post('./fake_path')
+        self.request1.user = self.user1
+        self.request1.query_params = {}
+        self.request2 = RequestFactory().post('./fake_path')
+        self.request2.user = self.user2
+        self.request2.query_params = {}
+
+
+    def test_get_links(self):
+        self.serializer = ConferenceSerializer(context={'request': self.request1})
+        self.links = self.serializer.get_links(self.conference)
+        self.assertEqual(self.links['self'], 'http://testserver/conferences/38/')
+        self.assertEqual(self.links['submissions'], 'http://testserver/submissions/?conference=38')
+
+
+    def test_get_submission_count(self):
         self.submission1 = SubmissionFactory(
             conference = self.conference,
             contributor = factory.SubFactory(UserFactory, username='Tom')
@@ -67,38 +85,38 @@ class TestSerializers(TestCase):
             conference = self.conference,
             contributor = factory.SubFactory(UserFactory, username='User2')
             )
-        # self.request1 = RequestFactory().post('./fake_path')
-        # self.request1.user = SimpleLazyObject(self.user1)
-        # self.request1.query_params = {}
-        # self.request2 = RequestFactory().post('./fake_path')
-        # self.request2.user = SimpleLazyObject(self.user2)
-        # self.request2.query_params = {}
-
-
-    @skip('Test links are formed correctly')
-    def test_get_links(self):
-        pass
-
-    def test_get_submission_count(self):
         self.serializer = ConferenceSerializer()
         self.assertEqual(self.serializer.get_submission_count(self.conference), 2)
         self.assertFalse(self.serializer.get_submission_count(self.conference) == 5)
  
-    @skip('')
     def test_get_can_edit(self):
-        pass
-        # self.serializer1 = ConferenceSerializer(context={'request': self.request1})
-        # self.serializer2 = ConferenceSerializer(context={'request': self.request2})
-        # self.canEdit1 = self.serializer1.get_can_edit(self.conference)
-        # self.canEdit2 = self.serializer2.get_can_edit(self.conference)
-        # self.assertTrue(self.canEdit1)
-        # self.assertTrue(self.canEdit2)
+        self.serializer1 = ConferenceSerializer(context={'request': self.request1})
+        self.serializer2 = ConferenceSerializer(context={'request': self.request2})
+        self.canEdit1 = self.serializer1.get_can_edit(self.conference)
+        self.canEdit2 = self.serializer2.get_can_edit(self.conference)
+        self.assertTrue(self.canEdit1)
+        self.assertFalse(self.canEdit2)
 
 
 class TestSignals(TestCase):
-    @skip('Test that permissions are added correctly')
+
+    def setUp(self):
+        self.user = UserFactory(
+            username = "Leo"
+            )
+        self.request = RequestFactory().get('./fake_path')
+        self.request.user = self.user
+        self.conference = ConferenceFactory(
+            admin = self.user
+            )
+
     def test_add_permissions(self):
-        pass
+        self.conference.save()  # This calls add_permission
+        self.view = ConferenceViewSet()
+        self.request.user = self.user
+        self.confPermissions = ConferencePermissions()
+        self.assertTrue(self.confPermissions.has_permission(self.request, self.view))
+
 
 
 class TestViews(TestCase):
@@ -108,16 +126,22 @@ class TestViews(TestCase):
             username = 'testViewsUser'
             )
         self.request = RequestFactory().post('./fake_path')
-        self.request.user = SimpleLazyObject(self.user)
+        self.request.user = self.user
         self.request.query_params = {}
-        self.request.data = {'id': 's72bc', 'title': 'conference', 'city': 'Charlottesville', 'state': 'Virginia', 'country': 'Angola'}
+        self.request.data = {'id': 's72bc', 'title': 'conference', 'city': 'Charlottesville', 'state': 'Virginia', 'country': 'NZ'}
         self.serializer = ConferenceSerializer(context={'request': self.request}, data=self.request.data)
         self.view = ConferenceViewSet()
+        self.view.request = self.request
+        self.view.format_kwarg = ''
 
-    @skip('Test create')
     def test_create(self):
-        pass
+        self.view.create(self.request)
+        self.conference = Conference.objects.get(admin=self.user)
+        self.assertEqual(self.conference.title, 'conference')
+
 
     def test_perform_create(self):
         self.view.perform_create(self.serializer)
-        self.assertEqual(self.serializer.admin, self.user)
+        self.conference = Conference.objects.get(admin=self.user)
+        self.assertEqual(self.conference.title, 'conference')
+

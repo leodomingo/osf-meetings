@@ -6,7 +6,7 @@ from conferences import permissions
 
 @receiver(post_save, sender=Conference)
 def add_permissions(sender, **kwargs):
-    conference, created = kwargs["instance"], kwargs["created"]
+    conference, created = kwargs['instance'], kwargs['created']
     conference_admin = conference.admin
     if created:
         permissions.set_conference_permissions(conference, conference_admin)

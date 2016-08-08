@@ -46,4 +46,4 @@ class ConferenceSerializer(serializers.ModelSerializer):
     def get_can_edit(self, obj):
         request = self.context.get('request')
         user = User.objects.get(username=request.user)
-        return user == obj.admin
+        return user.username == obj.admin.username
