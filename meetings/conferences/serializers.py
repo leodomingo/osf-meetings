@@ -4,8 +4,6 @@ from rest_framework.reverse import reverse
 from conferences.models import Conference
 from submissions.models import Submission
 from django.contrib.auth.models import User
-import ipdb
-
 
 
 class ConferenceSerializer(serializers.ModelSerializer):
@@ -47,6 +45,5 @@ class ConferenceSerializer(serializers.ModelSerializer):
 
     def get_can_edit(self, obj):
         request = self.context.get('request')
-        ipdb.set_trace()
         user = User.objects.get(username=request.user)
         return user == obj.admin
