@@ -9,7 +9,7 @@ export default Model.extend({
     canEdit: attr('boolean'),
     nodeId: attr('string'),
     category: attr('string', { defaultValue : 'project' }),
-    file : belongsTo('file'),
+    metafile : belongsTo('metafile'),
     dateCreated: attr(),
     downloadLink: attr('string'),
     downloadCount: attr('string'),

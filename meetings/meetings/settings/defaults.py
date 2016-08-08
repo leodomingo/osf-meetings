@@ -53,8 +53,8 @@ INSTALLED_APPS = [
     'approvals',
     'conferences',
     'submissions',
-    'files',
     'autofixture',
+    'metafiles',
     'mail'
 ]
 
@@ -78,6 +78,7 @@ REST_FRAMEWORK = {
 }
 
 JSON_API_FORMAT_KEYS = 'dasherize'
+JSON_API_PLURALIZE_TYPES = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',

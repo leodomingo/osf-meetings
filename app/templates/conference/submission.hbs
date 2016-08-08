@@ -10,7 +10,9 @@
             <div class="form-group row">
                 <div class="col-md-5" style="height: 100%;">
                     <div class="submission-header"> Upload File(s):
-                        {{upload-widget dropZone=drop resolve=resolveUpload}}
+                        {{upload-widget
+                            success=(route-action "success")
+                        dropZone=drop resolve=resolveUpload}}
                     </div>
                 </div>
             </div>

@@ -8,11 +8,8 @@ export default Ember.Route.extend({
         });
     },
 
-    //Need to fix the routing after submission
     actions : {
         saveSubmission(newSubmission, drop, resolve) {
-//            var router = this;
-
             if(resolve) {
                 newSubmission.save().then((newRecord) => {
                     resolve();
@@ -24,21 +21,17 @@ export default Ember.Route.extend({
                             'Authorization' : 'Bearer ' + authUser.get('token')
                         };
                     });
-
-//                    drop.on('sending', function(file, xhr, formData) {
-//                        var newFile = router.store.createRecord('file', {
-//                            submission : newRecord,
-//                            owner : newRecord.get('contributor')
-//                        });
-//
-//                    });
-//                    var newRecord_Conf = newRecord.get('conference');
-//                    router.transitionTo('conference.index', newRecord_Conf.get('id'));
                 });
 
             } else {
                 console.log("Upload Error");
             }
+        },
+
+        success(metafile) {
+            var submission = metafile.get('submission');
+            var conf = submission.get('conference');
+            this.transitionTo('conference.index', conf.get('id'));
         }
     }
 });

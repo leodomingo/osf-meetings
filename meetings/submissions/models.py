@@ -26,3 +26,6 @@ class Submission(models.Model):
             ),
             ('view_submission', 'Can view submission'),
         )
+
+    class JSONAPIMeta:
+        resource_name = 'submissions'

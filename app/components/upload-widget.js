@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-    store : Ember.inject.service(),
+    store : Ember.inject.service('store'),
     toast : Ember.inject.service(),
     url : 'https://staging-files.osf.io/v1/resources/',
     file : null,
@@ -15,37 +15,33 @@ export default Ember.Component.extend({
     dropZone : null,
     actions : {
         preUpload() {
-            console.log('\n\n preUpload \n\n');
-            console.log(...arguments);
             this.set('dropZone', arguments[1]);
             return new Ember.RSVP.Promise(resolve => {
                 this.set('resolve', resolve);
             });
         },
         success() {
-
-            //might need to move to router for transition
-            //need router-action module if so
+            var that = this;
             var successData = arguments[3];
-            var nodeId = successData['data']['attributes']['resource'];
+            var nodeId = successData['data']['attributes']['resource']; //osf node's id
             var submissions = this.get('store').peekAll('submission');
             var relatedSubmission = submissions.findBy('nodeId', nodeId);
 
-            var newFile = this.get('store').createRecord('file', {
+            var newFile = this.get('store').createRecord('metafile', {
                 submission : relatedSubmission,
-                owner : relatedSubmission.get('contributor'),
                 osfId : successData['data']['id'],
                 osfUrl : successData['data']['links']['download'],
                 fileName : successData['data']['attributes']['name']
             });
 
-            newFile.save();
-
+            newFile.save().then((file) => {
+                //do toast here
+                that.sendAction('success', file);
+            });
         },
         error() {
+            //do toast here
             console.log('ERROR');
-            console.log(...arguments);
-            //debugger;
         },
         buildUrl(){
             return this.get('url');
