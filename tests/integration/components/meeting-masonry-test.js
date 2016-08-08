@@ -22,6 +22,9 @@ test('it renders', function(assert) {
 
   assert.equal(this.$('.tile-title').text().trim(), model.title);
   assert.equal(this.$('.tile-description').text().trim(), testDescription);
+  assert.equal(this.$('#location').text().trim(), "Location: " + model.city + ", " + model.state  + ", " + model.country);
+  assert.equal(this.$('#submissions').text().trim(), testDescription);
+
 
 
 });

@@ -18,7 +18,6 @@ def schema_view(request):
     return response.Response(generator.get_schema(request=request))
 
 
-
 class CheckLoggedInView(APIView):
 
     def get(self, request, format=None):

@@ -10,7 +10,7 @@ def test_all(ctx):
     flake(ctx)
     test_api(ctx)
     # TODO: add more as they become available
-    # ember_test(ctx)
+    ember_test(ctx)
     jshint(ctx)
 
 
@@ -27,7 +27,8 @@ def api_server(ctx):
 
 @task
 def test_api(ctx):
-    ctx.run('python {}/manage.py test {}'.format(API, API), echo=True, pty=True)
+    ctx.run(
+        'python {}/manage.py test {}'.format(API, API), echo=True, pty=True)
 
 
 @task(aliases=['req'])
