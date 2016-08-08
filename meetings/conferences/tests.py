@@ -10,6 +10,7 @@ from serializers import ConferenceSerializer
 from views import ConferenceViewSet
 from django.utils.functional import SimpleLazyObject
 
+
 class UserFactory(factory.DjangoModelFactory):
     class Meta: 
         model = User
@@ -30,26 +31,21 @@ class SubmissionFactory(factory.DjangoModelFactory):
 
     #filling out NON NULL field
     approval = factory.SubFactory(ApprovalFactory)
-# TODO: Ask Jesse how permissions work
-# class TestPermissions(TestCase):
-#     def setUp(self):
-#         self.user1 = UserFactory(id='userONE')
-#         self.user2 = UserFactory(id='userTWO')
-#         self.conference = ConferenceFactory(
-#             admin = self.user1
-#         )
-#         self.request1 = RequestFactory().get('./fake_path')
-#         self.request2 = RequestFactory().get('./fake_path')
 
 
-#     def test_conference_creator(self):
-#         self.view = ConferenceViewSet()
-#         self.request1.user = self.user1
-#         self.request2.user = self.user2
-#         self.confPermissions = ConferencePermissions()
-#         self.permissions1 = self.confPermissions.has_permission(self.request1, self.view)
-#         self.permissiosn2 = self.confPermissions.has_permission(self.request2, self.view)
-#         print(self.permissions1.get_object())
+class TestPermissions(TestCase):
+    def setUp(self):
+        self.user = UserFactory(id=13)
+        self.conference = ConferenceFactory(
+            admin = self.user
+        )
+        self.request = RequestFactory().get('./fake_path')
+
+    def test_conference_creator(self):
+        self.view = ConferenceViewSet()
+        self.request.user = self.user
+        self.confPermissions = ConferencePermissions()
+        self.assertTrue(self.confPermissions.has_permission(self.request, self.view))
 
 class TestSerializers(TestCase):
     def setUp(self):
@@ -87,16 +83,16 @@ class TestSerializers(TestCase):
         self.serializer = ConferenceSerializer()
         self.assertEqual(self.serializer.get_submission_count(self.conference), 2)
         self.assertFalse(self.serializer.get_submission_count(self.conference) == 5)
-
-    # The problem here is that the get_can_edit function calls User.objects and our factory_boy objects
-    # aren't showing up in the User.objects 
-    # def test_get_can_edit(self):
-    #     self.serializer1 = ConferenceSerializer(context={'request': self.request1})
-    #     self.serializer2 = ConferenceSerializer(context={'request': self.request2})
-    #     self.canEdit1 = self.serializer1.get_can_edit(self.conference)
-    #     self.canEdit2 = self.serializer2.get_can_edit(self.conference)
-    #     self.assertTrue(self.canEdit1)
-    #     self.assertTrue(self.canEdit2)
+ 
+    @skip('')
+    def test_get_can_edit(self):
+        pass
+        # self.serializer1 = ConferenceSerializer(context={'request': self.request1})
+        # self.serializer2 = ConferenceSerializer(context={'request': self.request2})
+        # self.canEdit1 = self.serializer1.get_can_edit(self.conference)
+        # self.canEdit2 = self.serializer2.get_can_edit(self.conference)
+        # self.assertTrue(self.canEdit1)
+        # self.assertTrue(self.canEdit2)
 
 
 class TestSignals(TestCase):
@@ -106,10 +102,22 @@ class TestSignals(TestCase):
 
 
 class TestViews(TestCase):
+
+    def setUp(self):
+        self.user = UserFactory(
+            username = 'testViewsUser'
+            )
+        self.request = RequestFactory().post('./fake_path')
+        self.request.user = SimpleLazyObject(self.user)
+        self.request.query_params = {}
+        self.request.data = {'id': 's72bc', 'title': 'conference', 'city': 'Charlottesville', 'state': 'Virginia', 'country': 'Angola'}
+        self.serializer = ConferenceSerializer(context={'request': self.request}, data=self.request.data)
+        self.view = ConferenceViewSet()
+
     @skip('Test create')
     def test_create(self):
         pass
 
-    @skip('Test perform_create')
     def test_perform_create(self):
-        pass
+        self.view.perform_create(self.serializer)
+        self.assertEqual(self.serializer.admin, self.user)

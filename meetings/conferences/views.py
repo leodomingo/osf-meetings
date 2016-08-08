@@ -5,6 +5,7 @@ from conferences.serializers import ConferenceSerializer
 from conferences.permissions import ConferencePermissions
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+import ipdb
 
 
 class ConferenceViewSet(viewsets.ModelViewSet):
@@ -20,4 +21,10 @@ class ConferenceViewSet(viewsets.ModelViewSet):
         return super(ConferenceViewSet, self).create(request, args, kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(admin=serializer.context['request'].user)
+        if serializer.is_valid():
+            print('VALID!!!!')
+            serializer.save(admin=serializer.context['request'].user)
+        else:
+            print('INVALID!!!!!')
+
+
