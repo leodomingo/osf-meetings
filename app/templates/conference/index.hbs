@@ -30,12 +30,35 @@
                                 <div class="col-md-12">
                                     <div class="btn-group" role="group" aria-label="...">
 
-                                        {{#link-to "conference.submission" model.conf.id}}
-                                            <button type="button" class="btn btn-default" style="margin: 0 0 5px 0; width: 200px;">  Submit to This Conference</button>
-                                        {{/link-to}}
+                                        
+                                            <button type="button" class="btn btn-default" style="margin: 0 0 5px 0; width: 200px;" {{action 
+                                            "toggleInfo"}}>  Submit to This Conference</button>
+                                        
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="row" id="submission-instructions">
+                                <div class="col-md-6">
+                                    <div class="submission-modal">
+                                    <strong>Submit through email</strong>
+                                    <h6>Send an email to your conference identifier with the files you'd like to submit attached to it.</h6>
+                                    <h6>We’ll create an OSF project for you. You'll get a permanent link to your presentation, plus analytics about who has viewed and downloaded your work.</h6>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group submission-modal" role="group" aria-label="...">
+                                        <strong>Upload Here:</strong>
+                                        <br>
+                                        <h6>You can also use our upload form to submit files</h6>
+                                        {{#link-to "conference.submission" model.conf.id}}
+                                            <button type="button" class="btn btn-success" style="margin: 0 0 5px 0; width: 200px;"><span class="glyphicon glyphicon-plus"></span>  Upload a File</button>
+                                        {{/link-to}}
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
 
                             <!-- This is the basic code for a table of submissions without images -->
                             {{#if model.conf.submissionCount}}
