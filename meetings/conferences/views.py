@@ -24,6 +24,3 @@ class ConferenceViewSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             user = User.objects.get(username=serializer.context['request'].user)
             serializer.save(admin=user)
-
-
-

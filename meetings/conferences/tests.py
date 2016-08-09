@@ -1,5 +1,4 @@
 from django.test import TestCase, RequestFactory
-from unittest import skip
 import factory
 from conferences.models import Conference
 from approvals import models as approvalModels
@@ -8,14 +7,12 @@ from django.contrib.auth.models import User
 from permissions import ConferencePermissions
 from serializers import ConferenceSerializer
 from views import ConferenceViewSet
-from django.utils.functional import SimpleLazyObject
-from django_countries import countries
-from signals import add_permissions
 
 
 class UserFactory(factory.DjangoModelFactory):
-    class Meta: 
+    class Meta:
         model = User
+
 
 class ConferenceFactory(factory.DjangoModelFactory):
     class Meta:
@@ -31,7 +28,7 @@ class SubmissionFactory(factory.DjangoModelFactory):
     class Meta:
         model = submissionModels.Submission
 
-    #filling out NON NULL field
+    # filling out NON NULL field
     approval = factory.SubFactory(ApprovalFactory)
 
 
@@ -39,7 +36,7 @@ class TestPermissions(TestCase):
     def setUp(self):
         self.user = UserFactory(id=13)
         self.conference = ConferenceFactory(
-            admin = self.user
+            admin=self.user
         )
         self.request = RequestFactory().get('./fake_path')
 
@@ -49,17 +46,18 @@ class TestPermissions(TestCase):
         self.confPermissions = ConferencePermissions()
         self.assertTrue(self.confPermissions.has_permission(self.request, self.view))
 
+
 class TestSerializers(TestCase):
     def setUp(self):
         self.user1 = UserFactory(
-            username = 'Leo',
+            username='Leo',
             )
         self.user2 = UserFactory(
-            username = 'LeoLeo'
+            username='LeoLeo'
             )
         self.conference = ConferenceFactory(
-            id = '38',
-            admin = self.user1
+            id='38',
+            admin=self.user1
         )
         self.request1 = RequestFactory().post('./fake_path')
         self.request1.user = self.user1
@@ -68,27 +66,26 @@ class TestSerializers(TestCase):
         self.request2.user = self.user2
         self.request2.query_params = {}
 
-
     def test_get_links(self):
         self.serializer = ConferenceSerializer(context={'request': self.request1})
         self.links = self.serializer.get_links(self.conference)
         self.assertEqual(self.links['self'], 'http://testserver/conferences/38/')
-        self.assertEqual(self.links['submissions'], 'http://testserver/submissions/?conference=38')
-
+        self.assertEqual(self.links['submissions'],
+                         'http://testserver/submissions/?conference=38')
 
     def test_get_submission_count(self):
         self.submission1 = SubmissionFactory(
-            conference = self.conference,
-            contributor = factory.SubFactory(UserFactory, username='Tom')
+            conference=self.conference,
+            contributor=factory.SubFactory(UserFactory, username='Tom')
             )
         self.submission2 = SubmissionFactory(
-            conference = self.conference,
-            contributor = factory.SubFactory(UserFactory, username='User2')
+            conference=self.conference,
+            contributor=factory.SubFactory(UserFactory, username='User2')
             )
         self.serializer = ConferenceSerializer()
         self.assertEqual(self.serializer.get_submission_count(self.conference), 2)
         self.assertFalse(self.serializer.get_submission_count(self.conference) == 5)
- 
+
     def test_get_can_edit(self):
         self.serializer1 = ConferenceSerializer(context={'request': self.request1})
         self.serializer2 = ConferenceSerializer(context={'request': self.request2})
@@ -102,12 +99,12 @@ class TestSignals(TestCase):
 
     def setUp(self):
         self.user = UserFactory(
-            username = "Leo"
+            username="Leo"
             )
         self.request = RequestFactory().get('./fake_path')
         self.request.user = self.user
         self.conference = ConferenceFactory(
-            admin = self.user
+            admin=self.user
             )
 
     def test_add_permissions(self):
@@ -118,18 +115,19 @@ class TestSignals(TestCase):
         self.assertTrue(self.confPermissions.has_permission(self.request, self.view))
 
 
-
 class TestViews(TestCase):
 
     def setUp(self):
         self.user = UserFactory(
-            username = 'testViewsUser'
+            username='testViewsUser'
             )
         self.request = RequestFactory().post('./fake_path')
         self.request.user = self.user
         self.request.query_params = {}
-        self.request.data = {'id': 's72bc', 'title': 'conference', 'city': 'Charlottesville', 'state': 'Virginia', 'country': 'NZ'}
-        self.serializer = ConferenceSerializer(context={'request': self.request}, data=self.request.data)
+        self.request.data = {'id': 's72bc', 'title': 'conference', 'city': 'Charlottesville',
+                             'state': 'Virginia', 'country': 'NZ'}
+        self.serializer = ConferenceSerializer(context={'request': self.request},
+                                               data=self.request.data)
         self.view = ConferenceViewSet()
         self.view.request = self.request
         self.view.format_kwarg = ''
@@ -139,9 +137,7 @@ class TestViews(TestCase):
         self.conference = Conference.objects.get(admin=self.user)
         self.assertEqual(self.conference.title, 'conference')
 
-
     def test_perform_create(self):
         self.view.perform_create(self.serializer)
         self.conference = Conference.objects.get(admin=self.user)
         self.assertEqual(self.conference.title, 'conference')
-
