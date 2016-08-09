@@ -1,4 +1,5 @@
 import json
+import ipdb
 
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
@@ -24,8 +25,10 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = 'submission_id'
     lookup_field = 'pk'
     permission_classes = (SubmissionPermissions,)
+
     filter_backends = (
         filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter)
+
     filter_fields = ('conference', 'contributor')
     queryset = Submission.objects.all()
 
@@ -82,3 +85,42 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 serializer.save(approval=new_approval)
                 return Response(serializer.data)
         return Response(serializer.errors)
+
+    @method_decorator(login_required)
+    def update(self, request, *args, **kwargs):
+        current_user = request.user.username
+        account = SocialAccount.objects.get(uid=current_user)
+        osf_token = SocialToken.objects.get(account=account)
+
+        update_node = {
+            'data': {
+                'attributes': {
+                    'category': 'project',
+                    'title': request.data['title']
+                },
+                'type': 'nodes',
+                'id': request.data['node_id']
+            }
+        }
+
+        response = requests.put(
+            '{}{}/'.format(self.node_url, request.data['node_id']),
+            data=json.dumps(update_node),
+            headers={
+                'Authorization': 'Bearer {}'.format(osf_token),
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        )
+
+        #  serializer throw an error
+        #  payload doesn't send conference
+        if (response.status_code == 200):
+            serializer = SubmissionSerializer(
+                data=request.data,
+                context={'request': request}
+            )
+            if serializer.is_valid():
+                ipdb.set_trace()
+                return Response(serializer.validated_data, status=response.status_code)
+            return Response(serializer.errors)
+        return Response(response.text, status=response.status_code)
