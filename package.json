@@ -20,6 +20,7 @@
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.2",
+    "dropzone": "^4.3.0",
     "ember-ajax": "0.7.1",
     "ember-block-slots": "0.12.4",
     "ember-bootstrap": "0.7.2",

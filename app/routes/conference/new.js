@@ -26,9 +26,9 @@ export default Ember.Route.extend({
             var router = this;
             newConf.save().then(function(params) {
                 router.transitionTo('conference.index', params.id);
+                var dz = router.controller.get('dropzone');
+                dz.processQueue();
             });
-            var dz = router.controller.get('dropzone');
-            dz.processQueue();
         },
         setLogoUrl(value){
             this.currentModel.newConf.set('logo', value);
