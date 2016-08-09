@@ -8,8 +8,6 @@ upload_list = views.UploadViewSet.as_view({
 
 upload_detail = views.UploadViewSet.as_view({
     'get': 'retrieve',
-    'delete': 'destroy',
-    'put': 'update',
 })
 
 urlpatterns = [
