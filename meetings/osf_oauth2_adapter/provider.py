@@ -1,7 +1,7 @@
-from meetings.utils import OsfOauth2AdapterConfig
 from allauth.socialaccount import providers
 from allauth.socialaccount.providers.base import ProviderAccount
 from allauth.socialaccount.providers.oauth2.provider import OAuth2Provider
+from django.conf import settings
 
 
 class OSFAccount(ProviderAccount):
@@ -43,6 +43,6 @@ class OSFProvider(OAuth2Provider):
         return str(data.get('data').get('id'))
 
     def get_default_scope(self):
-        return OsfOauth2AdapterConfig.default_scopes
+        return settings.DEFAULT_SCOPES
 
 providers.registry.register(OSFProvider)

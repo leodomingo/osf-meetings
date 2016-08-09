@@ -2,10 +2,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
-from meetings.utils import OsfOauth2AdapterConfig
 from rest_framework import status
 import requests
 import json
+from django.conf import settings
 
 
 class CheckLoggedInView(APIView):
@@ -18,22 +18,15 @@ class CheckLoggedInView(APIView):
 
 
 class CurrentUserView(APIView):
-    base_url = '{}oauth2/{}'.format(
-        OsfOauth2AdapterConfig.osf_accounts_url, '{}')
-    access_token_url = base_url.format('token')
-    authorize_url = base_url.format('authorize')
-    profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
-
     #  we need to save the user's info in a the user model instead of
     #  retrieving it all the time from osf
-
     def get(self, request, **kwargs):
         if request.user.is_authenticated():
             curUser = request.user.username
             account = SocialAccount.objects.get(uid=curUser)
             token = SocialToken.objects.get(account=account)
 
-            extra_data = requests.get(self.profile_url, headers={
+            extra_data = requests.get(settings.PROFILE_URL, headers={
                 'Authorization': 'Bearer {}'.format(token)
             })
 
@@ -43,8 +36,10 @@ class CurrentUserView(APIView):
             data['attributes']['token'] = str(token)
 
             return Response(data)
-        else:
-            return Response(
-                'User is not logged in',
-                status=status.HTTP_401_UNAUTHORIZED
-            )
+        return Response(
+            {
+                'error': 'Please login or signup',
+                'status': 401
+            },
+            status=status.HTTP_401_UNAUTHORIZED
+        )

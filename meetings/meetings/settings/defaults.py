@@ -195,10 +195,14 @@ SITE_ID = 1
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
-OSF_FILES_URL = os.environ.get(
-    'OSF_FILES_URL', 'https://staging-files.osf.io').rstrip('/') + '/'
-OSF_STAGING_URL = os.environ.get(
-    'OSF_STAGE_URL', 'https://staging.osf.io').rstrip('/') + '/'
+OSF_FILES_URL = ('https://staging-files.osf.io').rstrip('/') + '/'
+OSF_STAGING_URL = ('https://staging.osf.io').rstrip('/') + '/'
+
+
+#  base_url
+PROFILE_URL = '{}v2/users/me/'.format(OSF_API_URL)
+WATERBUTLER_URL = '{}v1/resources/'.format(OSF_FILES_URL)
+PROJECTS_URL = '{}project/'.format(OSF_STAGING_URL)
 
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'

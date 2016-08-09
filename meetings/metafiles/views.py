@@ -13,17 +13,17 @@ class MetafileViewSet(ModelViewSet):
     serializer_class = MetafileSerializer
 
     def create(self, request, *args, **kwargs):
-        metafileSer = MetafileSerializer(
+        metafile_ser = MetafileSerializer(
             data=request.data,
             context={'request': request}
         )
 
-        if metafileSer.is_valid():
-            metafileSer.save(
+        if metafile_ser.is_valid():
+            metafile_ser.save(
                 owner=request.user,
                 submission=Submission.objects.get(
                     contributor=request.user.id
                 )
             )
-            return Response(metafileSer.data)
-        return Response(metafileSer.errors)
+            return Response(metafile_ser.data)
+        return Response(metafile_ser.errors)
