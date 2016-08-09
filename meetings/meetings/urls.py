@@ -8,6 +8,7 @@ from django.contrib import admin
 
 
 urlpatterns = [
+    url(r'^docs/', include('rest_framework_docs.urls')),
     url(r'^conferences/',
         include('conferences.urls', namespace='conferences')),
     url(r'^submissions/',
@@ -18,5 +19,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls, name='admin'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^mail/inbound/', include('mail.urls')),
-    url(r'^docs', apiViews.schema_view)
 ]
