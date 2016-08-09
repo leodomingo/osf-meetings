@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'submissions',
     'mail',
     'autofixture',
+    'rest_framework_docs'
 ]
 
 REST_FRAMEWORK = {
