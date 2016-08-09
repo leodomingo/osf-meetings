@@ -18,6 +18,8 @@ from allauth.socialaccount.models import SocialAccount
 import requests
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
+import ipdb
+
 
 class SubmissionViewSet(viewsets.ModelViewSet):
     resource_name = 'submissions'
@@ -70,7 +72,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     }
                 )
 
-                obj = response.json()
+                obj = response.json() # TODO: Figure out what's going on with this
                 serializer.save(
                     contributor=contributor,
                     approval=new_approval,
