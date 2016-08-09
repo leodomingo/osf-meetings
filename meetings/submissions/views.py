@@ -73,6 +73,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 )
 
                 obj = response.json() # TODO: Figure out what's going on with this
+                ipdb.set_trace()
                 serializer.save(
                     contributor=contributor,
                     approval=new_approval,

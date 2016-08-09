@@ -5,44 +5,14 @@ from submissions.models import Submission
 from approvals.models import Approval
 from conferences.models import Conference
 from django.contrib.auth.models import User
+from test_factories import (UserFactory, SubmissionFactory, ConferenceFactory, 
+SocialAccountFactory, SocialTokenFactory, SocialAppFactory, ApprovalFactory)
 from serializers import SubmissionSerializer
 from views import SubmissionViewSet
 from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
 
 import ipdb
 
-
-class UserFactory(factory.DjangoModelFactory):
-    class Meta: 
-        model = User
-
-class ConferenceFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = Conference
-
-
-class ApprovalFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = Approval
-
-
-class SubmissionFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = Submission
-
-    approval = factory.SubFactory(ApprovalFactory)
-
-class SocialAccountFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = SocialAccount
-
-class SocialTokenFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = SocialToken
-
-class SocialAppFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = SocialApp
 
 class TestPermissions(TestCase):
     @skip('Test different permissions in many test functions')
@@ -107,8 +77,10 @@ class TestViews(TestCase):
             uid='testViewsUser'
             )
         self.socialToken = SocialTokenFactory(
-            account = self.socialAccount,
-            app = factory.SubFactory(SocialAppFactory)
+            account=self.socialAccount,
+            app=factory.SubFactory(SocialAppFactory),
+            token='235387023',
+            token_secret='24358103981'
             )
         self.approval = ApprovalFactory(
             id=1,
@@ -125,7 +97,7 @@ class TestViews(TestCase):
         self.approvalData = {'type': 'Approval', 'approved': True, 'id': 1}
         self.conferenceData = {'type': 'conferences', 'id': 'conferenceId'}
         self.request.data = {'id': 15, 'node_id': '42u2p', 'title': 'Submission65', 'contributor': self.contributorData, 
-                'description': 'This is a submission', 'approval': self.approvalData, 'conference': self.conferenceData}
+                 'description': 'This is a submission', 'approval': self.approvalData, 'conference': self.conferenceData}
         self.views = SubmissionViewSet()
 
     def test_create(self):
