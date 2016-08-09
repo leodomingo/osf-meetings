@@ -6,7 +6,6 @@ from conferences.permissions import ConferencePermissions
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 
-
 class ConferenceViewSet(viewsets.ModelViewSet):
     resource_name = 'conferences'
     queryset = Conference.objects.all()
