@@ -24,7 +24,9 @@
                             {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
                             <label for="city">Logo</label>
-                            {{input type="file" accept="image/*" id="image"}}
+                            {{drop-zone-upload-on-submit
+                            url='http://localhost:8000/uploads/'
+                            setDropzone="setDropzone"}}
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>

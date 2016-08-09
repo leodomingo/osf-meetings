@@ -12,7 +12,8 @@ export default Ember.Route.extend({
                 },
                 crossDomain : true
             }),
-            newConf : this.store.createRecord('conference')
+            newConf : this.store.createRecord('conference'),
+            user : this.store.findRecord('user', 'me')
         });
     },
 
@@ -27,6 +28,8 @@ export default Ember.Route.extend({
             newConf.save().then(function(params) {
                 router.transitionTo('conference.index', params.id);
             });
+            var dz = router.controller.get('dropzone');
+            dz.processQueue();
         }
     }
 });
