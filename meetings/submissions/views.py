@@ -1,5 +1,4 @@
 import json
-import ipdb
 
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
@@ -51,39 +50,34 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         account = SocialAccount.objects.get(uid=current_user)
         osf_token = SocialToken.objects.get(account=account)
 
-        if not request.user.has_perm('submissions.can_set_contributor'):
-            if serializer.is_valid():
-                node = {
-                    'data': {
-                        'attributes': {
-                            'category': 'project',
-                            'description': request.data['description'],
-                            'title': request.data['title']
-                        },
-                        'type': 'nodes'
-                    }
+        if serializer.is_valid():
+            node = {
+                'data': {
+                    'attributes': {
+                        'category': 'project',
+                        'description': request.data['description'],
+                        'title': request.data['title']
+                    },
+                    'type': 'nodes'
                 }
+            }
 
-                response = requests.post(
-                        self.node_url,
-                        data=json.dumps(node),
-                        headers={
-                            'Authorization': 'Bearer {}'.format(osf_token),
-                            'Content-Type': 'application/json; charset=UTF-8'
-                        }
-                )
+            response = requests.post(
+                    self.node_url,
+                    data=json.dumps(node),
+                    headers={
+                        'Authorization': 'Bearer {}'.format(osf_token),
+                        'Content-Type': 'application/json; charset=UTF-8'
+                    }
+            )
 
-                resObj = response.json()
-                serializer.save(
-                    contributor=contributor,
-                    approval=new_approval,
-                    node_id=resObj['data']['id']
-                )
-                return Response(serializer.data)
-        else:
-            if serializer.is_valid():
-                serializer.save(approval=new_approval)
-                return Response(serializer.data)
+            resObj = response.json()
+            serializer.save(
+                contributor=contributor,
+                approval=new_approval,
+                node_id=resObj['data']['id']
+            )
+            return Response(serializer.data)
         return Response(serializer.errors)
 
     @method_decorator(login_required)
@@ -115,12 +109,5 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         #  serializer throw an error
         #  payload doesn't send conference
         if (response.status_code == 200):
-            serializer = SubmissionSerializer(
-                data=request.data,
-                context={'request': request}
-            )
-            if serializer.is_valid():
-                ipdb.set_trace()
-                return Response(serializer.validated_data, status=response.status_code)
-            return Response(serializer.errors)
+            return super(SubmissionViewSet, self).update(request, args, kwargs)
         return Response(response.text, status=response.status_code)
