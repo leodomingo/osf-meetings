@@ -44,8 +44,8 @@
                     </li>
                     {{#if authenticated }}
                     {{!-- TODO: Replace display name functionality if possible- for now truncate via CSS at end of label --}}
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle nav-user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <li  class="dropdown">
+                        <a href="#" id="userDropdown" class="dropdown-toggle nav-user-dropdown" data-toggle="dropdown" role="button" aria-expanded="false">
                             <span class="osf-gravatar">
                                 <img src={{user.links.profile_image}} alt="User gravatar">
                             </span> {{user.attributes.full_name}}
@@ -71,7 +71,7 @@
                         <div class="btn-group">
                             <a href="{{host}}register/" class="btn btn-success btn-top-signup m-r-xs">Sign Up</a>
                             <a onclick={{action 'login'}} class="btn btn-info btn-top-login">
-                                Sign in <span class="hidden-xs"><i class="fa fa-arrow-right"></i></span>
+                                Sign In <span class="hidden-xs"><i class="fa fa-arrow-right"></i></span>
                             </a>
                         </div>
                     </li>

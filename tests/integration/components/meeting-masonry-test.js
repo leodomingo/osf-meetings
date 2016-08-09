@@ -16,15 +16,21 @@ test('it renders', function(assert) {
 
   const model = server.create('conference');
   this.set('model', model);
-  let testDescription = this.get('model').description.substring(0,200) + "...";
+  if(this.get('model').description.length <= 200){
+      this.set('testDescription', this.get('model').description);
+  }
+  else{
+      this.set('testDescription', this.get('model').description.substring(0,200) + "...");
+  }
+  let testLocation = "Location: " + model.city + ", " + model.state  + ", " + model.country;
+  let testSubmission = "Submissions: " + model.submissionCount;
   this.render(hbs`{{meeting-masonry model=model}}`);
 
 
   assert.equal(this.$('.tile-title').text().trim(), model.title);
-  assert.equal(this.$('.tile-description').text().trim(), testDescription);
-  assert.equal(this.$('#location').text().trim(), "Location: " + model.city + ", " + model.state  + ", " + model.country);
-  assert.equal(this.$('#submissions').text().trim(), testDescription);
-
+  assert.equal(this.$('.tile-description').text().trim(), this.get('testDescription'));
+  assert.equal(this.$('#location').text().trim(), testLocation);
+  assert.equal(this.$('#submissions').text().trim(), testSubmission);
 
 
 });
