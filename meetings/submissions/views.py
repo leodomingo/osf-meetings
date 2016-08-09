@@ -18,8 +18,16 @@ from allauth.socialaccount.models import SocialAccount
 import requests
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
+#
+#   Basic ModelViewSet functions are expanded
+#   so SwaggerUI can catch the description
+#
+
 
 class SubmissionViewSet(viewsets.ModelViewSet):
+
+    """ Submission Resource """
+
     resource_name = 'submissions'
     serializer_class = SubmissionSerializer
     lookup_url_kwarg = 'submission_id'
@@ -36,8 +44,29 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
     node_url = '{}v2/nodes/'.format(OsfOauth2AdapterConfig.osf_api_url)
 
+    def list(self, request):
+        return super(SubmissionViewSet, self).list(self, request);
+
+    def retrieve(self, request, pk=None):
+        """Returns a single Submission item"""
+        return super(SubmissionViewSet, self).retrieve(request, pk)
+
+    def update(self, request, *args, **kwargs):
+        """Updates a single Submission item"""
+        return super(SubmissionViewSet, self).update(request, *args, **kwargs)
+
+    def partial_update(self, request, *args, **kwargs):
+        """Partial update a Submission """
+        return super(SubmissionViewSet, self).partial_update(
+            request, *args, **kwargs)
+
+    def destroy(self, request, pk=None):
+        """Delete a Submission"""
+        return super(SubmissionViewSet, self).destroy(request, pk)
+
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
+        """ Create a Submission """
         serializer = SubmissionSerializer(
             data=request.data, context={'request': request})
         new_approval = Approval.objects.create()
