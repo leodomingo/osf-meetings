@@ -1,3 +1,8 @@
+// This file isn't currently used. We are moving away from controllers and towards using
+// components for controller based actions. Using components will be much more sustainable
+// for furute versions of ember.
+
+
 import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 
@@ -6,6 +11,8 @@ export default Ember.Controller.extend(EmberValidations, {
 	editing: false,
 	navModal: false,
 	displayErrors: false,
+	info: false,
+
 
 	validations: {
 		'model.title': {

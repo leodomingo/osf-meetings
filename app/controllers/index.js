@@ -5,5 +5,5 @@ export default Ember.Controller.extend({
   tileview: true,
   query: null,
   queryParams: ['q', 'p'],
-  visited: false
+  visited: false,
 });
