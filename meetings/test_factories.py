@@ -8,8 +8,9 @@ from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
 
 
 class UserFactory(factory.DjangoModelFactory):
-    class Meta: 
+    class Meta:
         model = User
+
 
 class ConferenceFactory(factory.DjangoModelFactory):
     class Meta:

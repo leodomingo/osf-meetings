@@ -1,56 +1,38 @@
 from django.test import TestCase, RequestFactory
 import factory
-from conferences.models import Conference
-from approvals import models as approvalModels
-from submissions import models as submissionModels
-from django.contrib.auth.models import User
 from permissions import ConferencePermissions
 from serializers import ConferenceSerializer
+from test_factories import UserFactory, ConferenceFactory, SubmissionFactory
+from conferences.models import Conference
 from views import ConferenceViewSet
 
 
-class UserFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = User
-
-
-class ConferenceFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = Conference
-
-
-class ApprovalFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = approvalModels.Approval
-
-
-class SubmissionFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = submissionModels.Submission
-
-    # filling out NON NULL field
-    approval = factory.SubFactory(ApprovalFactory)
-
-
 class TestPermissions(TestCase):
-    def setUp(self):
-        self.user = UserFactory(id=13)
-        self.conference = ConferenceFactory(
-            admin=self.user
-        )
-        self.request = RequestFactory().get('./fake_path')
 
-    def test_conference_creator(self):
-        self.view = ConferenceViewSet()
-        self.request.user = self.user
-        self.confPermissions = ConferencePermissions()
-        self.assertTrue(self.confPermissions.has_permission(self.request, self.view))
+    def setUp(self):
+        self.user1 = UserFactory(
+            username='user1'
+            )
+        self.user2 = UserFactory(
+            username='user2'
+            )
+        self.conference = ConferenceFactory(
+            admin=self.user1,
+            id='conferenceId'
+            )
+
+    def test_conference_permissions(self):
+        self.assertTrue(self.user1.has_perm('change_conference', self.conference))
+        self.assertFalse(self.user2.has_perm('change_conference', self.conference))
+        self.assertTrue(self.user1.has_perm('delete_conference', self.conference))
+        self.assertFalse(self.user2.has_perm('delete_conference', self.conference))
 
 
 class TestSerializers(TestCase):
+
     def setUp(self):
         self.user1 = UserFactory(
-            username='Leo',
+            username='Leo'
             )
         self.user2 = UserFactory(
             username='LeoLeo'
