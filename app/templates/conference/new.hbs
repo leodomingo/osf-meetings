@@ -24,7 +24,7 @@
                             {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
                             <label for="city">Logo</label>
-                            {{drop-zone-upload-on-submit url=(get-uploads-url) getDropzone=(action "getDropzone")setFileUrlFromResponse="setLogoUrl"}}
+                            {{drop-zone-set-file-url url=(get-uploads-url) getDropzone=(action "getDropzone")setFileUrlFromResponse="setLogoUrl"}}
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>

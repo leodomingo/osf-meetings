@@ -170,14 +170,14 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 CORS_ALLOW_HEADERS = (
-        'x-requested-with',
-        'content-type',
-        'accept',
-        'origin',
-        'authorization',
-        'x-csrftoken',
-        'cache-control',
-    )
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control',
+)
 
 
 # Internationalization

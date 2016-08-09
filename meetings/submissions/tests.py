@@ -3,12 +3,14 @@ from unittest import skip
 
 
 class TestPermissions(TestCase):
+
     @skip('Test different permissions in many test functions')
     def test_permissions(self):
         pass
 
 
 class TestSerializers(TestCase):
+
     @skip('Test get_links, ensure that they are correct')
     def test_get_links(self):
         pass
@@ -19,6 +21,7 @@ class TestSerializers(TestCase):
 
 
 class TestSignals(TestCase):
+
     @skip('Test adding permissions via signal')
     def test_add_permissions_approved(self):
         pass
@@ -29,6 +32,7 @@ class TestSignals(TestCase):
 
 
 class TestViews(TestCase):
+
     @skip('Test create with many tests to cover')
     def test_create(self):
         pass

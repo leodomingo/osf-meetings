@@ -1,9 +1,8 @@
 from uploads.serializers import UploadSerializer
 from uploads.models import Upload
-from rest_framework import viewsets, filters
+from rest_framework import viewsets
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from rest_framework.decorators import parser_classes
 
 
 # Create your views here.
