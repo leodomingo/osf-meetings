@@ -11,6 +11,8 @@ export default Ember.Controller.extend(EmberValidations, {
 	editing: false,
 	navModal: false,
 	displayErrors: false,
+	info: false,
+
 
 	validations: {
 		'model.title': {

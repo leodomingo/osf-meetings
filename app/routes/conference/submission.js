@@ -1,8 +1,6 @@
 import Ember from 'ember';
-import CheckLoginMixin from 'osf-meetings/mixins/check-login-mixin';
 
-
-export default Ember.Route.extend(CheckLoginMixin, {
+export default Ember.Route.extend({
     model(params) {
         var conf = this.store.peekRecord('conference', params.conference_id);
         return this.store.createRecord('submission', {
@@ -12,8 +10,10 @@ export default Ember.Route.extend(CheckLoginMixin, {
 
     actions : {
         saveSubmission(newSubmission) {
+            var router = this;
             newSubmission.save().then(function(newRecord){
-                console.log(newRecord);
+                var newRecord_Conf = newRecord.get('conference');
+                router.transitionTo('conference.index', newRecord_Conf.get('id'));
             });
         }
     }
