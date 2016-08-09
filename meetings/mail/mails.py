@@ -38,7 +38,8 @@ class SubmissionConfDNE(EmailMultiAlternatives):
 
     def __init__(self, to=None, from_email=None, user=None):
         super(SubmissionConfDNE, self).__init__()
-        self.subject = "There was an error with your submission to OSF for Meetings"
+        self.subject = "There was an error with your submission"
+        + "to OSF for Meetings"
         fullname = 'joe smith'  # get from user when implemented
         dne_template = get_template('conference_does_not_exist.html')
         dne_context = Context({'fullname': fullname, })
@@ -50,7 +51,8 @@ class SubmissionWithoutFiles(EmailMultiAlternatives):
 
     def __init__(self, to=None, from_email=None, user=None):
         super(SubmissionWithoutFiles, self).__init__()
-        self.subject = "There was an error with your submission to OSF for Meetings"
+        self.subject = "There was an error with your submission"
+        + "to OSF for Meetings"
         fullname = 'joe smith'  # get from user when implemented
         template = get_template('conference_without_files.html')
         context = Context({'fullname': fullname, })
