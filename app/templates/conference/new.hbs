@@ -26,7 +26,8 @@
                             <label for="city">Logo</label>
                             {{drop-zone-upload-on-submit
                             url='http://localhost:8000/uploads/'
-                            setDropzone="setDropzone"}}
+                            getDropzone="getDropzone"
+                            setFileUrlFromResponse="setLogoUrl"}}
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>

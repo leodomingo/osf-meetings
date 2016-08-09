@@ -1,1 +1,6 @@
-{{drop-zone url=url id='myDropzone'}}
+{{drop-zone url=url id='myDropzone' 
+sending=setHeaders 
+success=(action "onSuccessfulUpload")
+autoProcessQueue=false
+maxFiles="1"
+}}

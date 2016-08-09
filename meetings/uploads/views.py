@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from uploads.serializers import UploadSerializer
 from uploads.models import Upload
-from uploads.permissions import UploadPermissions
 from rest_framework import viewsets, filters
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
