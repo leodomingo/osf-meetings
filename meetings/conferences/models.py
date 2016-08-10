@@ -4,6 +4,7 @@ from django.db import models
 
 from django_countries.fields import CountryField
 from django.contrib.auth.models import User
+from uploads.models import Upload
 
 
 class Conference(models.Model):
@@ -19,7 +20,7 @@ class Conference(models.Model):
     event_end = models.DateTimeField(blank=True, null=True)
     submission_start = models.DateTimeField(blank=True, null=True)
     submission_end = models.DateTimeField(blank=True, null=True)
-    logo = models.URLField(blank=True)
+    logo = models.ForeignKey(Upload, blank=True, null=True)
     description = models.TextField(blank=True, max_length=500)
     admin = models.ForeignKey(User, blank=True, null=True)
 

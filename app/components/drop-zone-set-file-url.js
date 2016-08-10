@@ -8,7 +8,10 @@ export default Ember.Component.extend({
 	},
 	actions: {
 		onSuccessfulUpload(file, responseText){
-			this.sendAction('setFileUrlFromResponse', responseText.file);
+			this.sendAction('setUploadFromResponse', responseText);
+		},
+		onRemovedFile(file){
+			this.sendAction('setFileUrlFromResponse', '');
 		}
 	}
 });

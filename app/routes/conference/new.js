@@ -24,12 +24,16 @@ export default Ember.Route.extend({
         },
         saveConference(newConf) {
             var router = this;
+            console.log(newConf.logo.id);
             newConf.save().then(function(params) {
                 router.transitionTo('conference.index', params.id);
             });
         },
-        setLogoUrl(value){
-            this.currentModel.newConf.set('logo', value);
+        setUpload(response){
+            var newConf = this.currentModel.newConf;
+            var upload = this.store.findRecord('upload', response.id).then(function(record){
+                newConf.set('logo', record);
+            });
         }
     }
 });

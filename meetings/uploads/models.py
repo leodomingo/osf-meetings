@@ -15,3 +15,6 @@ class Upload(models.Model):
         permissions = (
             ('view_upload', 'Can view upload'),
         )
+
+    class JSONAPIMeta:
+        resource_name = "uploads"
