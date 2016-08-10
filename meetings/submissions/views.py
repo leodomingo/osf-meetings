@@ -31,7 +31,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     queryset = Submission.objects.all()
 
     #  OSF's node url
-    node_url = settings.OSF_API_URL.format('v2/nodes/')
+    node_url = '{}v2/nodes/'.format(settings.OSF_API_URL)
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
@@ -48,6 +48,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
             if not request.user.has_perm('submissions.can_set_contributor'):
                 if serializer.is_valid():
+                    #  Creates a node in OSF
                     node = {
                         'data': {
                             'attributes': {
@@ -60,13 +61,12 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     }
 
                     response = requests.post(
-                            self.node_url,
-                            data=json.dumps(node),
-                            headers={
-                                'Authorization': 'Bearer {}'.format(osf_token),
-                                'Content-Type':
-                                    'application/json; charset=UTF-8'
-                            }
+                        self.node_url,
+                        data=json.dumps(node),
+                        headers={
+                            'Authorization': 'Bearer {}'.format(osf_token),
+                            'Content-Type': 'application/json; charset=UTF-8'
+                        }
                     )
 
                     response_object = response.json()

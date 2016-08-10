@@ -8,15 +8,6 @@ import json
 from django.conf import settings
 
 
-class CheckLoggedInView(APIView):
-
-    def get(self, request, format=None):
-        if request.user.is_authenticated():
-            return Response('true')
-        else:
-            return Response('false')
-
-
 class CurrentUserView(APIView):
     #  we need to save the user's info in a the user model instead of
     #  retrieving it all the time from osf
@@ -26,9 +17,13 @@ class CurrentUserView(APIView):
             account = SocialAccount.objects.get(uid=curUser)
             token = SocialToken.objects.get(account=account)
 
-            extra_data = requests.get(settings.PROFILE_URL, headers={
-                'Authorization': 'Bearer {}'.format(token)
-            })
+            # Gets the user's data
+            extra_data = requests.get(
+                settings.PROFILE_URL,
+                headers={
+                    'Authorization': 'Bearer {}'.format(token)
+                }
+            )
 
             data = json.loads(extra_data._content)['data']
             data['id'] = request.user.id

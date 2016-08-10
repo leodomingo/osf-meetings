@@ -198,7 +198,6 @@ OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
 OSF_FILES_URL = ('https://staging-files.osf.io').rstrip('/') + '/'
 OSF_STAGING_URL = ('https://staging.osf.io').rstrip('/') + '/'
 
-
 #  base_url
 PROFILE_URL = '{}v2/users/me/'.format(OSF_API_URL)
 WATERBUTLER_URL = '{}v1/resources/'.format(OSF_FILES_URL)
