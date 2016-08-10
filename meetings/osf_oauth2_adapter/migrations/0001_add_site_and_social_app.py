@@ -8,10 +8,6 @@ from allauth.socialaccount.models import SocialApp
 from django.contrib.sites.models import Site
 
 from django.conf import settings
-import meetings.settings.local as local
-
-CLIENT_ID = local.CLIENT_ID
-CLIENT_SECRET = local.CLIENT_SECRET
 
 
 def make_social_app(apps, schema_editor):
@@ -19,8 +15,8 @@ def make_social_app(apps, schema_editor):
     mysite.save()
     mysocialapp = SocialApp.objects.create(
         name="OSF",
-        client_id=CLIENT_ID,
-        secret=CLIENT_SECRET,
+        client_id=settings.CLIENT_ID,
+        secret=settings.CLIENT_SECRET,
         key="", provider="osf")
     mysocialapp.sites.add(mysite)
     mysocialapp.save()
