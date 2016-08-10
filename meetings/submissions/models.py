@@ -14,8 +14,8 @@ class Submission(models.Model):
     )
     description = models.TextField()
     conference = models.ForeignKey(
-            'conferences.Conference',
-            on_delete=models.CASCADE, null=True)
+        'conferences.Conference',
+        on_delete=models.CASCADE, null=True)
     approval = models.OneToOneField('approvals.Approval', null=True)
 
     class Meta:

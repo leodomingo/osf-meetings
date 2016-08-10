@@ -61,12 +61,12 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             }
 
             response = requests.post(
-                    self.node_url,
-                    data=json.dumps(node),
-                    headers={
-                        'Authorization': 'Bearer {}'.format(osf_token),
-                        'Content-Type': 'application/json; charset=UTF-8'
-                    }
+                self.node_url,
+                data=json.dumps(node),
+                headers={
+                    'Authorization': 'Bearer {}'.format(osf_token),
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
             )
 
             response_osf = response.json()

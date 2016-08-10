@@ -28,7 +28,6 @@ export default Ember.Component.extend({
             this.set('displayModal', false);
         },
         download(uri) {
-            debugger;
             var link = document.createElement("a");
             link.download = '';
             link.href = uri;
