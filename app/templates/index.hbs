@@ -4,7 +4,7 @@
   <div class="row conference-view-outer-container" id="indexBottom">
     <div class="col-md-10 col-md-offset-1">
       <div class="col-md-10 col-md-offset-1 tile-view fade-background">
-        <button class="btn btn-success navbar-btn" {{action "toggleInfo"}}>
+        <button id= "toggleInfo"class="btn btn-success navbar-btn" {{action "toggleInfo"}}>
           <span class="glyphicon glyphicon-plus"></span>
           Register a Meeting
         </button>
@@ -29,7 +29,7 @@
               <div class="btn-group submission-modal" role="group" aria-label="...">
                   <h5><strong>Create Here:</strong></h5>
                   <h6>You can also use our conference creation form to set up your meeting here</h6>
-                      <button type="button" class="btn btn-success" style="margin: 0 0 5px 0; width: 200px;" {{action "create"}}><span class="glyphicon glyphicon-plus"></span>  Create a Conference</button>
+                      <button type="button" id="createConference" class="btn btn-success" style="margin: 0 0 5px 0; width: 200px;" {{action "create"}}><span class="glyphicon glyphicon-plus"></span>  Create a Conference</button>
               </div>
           </div>
         </div>
