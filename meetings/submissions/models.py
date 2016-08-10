@@ -10,7 +10,9 @@ class Submission(models.Model):
     title = models.CharField(max_length=100)
     contributor = models.ForeignKey(
         User,
-        related_name='submission_contributor')
+        on_delete=models.CASCADE,
+        related_name='submissions_contributors'
+    )
     description = models.TextField()
     conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
     approval = models.OneToOneField('approvals.Approval')
@@ -24,3 +26,6 @@ class Submission(models.Model):
             ),
             ('view_submission', 'Can view submission'),
         )
+
+    class JSONAPIMeta:
+        resource_name = 'submissions'

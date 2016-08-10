@@ -7,9 +7,11 @@ export default Model.extend({
     title : attr('string'),
     description : attr('string'),
     canEdit: attr('boolean'),
-    category: attr('string'),
     nodeId: attr('string'),
+    category: attr('string', { defaultValue : 'project' }),
+    metafile : belongsTo('metafile'),
     dateCreated: attr(),
     downloadLink: attr('string'),
-    downloadCount: attr('string')
+    downloadCount: attr('string'),
+    contributor : belongsTo('user')
 });

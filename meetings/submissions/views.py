@@ -2,7 +2,6 @@ import json
 
 from rest_framework.response import Response
 from rest_framework import viewsets, filters
-# from rest_framework_json_api.views import RelationshipView
 
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -16,7 +15,8 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+from rest_framework import status
+from django.conf import settings
 
 
 class SubmissionViewSet(viewsets.ModelViewSet):
@@ -30,56 +30,61 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     filter_fields = ('conference', 'contributor')
     queryset = Submission.objects.all()
 
-    base_url = '{}oauth2/{}'.format(
-        OsfOauth2AdapterConfig.osf_accounts_url, '{}')
-    access_token_url = base_url.format('token')
-    profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
-    node_url = '{}v2/nodes/'.format(OsfOauth2AdapterConfig.osf_api_url)
+    #  OSF's node url
+    node_url = '{}v2/nodes/'.format(settings.OSF_API_URL)
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
-        serializer = SubmissionSerializer(
-            data=request.data, context={'request': request})
-        new_approval = Approval.objects.create()
-        contributor = request.user
+        if request.user.is_authenticated():
+            serializer = SubmissionSerializer(
+                data=request.data,
+                context={'request': request}
+            )
+            new_approval = Approval.objects.create()
+            contributor = request.user
 
-        current_user = request.user.username
-        account = SocialAccount.objects.get(uid=current_user)
-        osf_token = SocialToken.objects.get(account=account)
+            account = SocialAccount.objects.get(uid=request.user.username)
+            osf_token = SocialToken.objects.get(account=account)
 
-        if not request.user.has_perm('submissions.can_set_contributor'):
-            if serializer.is_valid():
-                node = {
-                    'data': {
-                        'attributes': {
-                            'category': 'project',
-                            'description': request.data['description'],
-                            'title': request.data['title']
-                        },
-                        'type': 'nodes'
+            if not request.user.has_perm('submissions.can_set_contributor'):
+                if serializer.is_valid():
+                    #  Creates a node in OSF
+                    node = {
+                        'data': {
+                            'attributes': {
+                                'category': 'project',
+                                'description': request.data['description'],
+                                'title': request.data['title']
+                            },
+                            'type': 'nodes'
+                        }
                     }
-                }
 
-                response = requests.post(
-                    self.node_url,
-                    data=json.dumps(node),
-                    headers={
-                        'Authorization': 'Bearer {}'.format(osf_token),
-                        'Content-Type': 'application/json; charset=UTF-8',
-                        'Accept': 'application/json, text/*'
-                    }
-                )
+                    response = requests.post(
+                        self.node_url,
+                        data=json.dumps(node),
+                        headers={
+                            'Authorization': 'Bearer {}'.format(osf_token),
+                            'Content-Type': 'application/json; charset=UTF-8'
+                        }
+                    )
 
-                obj = response.json()
-                serializer.save(
-                    contributor=contributor,
-                    approval=new_approval,
-                    node_id=obj['data']['id']
-                )
-
-                return Response(serializer.data)
-        else:
-            if serializer.is_valid():
-                serializer.save(approval=new_approval)
-                return Response(serializer.data)
-        return Response(serializer.errors)
+                    response_object = response.json()
+                    serializer.save(
+                        contributor=contributor,
+                        approval=new_approval,
+                        node_id=response_object['data']['id']
+                    )
+                    return Response(serializer.data)
+            else:
+                if serializer.is_valid():
+                    serializer.save(approval=new_approval)
+                    return Response(serializer.data)
+            return Response(serializer.errors)
+        return Response(
+            {
+                'error': 'Please login or signup',
+                'status': 401
+            },
+            status=status.HTTP_401_UNAUTHORIZED
+        )
