@@ -34,6 +34,16 @@ module.exports = function(environment) {
         ENV.osfUrl = 'https://staging.osf.io/';
         ENV.currentUser = 'http://localhost:8000/users/me'
         ENV.meetingsHomeUrl = 'http://localhost:4200/';
+        ENV.providers = {
+            "osf_meetings": {
+                url: 'http://localhost:8000/uploads/',
+                uploadMultiple: false
+           },
+           "osf": {
+                url: 'https://staging-files.osf.io/v1/resources/',
+                uploadMultiple: false
+           }
+        }
     }
 
     if (environment === 'test') {
