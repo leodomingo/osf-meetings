@@ -8,13 +8,15 @@ from submissions.models import Submission
 
 class MetafileSerializer(ser.ModelSerializer):
     owner = ResourceRelatedField(
-                queryset=User.objects.all(),
-                required=False,
-                allow_null=True)
+        queryset=User.objects.all(),
+        required=False,
+        allow_null=True
+    )
     submission = ResourceRelatedField(
-                    queryset=Submission.objects.all(),
-                    required=False,
-                    allow_null=True)
+        queryset=Submission.objects.all(),
+        required=False,
+        allow_null=True
+    )
 
     class Meta:
         model = Metafile

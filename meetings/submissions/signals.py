@@ -10,6 +10,7 @@ def add_permissions_on_submission_save(sender, **kwargs):
     approval = submission.approval
     conference_admin = submission.conference.admin
     submission_contributor = submission.contributor
+
     if submission.approval.approved:
         perm.set_approved_submission_permissions(
             submission, submission_contributor, conference_admin, approval)

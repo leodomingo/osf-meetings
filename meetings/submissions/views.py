@@ -15,7 +15,7 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from meetings.utils import OsfOauth2AdapterConfig
+from django.conf import settings
 
 
 class SubmissionViewSet(viewsets.ModelViewSet):
@@ -31,26 +31,24 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     filter_fields = ('conference', 'contributor')
     queryset = Submission.objects.all()
 
-    base_url = '{}oauth2/{}'.format(
-        OsfOauth2AdapterConfig.osf_accounts_url, '{}')
-    access_token_url = base_url.format('token')
-    profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
-    node_url = '{}v2/nodes/'.format(OsfOauth2AdapterConfig.osf_api_url)
+    #  OSF's node url
+    node_url = '{}v2/nodes/'.format(settings.OSF_API_URL)
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
-        serializer = SubmissionSerializer(
-            data=request.data,
-            context={'request': request}
-        )
-        new_approval = Approval.objects.create()
-        contributor = request.user
+        if request.user.is_authenticated():
+            serializer = SubmissionSerializer(
+                data=request.data,
+                context={'request': request}
+            )
+            new_approval = Approval.objects.create()
+            contributor = request.user
 
-        current_user = request.user.username
-        account = SocialAccount.objects.get(uid=current_user)
-        osf_token = SocialToken.objects.get(account=account)
+            account = SocialAccount.objects.get(uid=request.user.username)
+            osf_token = SocialToken.objects.get(account=account)
 
         if serializer.is_valid():
+            # Creates a OSF's node
             node = {
                 'data': {
                     'attributes': {
@@ -71,11 +69,11 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     }
             )
 
-            resObj = response.json()
+            response_osf = response.json()
             serializer.save(
                 contributor=contributor,
                 approval=new_approval,
-                node_id=resObj['data']['id']
+                node_id=response_osf['data']['id']
             )
             return Response(serializer.data)
         return Response(serializer.errors)
@@ -97,6 +95,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             }
         }
 
+        # Update OSF's node
         response = requests.put(
             '{}{}/'.format(self.node_url, request.data['node_id']),
             data=json.dumps(update_node),
@@ -106,8 +105,6 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             }
         )
 
-        #  serializer throw an error
-        #  payload doesn't send conference
         if (response.status_code == 200):
             return super(SubmissionViewSet, self).update(request, args, kwargs)
         return Response(response.text, status=response.status_code)
