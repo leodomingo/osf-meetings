@@ -9,9 +9,6 @@ from django.contrib.sites.models import Site
 
 from django.conf import settings
 
-CLIENT_ID = local.CLIENT_ID
-CLIENT_SECRET = local.CLIENT_SECRET
-
 
 def make_social_app(apps, schema_editor):
     mysite = Site.objects.create(domain="osf.io", name="OSF")
