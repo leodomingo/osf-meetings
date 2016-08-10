@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'submissions',
     'mail',
     'autofixture',
+    'rest_framework_docs'
 ]
 
 REST_FRAMEWORK = {
@@ -185,6 +186,7 @@ SITE_ID = 1
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
+OSF_MEETINGS_API_URL = 'http://localhost:8000'
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'
 OSF_MEETINGS_API_URL = 'http://localhost:8000'
@@ -203,3 +205,5 @@ MAILGUN_API_KEY = ''
 ANYMAIL = {
     "MAILGUN_API_KEY": MAILGUN_API_KEY,
 }
+
+EMAIL_DOMAIN = 'osf.io'
