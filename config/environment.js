@@ -34,7 +34,7 @@ module.exports = function(environment) {
             "osfMeetings": {
                 "host": "http://localhost:4200/",
                 "apiUrl": "http://localhost:8000/",
-                "currentUser": "http://localhost:8000/users/me",
+                "currentUser": "http://localhost:8000/users/me/",
                 "uploadsUrl": "http://localhost:8000/uploads/",
                 "uploadMultiple": false
             },
