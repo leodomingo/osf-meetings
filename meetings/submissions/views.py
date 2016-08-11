@@ -18,6 +18,8 @@ from allauth.socialaccount.models import SocialAccount
 import requests
 from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
 
+from django.http import HttpResponse
+
 import ipdb
 
 
@@ -72,8 +74,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     }
                 )
 
-                obj = response.json() # TODO: Figure out what's going on with this
-                ipdb.set_trace()
+                obj = response.json()
                 serializer.save(
                     contributor=contributor,
                     approval=new_approval,

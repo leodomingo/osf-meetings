@@ -1,15 +1,17 @@
 from django.test import TestCase, RequestFactory
 from unittest import skip
+import mock
 import factory
 from submissions.models import Submission
 from approvals.models import Approval
 from conferences.models import Conference
 from django.contrib.auth.models import User
 from test_factories import (UserFactory, SubmissionFactory, ConferenceFactory, 
-SocialAccountFactory, SocialTokenFactory, SocialAppFactory, ApprovalFactory)
+SocialAccountFactory, SocialTokenFactory, SocialAppFactory, ApprovalFactory, ResponseFactory)
 from serializers import SubmissionSerializer
 from views import SubmissionViewSet
 from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
+from osf_oauth2_adapter.views import OSFOAuth2Adapter
 
 import ipdb
 
@@ -72,6 +74,7 @@ class TestViews(TestCase):
             username='testViewsUser',
             id='428'
             )
+        self.socialApp = SocialAppFactory()
         self.socialAccount = SocialAccountFactory(
             user=self.user,
             uid='testViewsUser'
@@ -100,9 +103,15 @@ class TestViews(TestCase):
                  'description': 'This is a submission', 'approval': self.approvalData, 'conference': self.conferenceData}
         self.views = SubmissionViewSet()
 
-    def test_create(self):
+    @mock.patch('requests.post')
+    def test_create(self, mock_method):
+        mock_method.return_value(ResponseFactory(
+            content="{'data': {'id': 'qjdfy'}}"
+            ))
+        # adapter = OSFOAuth2Adapter(self.request)
+        # adapter.complete_login(self.request, self.socialApp, self.socialToken)
         self.views.create(self.request)
-        ipdb.set_trace()
+
 
     @skip('Test queryset')
     def test_get_queryset(self):

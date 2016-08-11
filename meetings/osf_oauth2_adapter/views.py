@@ -1,6 +1,8 @@
 import requests
 from .apps import OsfOauth2AdapterConfig
 
+import ipdb
+
 from allauth.socialaccount.providers.oauth2.views import (
     OAuth2Adapter,
     OAuth2LoginView,
@@ -26,7 +28,6 @@ class OSFOAuth2Adapter(OAuth2Adapter):
         })
 
         jsonData = extra_data.json()
-
         response = self.get_provider().sociallogin_from_response(
             request,
             jsonData

@@ -4,6 +4,7 @@ from submissions.models import Submission
 from approvals.models import Approval
 from conferences.models import Conference
 from django.contrib.auth.models import User
+from requests.models import Response
 from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
 
 
@@ -41,3 +42,7 @@ class SocialTokenFactory(factory.DjangoModelFactory):
 class SocialAppFactory(factory.DjangoModelFactory):
     class Meta:
         model = SocialApp
+
+class ResponseFactory(factory.DjangoModelFactory):
+    class Meta:
+        model = Response
