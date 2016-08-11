@@ -4,6 +4,6 @@ import config from '../config/environment';
 export
 default Ember.Route.extend({
     activate: function() {
-        window.location = config.meetingsUrl + "/accounts/login/";
+        window.location = config.providers.osfMeetings.apiUrl + "accounts/login/";
     }
 });
