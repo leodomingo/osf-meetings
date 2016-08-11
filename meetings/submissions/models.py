@@ -1,7 +1,6 @@
 from __future__ import unicode_literals
 from django.db import models
 from django.contrib.auth.models import User
-from conferences.models import Conference
 
 
 class Submission(models.Model):
@@ -14,8 +13,10 @@ class Submission(models.Model):
         related_name='submissions_contributors'
     )
     description = models.TextField()
-    conference = models.ForeignKey(Conference, on_delete=models.CASCADE)
-    approval = models.OneToOneField('approvals.Approval')
+    conference = models.ForeignKey(
+        'conferences.Conference',
+        on_delete=models.CASCADE, null=True)
+    approval = models.OneToOneField('approvals.Approval', null=True)
 
     class Meta:
         ordering = ('date_created',)

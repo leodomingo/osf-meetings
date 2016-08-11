@@ -20,7 +20,8 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Conference',
             fields=[
-                ('id', models.SlugField(max_length=10, primary_key=True, serialize=False)),
+                ('id', models.SlugField(
+                    max_length=10, primary_key=True, serialize=False)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('modified', models.DateTimeField(auto_now=True)),
                 ('title', models.CharField(max_length=100)),
@@ -34,7 +35,11 @@ class Migration(migrations.Migration):
                 ('submission_end', models.DateTimeField(blank=True, null=True)),
                 ('logo', models.URLField(blank=True)),
                 ('description', models.TextField(blank=True, max_length=500)),
-                ('admin', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('admin', models.ForeignKey(
+                    blank=True, null=True,
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to=settings.AUTH_USER_MODEL)
+                ),
             ],
             options={
                 'ordering': ('created',),

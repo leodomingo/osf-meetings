@@ -15,7 +15,6 @@ from allauth.socialaccount.models import SocialToken
 from allauth.socialaccount.models import SocialAccount
 
 import requests
-from rest_framework import status
 from django.conf import settings
 
 
@@ -25,8 +24,10 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     lookup_url_kwarg = 'submission_id'
     lookup_field = 'pk'
     permission_classes = (SubmissionPermissions,)
+
     filter_backends = (
         filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter)
+
     filter_fields = ('conference', 'contributor')
     queryset = Submission.objects.all()
 
@@ -46,45 +47,64 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             account = SocialAccount.objects.get(uid=request.user.username)
             osf_token = SocialToken.objects.get(account=account)
 
-            if not request.user.has_perm('submissions.can_set_contributor'):
-                if serializer.is_valid():
-                    #  Creates a node in OSF
-                    node = {
-                        'data': {
-                            'attributes': {
-                                'category': 'project',
-                                'description': request.data['description'],
-                                'title': request.data['title']
-                            },
-                            'type': 'nodes'
-                        }
-                    }
+        if serializer.is_valid():
+            # Creates a OSF's node
+            node = {
+                'data': {
+                    'attributes': {
+                        'category': 'project',
+                        'description': request.data['description'],
+                        'title': request.data['title']
+                    },
+                    'type': 'nodes'
+                }
+            }
 
-                    response = requests.post(
-                        self.node_url,
-                        data=json.dumps(node),
-                        headers={
-                            'Authorization': 'Bearer {}'.format(osf_token),
-                            'Content-Type': 'application/json; charset=UTF-8'
-                        }
-                    )
+            response = requests.post(
+                self.node_url,
+                data=json.dumps(node),
+                headers={
+                    'Authorization': 'Bearer {}'.format(osf_token),
+                    'Content-Type': 'application/json; charset=UTF-8'
+                }
+            )
 
-                    response_object = response.json()
-                    serializer.save(
-                        contributor=contributor,
-                        approval=new_approval,
-                        node_id=response_object['data']['id']
-                    )
-                    return Response(serializer.data)
-            else:
-                if serializer.is_valid():
-                    serializer.save(approval=new_approval)
-                    return Response(serializer.data)
-            return Response(serializer.errors)
-        return Response(
-            {
-                'error': 'Please login or signup',
-                'status': 401
-            },
-            status=status.HTTP_401_UNAUTHORIZED
+            response_osf = response.json()
+            serializer.save(
+                contributor=contributor,
+                approval=new_approval,
+                node_id=response_osf['data']['id']
+            )
+            return Response(serializer.data)
+        return Response(serializer.errors)
+
+    @method_decorator(login_required)
+    def update(self, request, *args, **kwargs):
+        current_user = request.user.username
+        account = SocialAccount.objects.get(uid=current_user)
+        osf_token = SocialToken.objects.get(account=account)
+
+        update_node = {
+            'data': {
+                'attributes': {
+                    'category': 'project',
+                    'title': request.data['title']
+                },
+                'type': 'nodes',
+                'id': request.data['node_id']
+            }
+        }
+
+        # Update OSF's node
+        response = requests.put(
+            '{}{}/'.format(self.node_url, request.data['node_id']),
+            data=json.dumps(update_node),
+            headers={
+                'Authorization': 'Bearer {}'.format(osf_token),
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
         )
+
+        if (response.status_code == 200):
+            return super(SubmissionViewSet, self).update(request, args, kwargs)
+        return Response(response.text, status=response.status_code)

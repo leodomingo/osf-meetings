@@ -25,8 +25,12 @@ class Migration(migrations.Migration):
                 ('osf_id', models.CharField(blank=True, max_length=100)),
                 ('osf_url', models.URLField(blank=True, null=True)),
                 ('file_name', models.CharField(max_length=100)),
-                ('owner', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, related_name='Metafile_owner', to=settings.AUTH_USER_MODEL)),
-                ('submission', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='submissions.Submission')),
+                ('owner', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    related_name='Metafile_owner', to=settings.AUTH_USER_MODEL)),
+                ('submission', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to='submissions.Submission')),
             ],
         ),
     ]

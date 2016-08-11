@@ -19,10 +19,12 @@ class MetafileViewSet(ModelViewSet):
         )
 
         if metafile_ser.is_valid():
+            submission_data = request.data['submission']
+            submission_id = submission_data.items()[1][1]
             metafile_ser.save(
                 owner=request.user,
                 submission=Submission.objects.get(
-                    contributor=request.user.id
+                    id=submission_id
                 )
             )
             return Response(metafile_ser.data)

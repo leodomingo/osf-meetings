@@ -21,18 +21,31 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Submission',
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('id', models.AutoField(
+                    auto_created=True, primary_key=True, serialize=False,
+                    verbose_name='ID')),
                 ('node_id', models.CharField(max_length=10)),
                 ('date_created', models.DateTimeField(auto_now_add=True)),
                 ('title', models.CharField(max_length=100)),
                 ('description', models.TextField()),
-                ('approval', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='approvals.Approval')),
-                ('conference', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='conferences.Conference')),
-                ('contributor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='submissions_contributors', to=settings.AUTH_USER_MODEL)),
+                ('approval', models.OneToOneField(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to='approvals.Approval')),
+                ('conference', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    to='conferences.Conference')),
+                ('contributor', models.ForeignKey(
+                    on_delete=django.db.models.deletion.CASCADE,
+                    related_name='submissions_contributors',
+                    to=settings.AUTH_USER_MODEL)),
             ],
             options={
                 'ordering': ('date_created',),
-                'permissions': (('can_set_contributor', 'Can set the contributor for a submission'), ('view_submission', 'Can view submission')),
+                'permissions': (
+                    ('can_set_contributor',
+                        'Can set the contributor for a submission'),
+                    ('view_submission', 'Can view submission')
+                ),
             },
         ),
     ]
