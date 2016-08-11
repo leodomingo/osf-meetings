@@ -30,12 +30,8 @@ module.exports = function(environment) {
         // ENV.APP.LOG_TRANSITIONS = true;
         // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
         // ENV.APP.LOG_VIEW_LOOKUPS = true;
-        ENV.meetingsUrl = 'http://localhost:8000';
-        ENV.osfUrl = 'https://staging.osf.io/';
-        ENV.currentUser = 'http://localhost:8000/users/me'
-        ENV.meetingsHomeUrl = 'http://localhost:4200/';
         ENV.providers = {
-            "osf-meetings": {
+            "osfMeetings": {
                 "host": "http://localhost:4200/",
                 "apiUrl": "http://localhost:8000",
                 "currentUser": "http://localhost:8000/users/me",
