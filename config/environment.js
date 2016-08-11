@@ -33,7 +33,7 @@ module.exports = function(environment) {
         ENV.providers = {
             "osfMeetings": {
                 "host": "http://localhost:4200/",
-                "apiUrl": "http://localhost:8000",
+                "apiUrl": "http://localhost:8000/",
                 "currentUser": "http://localhost:8000/users/me",
                 "uploadsUrl": "http://localhost:8000/uploads/",
                 "uploadMultiple": false
