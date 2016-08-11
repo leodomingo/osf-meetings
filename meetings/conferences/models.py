@@ -31,4 +31,4 @@ class Conference(models.Model):
         )
 
     class JSONAPIMeta:
-        resource_name = "conferences"
+        resource_name = 'conferences'

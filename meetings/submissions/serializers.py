@@ -4,6 +4,7 @@ from rest_framework_json_api.relations import ResourceRelatedField
 
 from submissions.models import Submission
 from approvals.models import Approval
+from conferences.models import Conference
 from django.contrib.auth.models import User
 
 
@@ -15,6 +16,7 @@ class SubmissionSerializer(ser.ModelSerializer):
         queryset=User.objects.all(), required=False, allow_null=True)
     approval = ResourceRelatedField(
         queryset=Approval.objects.all(), required=False, allow_null=True)
+    conference = ResourceRelatedField(queryset=Conference.objects.all(), required=False)
 
     class Meta:
         model = Submission

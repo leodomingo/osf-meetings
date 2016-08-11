@@ -61,6 +61,9 @@ INSTALLED_APPS = [
     'uploads',
     'mail',
     'autofixture',
+    'metafiles',
+    'mail',
+    'rest_framework_docs'
 ]
 
 REST_FRAMEWORK = {
@@ -84,6 +87,7 @@ REST_FRAMEWORK = {
 }
 
 JSON_API_FORMAT_KEYS = 'dasherize'
+JSON_API_PLURALIZE_TYPES = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -164,7 +168,15 @@ AUTHENTICATION_BACKENDS = (
 # http://blog.hugethoughts.com/allow-cors-specific-domain-django/
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control'
+)
 CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
 )
@@ -202,9 +214,17 @@ SITE_ID = 1
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
+OSF_FILES_URL = ('https://staging-files.osf.io').rstrip('/') + '/'
+OSF_STAGING_URL = ('https://staging.osf.io').rstrip('/') + '/'
+
+#  base_url
+PROFILE_URL = '{}v2/users/me/'.format(OSF_API_URL)
+WATERBUTLER_URL = '{}v1/resources/'.format(OSF_FILES_URL)
+PROJECTS_URL = '{}project/'.format(OSF_STAGING_URL)
+
+OSF_MEETINGS_API_URL = 'http://localhost:8000'
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'
-OSF_MEETINGS_API_URL = 'http://localhost:8000'
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
@@ -220,3 +240,5 @@ MAILGUN_API_KEY = ''
 ANYMAIL = {
     "MAILGUN_API_KEY": MAILGUN_API_KEY,
 }
+
+EMAIL_DOMAIN = 'osf.io'
