@@ -35,14 +35,18 @@ module.exports = function(environment) {
         ENV.currentUser = 'http://localhost:8000/users/me'
         ENV.meetingsHomeUrl = 'http://localhost:4200/';
         ENV.providers = {
-            "osf_meetings": {
-                url: 'http://localhost:8000/uploads/',
-                uploadMultiple: false
-           },
-           "osf": {
-                url: 'https://staging-files.osf.io/v1/resources/',
-                uploadMultiple: false
-           }
+            "osf-meetings": {
+                "host": "http://localhost:4200/",
+                "apiUrl": "http://localhost:8000",
+                "currentUser": "http://localhost:8000/users/me",
+                "uploadsUrl": "http://localhost:8000/uploads/",
+                "uploadMultiple": false
+            },
+            "osf": {
+                "host": "https://staging.osf.io/",
+                "uploadsUrl": "https://staging-files.osf.io/v1/resources/",
+                "uploadMultiple": false
+            }
         }
     }
 

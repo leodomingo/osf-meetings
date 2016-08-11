@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import config from 'ember-get-config';
 
-export function getProvider(provider_name) {
+export function getProvider(params/*, hash*/) {
+	var provider_name = params[0];
 	return config.providers[provider_name];
 }
 
