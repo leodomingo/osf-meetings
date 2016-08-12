@@ -13,38 +13,6 @@ export default Ember.Controller.extend(EmberValidations, {
 	displayErrors: false,
 	info: false,
 
-
-	validations: {
-		'model.title': {
-		  length: {minimum: 3, maximum: 300, messages: {
-		    tooShort: 'Please enter a longer title',
-		    tooLong: 'Title exceeds limit of 300 characters'
-		  }}
-		},
-		'model.description': {
-		  length: {minimum: 6, maximum: 2000, messages: {
-		    tooShort: 'Please enter a longer description',
-		    tooLong: 'Description exceeds limit of 2000 characters'
-		  }}
-		},
-		'model.country': {
-		  exclusion: {in: ['-Select a country'], message: 'Please choose a country'}
-		},
-		'model.state': {
-		  statecheck: {}
-		},
-		'model.city': {
-		  length: {maximum: 100, messages: {
-		    tooLong: 'City name is too long'
-		  }}
-		},
-		'model.startDate': {
-		  datecheck: {}
-		},
-		'model.submissionDate': {
-		  datecheck: {}
-		}
-	},
  	hasState: Ember.computed.match('model.state', /.+/),
 
 	actions: {

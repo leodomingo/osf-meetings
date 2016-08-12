@@ -24,5 +24,6 @@ class ConferenceViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         if serializer.is_valid():
-            user = User.objects.get(username=serializer.context['request'].user)
+            user = User.objects.get(
+                username=serializer.context['request'].user)
             serializer.save(admin=user)

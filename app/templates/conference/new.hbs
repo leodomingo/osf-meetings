@@ -7,42 +7,32 @@
                     <div class="form-group row fade-background">
                         <div class="section-header">IDENTIFY</div>
                         <hr>
-                        <div class="col-lg-6">
-                            <label for="city" >Conference Identifier</label>
-                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
-                        </div>
-                        <div class="col-lg-6 {{"has-success"}}" id="titleScroll">
+                        <div class="col-lg-6" id="titleScroll">
                             <label for="title">Title</label>
                             {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
+                            {{error-message model=model.newConf field='title'}}
                             <br>
-                            {{#if this.displayErrors}}
-                                {{#each errors.model.newConf.title as |error|}}
-                                    <div class="alert alert-danger" role="alert">{{error}}</div>
-                                {{/each}}
-                            {{/if}}
                             <label for="website">Website</label>
                             {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
-
+    
                             <label for="city">Logo</label>
                             {{input type="file" accept="image/*" id="image"}}
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
                             {{textarea value=model.newConf.description class="form-control resize" id="description"}}
-                            <!-- {{#if this.displayErrors}}
-                                    {{#each errors.model.newConf.description as |error|}}
-                                        <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                    {{/each}}
-                                {{/if}} -->
+                            {{error-message model=model.newConf field='description'}}
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="city" >Conference Identifier</label>
+                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
                         </div>
                     </div>
-
-
                     <div class="form-group row fade-background">
                         <div class="section-header">LOCATE</div>
                         <hr>
                         <div class="col-lg-6">
-                            <div class ="{{"has-success"}}">
+                            <div>
                                 <label for="country" id="countryScroll">
                                     Country
                                 </label>
@@ -56,27 +46,18 @@
                                         </option>
                                     {{/each}}
                                 </select>
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.country as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
                             </div>
-
-                            <div class="{{"has-success"}}">
+                            <div>
                                 <label for="state" id="stateScroll">
                                     State
                                 </label>
                                 {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.state as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
+                                {{error-message model=model.newConf field='state'}}
                             </div>
-                            <div class="{{"has-success"}}">
+                            <div>
                                 <label for="city" id="cityScroll">City</label>
                                 {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
+                                {{error-message model=model.newConf field='city'}}
                                 <!-- {{#if this.displayErrors}}
                                         {{#each errors.model.newConf.city as |error|}}
                                             <br><div class="alert alert-danger" role="alert">{{error}}</div>

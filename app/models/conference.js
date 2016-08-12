@@ -2,8 +2,41 @@ import attr from 'ember-data/attr';
 //import Collection from './collection';
 import Model from 'ember-data/model';
 import { hasMany } from 'ember-data/relationships';
+import { validator, buildValidations } from 'ember-cp-validations';
 
-export default Model.extend({
+const Validations = buildValidations({
+    title: validator('presence', {
+        presence: true,
+        description: 'Conference Title',
+        message: 'Title cannot be blank'
+     }),
+    city: validator('presence', {
+        presence: true,
+        description: 'Conference City'
+    }),
+    state: validator('presence', {
+        presence: true,
+        description: 'Conference State'
+    }),
+    description: [
+        validator('presence', {
+            presence: true,
+            message: 'Conference description can\'t be blank'
+        }),
+        validator('length', {
+            min: 30,
+            description: 'Conference Description',
+            message: 'Description is too short'
+        })
+    ],
+    eventStart: validator('presence', true),
+    eventEnd: validator('presence', true),
+    submissionStart: validator('presence', true),
+    submissionEnd: validator('presence', true),
+    
+});
+
+export default Model.extend(Validations,{
     title: attr('string'),
     city: attr('string'),
     state: attr('string'),
