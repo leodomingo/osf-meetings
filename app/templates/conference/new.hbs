@@ -10,7 +10,9 @@
                         <div class="col-lg-6" id="titleScroll">
                             <label for="title">Title</label>
                             {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
-                            {{error-message model=model.newConf field='title'}}
+                            {{#if model.newConf.title}}
+                                {{error-message model=model.newConf field='title'}}
+                            {{/if}}
                             <br>
                             <label for="website">Website</label>
                             {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
@@ -21,7 +23,9 @@
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
                             {{textarea value=model.newConf.description class="form-control resize" id="description"}}
-                            {{error-message model=model.newConf field='description'}}
+                            {{#if model.newConf.description}}
+                                {{error-message model=model.newConf field='description'}}
+                            {{/if}}
                         </div>
                         <div class="col-lg-6">
                             <label for="city" >Conference Identifier</label>
@@ -52,17 +56,16 @@
                                     State
                                 </label>
                                 {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
-                                {{error-message model=model.newConf field='state'}}
+                                {{#if model.newConf.state}}
+                                    {{error-message model=model.newConf field='state'}}
+                                {{/if}}
                             </div>
                             <div>
                                 <label for="city" id="cityScroll">City</label>
                                 {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
-                                {{error-message model=model.newConf field='city'}}
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.city as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
+                                {{#if model.newConf.city}}
+                                    {{error-message model=model.newConf field='city'}}
+                                {{/if}}
                             </div>
 
 
@@ -79,12 +82,7 @@
                         <div class="col-lg-6">
                             <label for="city">End</label>
                             {{bs-datetimepicker date=model.newConf.eventEnd class="form-control" id='endDate'}}
-                            {{#if this.displayErrors}}
-                                {{#each errors.model.newConf.eventStart as |error|}}
-                                    <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                {{/each}}
-                            {{/if}}
-
+                            {{model.newConf.eventEnd}}
                         </div>
                     </div>
 
