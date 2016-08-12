@@ -1,5 +1,5 @@
 import requests
-from .apps import OsfOauth2AdapterConfig
+from django.conf import settings
 
 import ipdb
 
@@ -13,17 +13,14 @@ from osf_oauth2_adapter.provider import OSFProvider
 
 
 class OSFOAuth2Adapter(OAuth2Adapter):
+    #  Used for Django All OAuth
     provider_id = OSFProvider.id
-    base_url = '{}oauth2/{}'.format(
-        OsfOauth2AdapterConfig.osf_accounts_url, '{}'
-    )
-
+    base_url = '{}oauth2/{}'.format(settings.OSF_ACCOUNTS_URL, '{}')
     access_token_url = base_url.format('token')
     authorize_url = base_url.format('authorize')
-    profile_url = '{}v2/users/me/'.format(OsfOauth2AdapterConfig.osf_api_url)
 
     def complete_login(self, request, app, access_token, **kwargs):
-        extra_data = requests.get(self.profile_url, headers={
+        extra_data = requests.get(settings.PROFILE_URL, headers={
             'Authorization': 'Bearer {}'.format(access_token.token)
         })
 
