@@ -34,6 +34,7 @@ You will need the following things properly installed on your computer.
 3. `run the bash script with ./script.sh. Passing in a number will create randomly generated test data into the database. 
     i.e. running ./script.sh 500 will create the database with 500 preloaded conferences.`
 4. Visit the Django REST API interface at [http://localhost:8000](http://localhost:8000).
+5. Visit the API docs at [http://localhost:8000/docs/](http://localhost:8000/docs/).
 
 ## Running Ember APP / Development
 
