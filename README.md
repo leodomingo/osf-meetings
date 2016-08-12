@@ -24,9 +24,6 @@ You will need the following things properly installed on your computer.
 * `ember install ../ember-osf`
 * `npm link ../ember-osf`
 
-#### Django
-##### API server for OSF_meetings_ember with permissions using django_guardian
-
 #### Setup
 
 1. `pip install -r requirements.txt`
