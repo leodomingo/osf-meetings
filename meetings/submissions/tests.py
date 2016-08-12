@@ -106,7 +106,7 @@ class TestViews(TestCase):
     @mock.patch('requests.post')
     def test_create(self, mock_method):
         mock_method.return_value(ResponseFactory(
-            content="{'data': {'id': 'qjdfy'}}"
+            content={'data': {'id': 'qjdfy'}}
             ))
         # adapter = OSFOAuth2Adapter(self.request)
         # adapter.complete_login(self.request, self.socialApp, self.socialToken)
