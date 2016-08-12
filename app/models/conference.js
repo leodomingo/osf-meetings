@@ -1,8 +1,7 @@
 import attr from 'ember-data/attr';
-//import Collection from './collection';
 import Model from 'ember-data/model';
-import { hasMany } from 'ember-data/relationships';
 import { validator, buildValidations } from 'ember-cp-validations';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 const Validations = buildValidations({
     title: validator('presence', {
@@ -51,5 +50,6 @@ export default Model.extend(Validations,{
     submissions : hasMany('submission', { async : true }),
     canEdit: attr('boolean', { defaultValue : ''}),
     submissionCount: attr('number'),
-    mySubmissionCount: attr('number')
+    mySubmissionCount: attr('number'),
+    admin: belongsTo('user')
 });

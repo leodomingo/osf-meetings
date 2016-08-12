@@ -1,6 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
+    store: Ember.inject.service('store'),
     tagName: 'tr',
     isRenaming: false,
     displayModal: false,
@@ -25,7 +26,12 @@ export default Ember.Component.extend({
         },
         cancelDelete() {
             this.set('displayModal', false);
+        },
+        download(uri) {
+            var link = document.createElement("a");
+            link.download = '';
+            link.href = uri;
+            link.click();
         }
-
     }
 });

@@ -12,20 +12,24 @@ class TestPermissions(TestCase):
     def setUp(self):
         self.user1 = UserFactory(
             username='user1'
-            )
+        )
         self.user2 = UserFactory(
             username='user2'
-            )
+        )
         self.conference = ConferenceFactory(
             admin=self.user1,
             id='conferenceId'
-            )
+        )
 
     def test_conference_permissions(self):
-        self.assertTrue(self.user1.has_perm('change_conference', self.conference))
-        self.assertFalse(self.user2.has_perm('change_conference', self.conference))
-        self.assertTrue(self.user1.has_perm('delete_conference', self.conference))
-        self.assertFalse(self.user2.has_perm('delete_conference', self.conference))
+        self.assertTrue(
+            self.user1.has_perm('change_conference', self.conference))
+        self.assertFalse(
+            self.user2.has_perm('change_conference', self.conference))
+        self.assertTrue(
+            self.user1.has_perm('delete_conference', self.conference))
+        self.assertFalse(
+            self.user2.has_perm('delete_conference', self.conference))
 
 
 class TestSerializers(TestCase):
@@ -49,9 +53,11 @@ class TestSerializers(TestCase):
         self.request2.query_params = {}
 
     def test_get_links(self):
-        self.serializer = ConferenceSerializer(context={'request': self.request1})
+        self.serializer = ConferenceSerializer(
+            context={'request': self.request1})
         self.links = self.serializer.get_links(self.conference)
-        self.assertEqual(self.links['self'], 'http://testserver/conferences/38/')
+        self.assertEqual(
+            self.links['self'], 'http://testserver/conferences/38/')
         self.assertEqual(self.links['submissions'],
                          'http://testserver/submissions/?conference=38')
 
@@ -65,12 +71,16 @@ class TestSerializers(TestCase):
             contributor=factory.SubFactory(UserFactory, username='User2')
             )
         self.serializer = ConferenceSerializer()
-        self.assertEqual(self.serializer.get_submission_count(self.conference), 2)
-        self.assertFalse(self.serializer.get_submission_count(self.conference) == 5)
+        self.assertEqual(
+            self.serializer.get_submission_count(self.conference), 2)
+        self.assertFalse(
+            self.serializer.get_submission_count(self.conference) == 5)
 
     def test_get_can_edit(self):
-        self.serializer1 = ConferenceSerializer(context={'request': self.request1})
-        self.serializer2 = ConferenceSerializer(context={'request': self.request2})
+        self.serializer1 = ConferenceSerializer(
+            context={'request': self.request1})
+        self.serializer2 = ConferenceSerializer(
+            context={'request': self.request2})
         self.canEdit1 = self.serializer1.get_can_edit(self.conference)
         self.canEdit2 = self.serializer2.get_can_edit(self.conference)
         self.assertTrue(self.canEdit1)
@@ -94,7 +104,8 @@ class TestSignals(TestCase):
         self.view = ConferenceViewSet()
         self.request.user = self.user
         self.confPermissions = ConferencePermissions()
-        self.assertTrue(self.confPermissions.has_permission(self.request, self.view))
+        self.assertTrue(self.confPermissions.has_permission(
+            self.request, self.view))
 
 
 class TestViews(TestCase):
@@ -106,10 +117,17 @@ class TestViews(TestCase):
         self.request = RequestFactory().post('./fake_path')
         self.request.user = self.user
         self.request.query_params = {}
-        self.request.data = {'id': 's72bc', 'title': 'conference', 'city': 'Charlottesville',
-                             'state': 'Virginia', 'country': 'NZ'}
-        self.serializer = ConferenceSerializer(context={'request': self.request},
-                                               data=self.request.data)
+        self.request.data = {
+            'id': 's72bc',
+            'title': 'conference',
+            'city': 'Charlottesville',
+            'state': 'Virginia',
+            'country': 'NZ'
+        }
+        self.serializer = ConferenceSerializer(
+            context={'request': self.request},
+            data=self.request.data
+        )
         self.view = ConferenceViewSet()
         self.view.request = self.request
         self.view.format_kwarg = ''
