@@ -4,7 +4,7 @@ export default Ember.Route.extend({
     info: false,
     init: function(){
         this.controllerFor('index').set('info', false);
-        Ember.$('#submission-instructions').hide();
+        Ember.$('#submission-instructions').hide(); 
     },
     model(params) {
         return Ember.RSVP.hash({

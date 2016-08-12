@@ -45,9 +45,12 @@ export default Ember.Route.extend({
         },
         success(dropZone, file, successData) {
             var conf = this.currentModel.newConf;
-            var newUpload = this.store.findRecord('upload', successData.id).then((newRecord) => {
-                conf.set('upload', newRecord);
-                this.transitionTo('conference.index', conf.get('id'));
+            var router = this;
+            this.store.findRecord('upload', successData.id).then((newUpload) => {
+                conf.set('logo', newUpload);
+                conf.save().then( ()=>{
+                    router.transitionTo('conference.index', conf.get('id'));
+                });
             });
         }
     } 
