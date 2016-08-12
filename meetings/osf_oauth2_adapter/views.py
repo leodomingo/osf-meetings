@@ -1,8 +1,6 @@
 import requests
 from django.conf import settings
 
-import ipdb
-
 from allauth.socialaccount.providers.oauth2.views import (
     OAuth2Adapter,
     OAuth2LoginView,

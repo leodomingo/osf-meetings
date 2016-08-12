@@ -17,9 +17,7 @@ from allauth.socialaccount.models import SocialAccount
 import requests
 from django.conf import settings
 
-from django.http import HttpResponse
-
-import ipdb
+# from django.http import HttpResponse
 
 
 class SubmissionViewSet(viewsets.ModelViewSet):
