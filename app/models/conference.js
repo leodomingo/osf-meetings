@@ -1,10 +1,6 @@
 import attr from 'ember-data/attr';
 import Model from 'ember-data/model';
-<<<<<<< HEAD
 import { hasMany, belongsTo } from 'ember-data/relationships';
-=======
-import { belongsTo, hasMany } from 'ember-data/relationships';
->>>>>>> a3605244e3faa2de63e9017595888900335e165f
 
 export default Model.extend({
     title: attr('string'),

@@ -24,10 +24,11 @@
                             {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
                             <label for="city">Logo</label>
-                            {{drop-zone-set-file-url 
-                            url=(get-uploads-url) 
-                            getDropzone=(action "getDropzone")
-                            setUploadFromResponse="setUpload"}}
+                            {{upload-widget
+                                success=(route-action "success")
+                                resolve=resolveUpload
+                                dropZone=drop
+                            }}
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
@@ -133,7 +134,7 @@
                     <div class="form-group row fade-background" >
                         <div class="col-md-4">
                             <button class="btn btn-danger" {{action "back"}}>Cancel</button>
-                            <button class="btn btn-success" {{action "saveConference" model.newConf}}>
+                            <button class="btn btn-success" {{action "saveConference" model.newConf drop resolveUpload}}>
                                 Create
                             </button>
                         </div>

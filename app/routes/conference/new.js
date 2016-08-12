@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import config from '../../config/environment';
+import config from 'ember-get-config';
 
 // Validations are currently disabled for developing. They will likely need to be completely 
 // re-implemented. Currently they are set up using the ember-validations library which only
@@ -30,18 +30,25 @@ export default Ember.Route.extend({
                 newRoute.controller.set('visited', true);
             });
         },
-        saveConference(newConf) {
-            var router = this;
-            console.log(newConf.logo.id);
-            newConf.save().then(function(params) {
-                router.transitionTo('conference.index', params.id);
+        saveConference(newConference, drop, resolve) {
+            newConference.save().then(() => {
+                drop.on('processing', function() {
+                    this.options.url = config.providers.osfMeetings.uploadsUrl;
+                    var csrftoken = Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1");
+                    this.options.headers = {
+                        'X-CSRFToken': csrftoken,
+                    };
+                    this.options.withCredentials = true;
+                });
+                resolve();
             });
         },
-        setUpload(response){
-            var newConf = this.currentModel.newConf;
-            var upload = this.store.findRecord('upload', response.id).then(function(record){
-                newConf.set('logo', record);
+        success(dropZone, file, successData) {
+            var conf = this.currentModel.newConf;
+            var newUpload = this.store.findRecord('upload', successData.id).then((newRecord) => {
+                conf.set('upload', newRecord);
+                this.transitionTo('conference.index', conf.get('id'));
             });
         }
-    }
+    } 
 });

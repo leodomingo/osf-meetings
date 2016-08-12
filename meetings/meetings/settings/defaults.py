@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'mail',
     'autofixture',
     'metafiles',
-    'mail',
     'rest_framework_docs'
 ]
 
