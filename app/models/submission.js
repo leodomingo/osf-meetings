@@ -27,7 +27,7 @@ var Validations = buildValidations({
         ]
     },
 }, {
-    debounce: 500
+    debounce: 500,
 });
 
 
