@@ -29,7 +29,8 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="city" >Conference Identifier</label>
-                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
+                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Identifier"}}
+                            {{error-message model=model.newConf field='id'}}
                         </div>
                     </div>
                     <div class="form-group row fade-background">

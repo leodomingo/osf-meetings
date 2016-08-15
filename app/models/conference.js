@@ -4,6 +4,7 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
 const Validations = buildValidations({
+    id: validator('unique-identifier', {}),
     title: validator('presence', {
         presence: true,
         description: 'Conference Title',
@@ -35,7 +36,7 @@ const Validations = buildValidations({
     
 });
 
-export default Model.extend(Validations,{
+export default Model.extend(Validations, {
     title: attr('string'),
     city: attr('string'),
     state: attr('string'),

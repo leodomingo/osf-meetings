@@ -14,9 +14,11 @@ class ConferenceViewSet(viewsets.ModelViewSet):
     serializer_class = ConferenceSerializer
     filter_backends = (
         filters.SearchFilter,
-        filters.DjangoObjectPermissionsFilter,)
+        filters.DjangoObjectPermissionsFilter,
+        filters.DjangoFilterBackend,)
     permission_classes = (ConferencePermissions, )
     search_fields = ('title', 'description')
+    filter_fields = ('id',)
 
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
