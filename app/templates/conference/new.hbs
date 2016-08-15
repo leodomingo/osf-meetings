@@ -9,19 +9,19 @@
                         <hr>
                         <div class="col-lg-6" id="titleScroll">
                             <label for="title">Title</label>
-                            {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
-                            {{error-message model=model.newConf field='title'}}
+                            {{validator-input tagType='input' type='text'
+                                 model=model.newConf valuePath='title' placeholder='Title'}}
                             <br>
                             <label for="website">Website</label>
-                            {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
-    
+                            {{input type='text' value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
+
                             <label for="city">Logo</label>
                             {{input type="file" accept="image/*" id="image"}}
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
-                            {{textarea value=model.newConf.description class="form-control resize" id="description"}}
-                            {{error-message model=model.newConf field='description'}}
+                             {{validator-input tagType='textarea' model=model.newConf
+                                 valuePath='description' placeholder='Description'}}
                         </div>
                         <div class="col-lg-6">
                             <label for="city" >Conference Identifier</label>
@@ -51,18 +51,13 @@
                                 <label for="state" id="stateScroll">
                                     State
                                 </label>
-                                {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
-                                {{error-message model=model.newConf field='state'}}
+                                {{validator-input tagType='input' model=model.newConf
+                                    valuePath='state' placeholder='State'}}
                             </div>
                             <div>
                                 <label for="city" id="cityScroll">City</label>
-                                {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
-                                {{error-message model=model.newConf field='city'}}
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.city as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
+                                {{validator-input tagType='input' model=model.newConf
+                                    valuePath='city' placeholder='City'}}
                             </div>
 
 

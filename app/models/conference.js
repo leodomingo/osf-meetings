@@ -3,36 +3,43 @@ import Model from 'ember-data/model';
 import { validator, buildValidations } from 'ember-cp-validations';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
-const Validations = buildValidations({
-    title: validator('presence', {
-        presence: true,
-        description: 'Conference Title',
-        message: 'Title cannot be blank'
-     }),
-    city: validator('presence', {
-        presence: true,
-        description: 'Conference City'
-    }),
-    state: validator('presence', {
-        presence: true,
-        description: 'Conference State'
-    }),
-    description: [
-        validator('presence', {
-            presence: true,
-            message: 'Conference description can\'t be blank'
-        }),
-        validator('length', {
-            min: 30,
-            description: 'Conference Description',
-            message: 'Description is too short'
-        })
-    ],
-    eventStart: validator('presence', true),
-    eventEnd: validator('presence', true),
-    submissionStart: validator('presence', true),
-    submissionEnd: validator('presence', true),
-    
+var Validations = buildValidations({
+    title: {
+        description: 'Title',
+        validators: [
+            validator('presence', true),
+            validator('length', {
+                min: 4,
+                max: 50
+            })
+        ]
+    },
+    city: {
+        description: 'City',
+        validators: [ validator('presence', true) ]
+    },
+    state: {
+        description: 'State',
+        validators: [ validator('presence', true) ]
+    },
+    description: {
+        description: 'Conference description',
+        validators: [
+            validator('presence', true),
+            validator('length', {
+                min: 20,
+                message: 'Description is too short'
+            })
+        ]
+    },
+    //This still needs work on date
+    //
+    //eventStart: validator('presence', true),
+    //eventEnd: validator('presence', true),
+    //submissionStart: validator('presence', true),
+    //submissionEnd: validator('presence', true),
+}, {
+    debounce: 500
 });
 
 export default Model.extend(Validations,{

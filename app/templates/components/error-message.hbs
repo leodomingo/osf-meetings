@@ -1,9 +1,0 @@
-<div class="error-message">
-    {{#if (v-get (model) (field) 'isValid') }}
-        <div class="ok">
-            <span class="fa fa-check"></span>
-        </div>
-    {{else}}
-        <div class="error">{{v-get (model) (field) 'message'}}</div>
-    {{/if}}
-</div>
