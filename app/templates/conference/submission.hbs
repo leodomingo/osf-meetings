@@ -20,7 +20,8 @@
             <div class="form-group row has-success">
                 <div class="col-md-6">
                     <label> Title:</label>
-                    {{input id="title" value=model.title class="form-control"}}
+                    {{validator-input tagType='input' type='text' model=model
+                        valuePath='title' placeholder='Title'}}
                     {{#if this.displayErrors}}
                         {{#each errors.model.title as |error|}}
                             <br><div class="alert alert-danger" role="alert">{{error}}</div>
@@ -38,7 +39,8 @@
                 <div class="form-group row has-success">
                     <div class="col-md-6">
                         <label>Description:</label>
-                        {{textarea id="description" value=model.description class="form-control"}}
+                        {{validator-input tagType='textarea' model=model
+                            valuePath='description' placeholder='Description'}}
                         {{#if this.displayErrors}}
                             {{#each errors.model.description as |error|}}
                                 <br><div class="alert alert-danger" role="alert">{{error}}</div>
