@@ -103,7 +103,6 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response(serializer.errors)
 
-
     @method_decorator(login_required)
     def update(self, request, *args, **kwargs):
         """Updates a single Submission item"""
