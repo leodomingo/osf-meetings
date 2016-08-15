@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'conferences',
     'submissions',
     'autofixture',
-    'rest_framework_swagger'
+    'rest_framework_swagger',
     'metafiles',
     'mail'
 ]
