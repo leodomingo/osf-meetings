@@ -17,9 +17,7 @@
     {{/if}}
 </td>
 <td style="color: black;">
-    {{#each submission.contributors as |contributor|}}
-        {{contributor.users.fullName}}
-    {{/each}}
+    {{submission.contributor.fullName}}
 </td>
 <td class="tableCategory" style="color: #000000">{{submission.category}}</td>
 <td class="tableDate" style="color: #000000">{{date-display submission.dateCreated}}</td>

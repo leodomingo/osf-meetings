@@ -1,7 +1,6 @@
 import attr from 'ember-data/attr';
-//import Collection from './collection';
 import Model from 'ember-data/model';
-import { hasMany } from 'ember-data/relationships';
+import { belongsTo, hasMany } from 'ember-data/relationships';
 
 export default Model.extend({
     title: attr('string'),
@@ -18,5 +17,6 @@ export default Model.extend({
     submissions : hasMany('submission', { async : true }),
     canEdit: attr('boolean', { defaultValue : ''}),
     submissionCount: attr('number'),
-    mySubmissionCount: attr('number')
+    mySubmissionCount: attr('number'),
+    admin: belongsTo('user')
 });
