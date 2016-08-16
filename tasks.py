@@ -10,7 +10,7 @@ def test_all(ctx):
     flake(ctx)
     test_api(ctx)
     # TODO: add more as they become available
-    ember_test(ctx)
+    #ember_test(ctx)
     jshint(ctx)
 
 
