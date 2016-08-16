@@ -2,7 +2,7 @@ from django.conf.urls import url
 from submissions import views
 
 submission_list = views.SubmissionViewSet.as_view({
-    'get': 'retrieve',
+    'get': 'list',
     'post': 'create'
 })
 submission_detail = views.SubmissionViewSet.as_view({

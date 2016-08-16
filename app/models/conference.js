@@ -4,7 +4,14 @@ import { validator, buildValidations } from 'ember-cp-validations';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
 const Validations = buildValidations({
-    id: validator('unique-identifier', {}),
+    id: [
+        validator('unique-identifier', {}),
+        validator('length', {
+            max: 10,
+            description: "Conference Identifier",
+            message: "Conference Identifier must be fewer than 10 characters"
+        })
+    ],
     title: validator('presence', {
         presence: true,
         description: 'Conference Title',
