@@ -35,6 +35,18 @@ export default Ember.Route.extend({
             newConf.save().then(function(params) {
                 router.transitionTo('conference.index', params.id);
             });
+        },
+        count(){
+            //console.log('Got one');
+            let maxLength = 500;
+            let remainder = maxLength -Ember.$('#description').val().length;
+            if ((remainder < 0) || (remainder > 470)){
+                Ember.$('#remaining').css({"color" : "red"});
+            }
+            else {
+                Ember.$('#remaining').css({'color' : 'green'});
+            }
+            Ember.$('#remaining').text(remainder);
         }
     }
 });

@@ -32,9 +32,10 @@ const Validations = buildValidations({
         }),
         validator('length', {
             min: 30,
+            max: 500,
             description: 'Conference Description',
-            message: 'Description is too short'
-        })
+            message: 'Description must be between 30 and 500 characters'
+        }),
     ],
     eventStart: validator('presence', true),
     eventEnd: validator('presence', true),

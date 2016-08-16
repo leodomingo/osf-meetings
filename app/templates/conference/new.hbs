@@ -22,7 +22,9 @@
 
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
-                            {{textarea value=model.newConf.description class="form-control resize" id="description"}}
+                                                        <div id="remaining"></div>
+
+                            {{textarea value=model.newConf.description class="form-control resize" id="description" key-up="count"}}
                             {{#if model.newConf.description}}
                                 {{error-message model=model.newConf field='description'}}
                             {{/if}}
