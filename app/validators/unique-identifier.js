@@ -4,7 +4,8 @@ import BaseValidator from 'ember-cp-validations/validators/base';
 const UniqueIdentifier = BaseValidator.extend({
   store: Ember.inject.service(),
 
-  validate(value, options, model, attribute) {
+
+  validate(value, options, model, attribute) {   // jshint ignore:line
     if (value){
           return this.get('store').query('conference', {
             id: value,
@@ -14,7 +15,6 @@ const UniqueIdentifier = BaseValidator.extend({
                 let message = "<h1>The conference identifier \"" +  value + "\" is already in use.</h1>";
                 return message;
             } else {
-              let message = "The conference identifier " +  value + " is available!";
               return true;
             }
         });
