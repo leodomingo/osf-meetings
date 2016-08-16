@@ -42,9 +42,6 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     #  OSF's node url
     node_url = '{}v2/nodes/'.format(settings.OSF_API_URL)
 
-    def list(self, request):
-        return super(SubmissionViewSet, self).list(self, request)
-
     def retrieve(self, request, pk=None):
         """Returns a single Submission item"""
         return super(SubmissionViewSet, self).retrieve(request, pk)

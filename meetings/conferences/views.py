@@ -17,9 +17,11 @@ class ConferenceViewSet(viewsets.ModelViewSet):
     serializer_class = ConferenceSerializer
     filter_backends = (
         filters.SearchFilter,
-        filters.DjangoObjectPermissionsFilter,)
+        filters.DjangoObjectPermissionsFilter,
+        filters.DjangoFilterBackend,)
     permission_classes = (ConferencePermissions, )
     search_fields = ('title', 'description')
+    filter_fields = ('id',)
 
     def retrieve(self, request, pk=None):
         """Returns a single Conference item"""
