@@ -11,7 +11,7 @@ const UniqueIdentifier = BaseValidator.extend({
         }).then((result) => {
             let meta = result.get('meta');
             if (meta.pagination.count !== 0) {
-                let message = "The conference identifier \"" +  value + "\" is already in use.";
+                let message = "<h1>The conference identifier \"" +  value + "\" is already in use.</h1>";
                 return message;
             } else {
               let message = "The conference identifier " +  value + " is available!";
