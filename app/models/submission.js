@@ -8,13 +8,10 @@ var Validations = buildValidations({
         description: 'Title',
         validators: [
             validator('presence', true),
+            validator('unique-submission-title'),
             validator('length', {
                 min: 4
             }),
-            validator('format', {
-                regex: /^(?=.*[a-z])(?=.*[A-Z]).{4,8}$/,
-                message: '{title} must have the first letter capitalized'
-            })
         ]
     },
     description: {
