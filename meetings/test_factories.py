@@ -45,6 +45,9 @@ class SocialAppFactory(factory.DjangoModelFactory):
         model = SocialApp
 
 
-class ResponseFactory(factory.DjangoModelFactory):
-    class Meta:
-        model = Response
+class ResponseFactory(object):
+    def __init__(self, content):
+        self.data = content
+
+    def json(self):
+        return self.data

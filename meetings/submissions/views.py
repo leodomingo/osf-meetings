@@ -70,7 +70,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
             osf_token = SocialToken.objects.get(account=account)
 
         if serializer.is_valid():
-            # Creates a OSF's node
+            # Creates an OSF node json object
             node = {
                 'data': {
                     'attributes': {
