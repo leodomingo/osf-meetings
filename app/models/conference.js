@@ -1,8 +1,50 @@
 import attr from 'ember-data/attr';
 import Model from 'ember-data/model';
+import { validator, buildValidations } from 'ember-cp-validations';
 import { belongsTo, hasMany } from 'ember-data/relationships';
 
-export default Model.extend({
+const Validations = buildValidations({
+    id: [
+        validator('unique-identifier', {}),
+        validator('length', {
+            max: 10,
+            description: "Conference Identifier",
+            message: "Conference Identifier must be fewer than 10 characters"
+        })
+    ],
+    title: validator('presence', {
+        presence: true,
+        description: 'Conference Title',
+        message: 'Title cannot be blank'
+     }),
+    city: validator('presence', {
+        presence: true,
+        description: 'Conference City'
+    }),
+    state: validator('presence', {
+        presence: true,
+        description: 'Conference State'
+    }),
+    description: [
+        validator('presence', {
+            presence: true,
+            message: 'Conference description can\'t be blank'
+        }),
+        validator('length', {
+            min: 30,
+            max: 500,
+            description: 'Conference Description',
+            message: 'Description must be between 30 and 500 characters'
+        }),
+    ],
+    eventStart: validator('presence', true),
+    eventEnd: validator('presence', true),
+    submissionStart: validator('presence', true),
+    submissionEnd: validator('presence', true),
+    
+});
+
+export default Model.extend(Validations, {
     title: attr('string'),
     city: attr('string'),
     state: attr('string'),
