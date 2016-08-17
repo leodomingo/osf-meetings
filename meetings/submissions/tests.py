@@ -4,6 +4,8 @@ import factory
 from datetime import datetime
 
 from submissions.models import Submission
+from conferences.tests import ConferenceFactory
+from api.tests import UserFactory
 
 
 class SubmissionFactory(factory.Factory):
@@ -14,6 +16,8 @@ class SubmissionFactory(factory.Factory):
     date_created = factory.LazyFunction(datetime.now)
     title = 'Even more'
     description = 'More text'
+    conference = factory.SubFactory(ConferenceFactory)
+    contributor = factory.SubFactory(UserFactory)
 
 
 class TestPermissions(TestCase):

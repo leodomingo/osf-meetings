@@ -1,5 +1,21 @@
 from django.test import TestCase
 from unittest import skip
+import factory
+from datetime import datetime
+
+from conferences.models import Conference
+
+
+class ConferenceFactory(factory.Factory):
+    class Meta:
+        model = Conference
+
+    id = 'abc123'
+    created = factory.LazyFunction(datetime.now)
+    modified = factory.LazyFunction(datetime.now)
+    title = 'This is a conference'
+    city = factory.Iterator(['Cville', 'Denver'])
+    state = factory.Iterator(['WY', 'HI', 'VA'])
 
 
 class TestPermissions(TestCase):
