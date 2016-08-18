@@ -1,18 +1,15 @@
 from django.test import TestCase, RequestFactory
 from unittest import skip
+from collections import OrderedDict
 import mock
 import factory
 from submissions.models import Submission
-# from approvals.models import Approval
-# from conferences.models import Conference
 from django.contrib.auth.models import User
 from test_factories import (UserFactory, SubmissionFactory, ConferenceFactory,
                             SocialAccountFactory, SocialTokenFactory,
                             SocialAppFactory, ApprovalFactory, ResponseFactory)
 from serializers import SubmissionSerializer
 from views import SubmissionViewSet
-# from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
-# from osf_oauth2_adapter.views import OSFOAuth2Adapter
 
 
 class TestPermissions(TestCase):
@@ -157,6 +154,19 @@ class TestViews(TestCase):
                              'contributor': self.contributorData, 'description':
                              'This is a submission', 'approval': self.approvalData,
                              'conference': self.conferenceData}
+        this = {
+            u'category': u'project',
+            u'can_edit': False,
+            u'node_id': None,
+            u'description': u'With mother',
+            u'title': u'Submission65',
+            u'contributor': None,
+            u'metafile': None,
+            'id': None,
+            u'conference': OrderedDict(
+                [(u'type', u'conferences'), (u'id', u'tBest')])
+        }
+        print this
         self.views = SubmissionViewSet()
 
         self.submission1 = SubmissionFactory(
@@ -200,13 +210,13 @@ class TestViews(TestCase):
     # time, I would look into how to format  this fake data so that the test will work, but
     # my internship is ending right now so someone else has to do it. Sorry :(
     @mock.patch('requests.post')
-    def test_create(self, mock_method):
+    def test_perform_create(self, mock_method):
         mock_method.return_value(ResponseFactory(
             content={'data': {'id': 'qjdfy'}}
             ))
-        # adapter = OSFOAuth2Adapter(self.request)
-        # adapter.complete_login(self.request, self.socialApp, self.socialToken)
-        self.views.create(self.request)
+        serializer = SubmissionSerializer(data=self.request.data)
+        serializer.is_valid()
+        self.views.perform_create(serializer)
 
     def test_get_queryset(self):
         queryset = self.views.queryset
