@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
 
 // Validations are currently disabled for developing. They will likely need to be completely 
 // re-implemented. Currently they are set up using the ember-validations library which only
@@ -19,43 +18,28 @@ export default Ember.Route.extend({
 
     actions : {
         saveSubmission(newSubmission, drop, resolve) {
+            if(resolve) {
                 newSubmission.save().then((newRecord) => {
+                    resolve();
                     drop.on('processing', function(file) {
-                        var that = this;
-                        this.options.url = config.providers.osf.uploadsUrl + 
-                            newRecord.get('nodeId') +
-                            '/providers/osfstorage/?kind=file&name=' + 
-                            file.name;
-                        var userId = newRecord.get('contributor').then((authUser) =>{
-                            var authHeader = 'Bearer ' + authUser.get('token');
-                            that.options.headers = {
-                                'Authorization' : authHeader
-                            }
-                        });
-                        this.options.method = 'PUT';
-                    });     
-                    resolve();                    
+                        this.options.url = this.options.url() + newRecord.get('nodeId') +
+                            '/providers/osfstorage/?kind=file&name=' + file.name;
+                        var authUser = newRecord.get('contributor');
+                        this.options.headers = {
+                            'Authorization' : 'Bearer ' + authUser.get('token')
+                        };
+                    });
                 });
+
+            } else {
+                console.log("Upload Error");
+            }
         },
 
-        success(dropZone, file, successData) {
-            var nodeId = successData['data']['attributes']['resource']; //osf node's id
-            var submissions = this.get('store').peekAll('submission');
-            var relatedSubmission = submissions.findBy('nodeId', nodeId);
-
-            var newFile = this.get('store').createRecord('metafile', {
-                submission : relatedSubmission,
-                osfId : successData['data']['id'],
-                osfUrl : successData['data']['links']['download'],
-                fileName : successData['data']['attributes']['name']
-            });
-
-            newFile.save().then((metafile) => {
-                //do toast here
-                var submission = metafile.get('submission');
-                var conf = submission.get('conference');
-                this.transitionTo('conference.index', conf.get('id'));
-            });
+        success(metafile) {
+            var submission = metafile.get('submission');
+            var conf = submission.get('conference');
+            this.transitionTo('conference.index', conf.get('id'));
         }
     }
 });

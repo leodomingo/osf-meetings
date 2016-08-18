@@ -1,11 +1,7 @@
 import attr from 'ember-data/attr';
 import Model from 'ember-data/model';
-<<<<<<< HEAD
-import { hasMany, belongsTo } from 'ember-data/relationships';
-=======
 import { validator, buildValidations } from 'ember-cp-validations';
 import { belongsTo, hasMany } from 'ember-data/relationships';
->>>>>>> 37ff12bb9c0fc4a812a2a65f3b189f039390b2b9
 
 var Validations = buildValidations({
     id: [
