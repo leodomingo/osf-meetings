@@ -9,21 +9,20 @@
                         <hr>
                         <div class="col-lg-6" id="titleScroll">
                             <label for="title">Title</label>
-                            {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
-                            {{#if model.newConf.title}}
-                                {{error-message model=model.newConf field='title'}}
-                            {{/if}}
+                            {{validator-input tagType='input' type='text'
+                                 model=model.newConf valuePath='title' placeholder='Title'}}
                             <br>
                             <label for="website">Website</label>
-                            {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
-    
+                            {{input type='text' value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
+
                             <label for="city">Logo</label>
                             {{input type="file" accept="image/*" id="image"}}
 
+                            {{!-- Keeping Description as normal textarea to allow for twitter style countdown, may have to change this later--}}
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
-                                                        <div id="remaining"></div>
 
+                            <div id="remaining"></div>
                             {{textarea value=model.newConf.description class="form-control resize" id="description" key-up="count" }}
                             {{#if model.newConf.description}}
                                 {{error-message model=model.newConf field='description'}}
@@ -31,8 +30,8 @@
                         </div>
                         <div class="col-lg-6">
                             <label for="city" >Conference Identifier</label>
-                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Identifier"}}
-                            {{error-message model=model.newConf field='id'}}
+                            {{validator-input tagType='input' type='text'
+                                 model=model.newConf valuePath='id' placeholder='Conference Identifier'}}
                         </div>
                     </div>
                     <div class="form-group row fade-background">
@@ -58,20 +57,14 @@
                                 <label for="state" id="stateScroll">
                                     State
                                 </label>
-                                {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
-                                {{#if model.newConf.state}}
-                                    {{error-message model=model.newConf field='state'}}
-                                {{/if}}
+                                {{validator-input tagType='input' model=model.newConf
+                                    valuePath='state' placeholder='State'}}
                             </div>
                             <div>
                                 <label for="city" id="cityScroll">City</label>
-                                {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
-                                {{#if model.newConf.city}}
-                                    {{error-message model=model.newConf field='city'}}
-                                {{/if}}
+                                {{validator-input tagType='input' model=model.newConf
+                                    valuePath='city' placeholder='City'}}
                             </div>
-
-
                         </div>
 
                     </div>

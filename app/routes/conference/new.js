@@ -10,6 +10,7 @@ import config from '../../config/environment';
 // validations library will need to be used.
 
 export default Ember.Route.extend({
+
     model() {
         return Ember.RSVP.hash({
                 meta : Ember.$.ajax({
