@@ -9,6 +9,8 @@ from django.conf import settings
 
 
 class CurrentUserView(APIView):
+    """ Returns the metadata for the authenticated user"""
+
     #  we need to save the user's info in a the user model instead of
     #  retrieving it all the time from osf
     def get(self, request, **kwargs):

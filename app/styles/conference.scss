@@ -26,6 +26,19 @@
     margin-top: .3em;
     font-size: 36px;
 }
+.error-message
+{
+  font-size: 14px;
+  padding-bottom: 5px;
+}
+.error-message .ok
+{
+  color: green;
+}
+.error-message .error
+{
+  color: red;
+}
 .submission-modal
 {
 	background-color: rgba(0,0,0,0.1);
@@ -37,4 +50,9 @@
   margin: 15px -15px 30px -15px;
   padding-left: 0;
   display: none;
+}
+.valid-input 
+{
+  color: green;
+  font-size: 18px;
 }

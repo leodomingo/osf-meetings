@@ -10,9 +10,10 @@ import config from 'ember-get-config';
 // validations library will need to be used.
 
 export default Ember.Route.extend({
+
     model() {
         return Ember.RSVP.hash({
-            meta : Ember.$.ajax({
+                meta : Ember.$.ajax({
                 url : config.providers.osfMeetings.apiUrl + "conferences/",
                 type : "OPTIONS",
                 xhrFields : {
@@ -52,6 +53,18 @@ export default Ember.Route.extend({
                     router.transitionTo('conference.index', conf.get('id'));
                 });
             });
+        },
+        count(){
+            //console.log('Got one');
+            let maxLength = 500;
+            let remainder = maxLength -Ember.$('#description').val().length;
+            if ((remainder < 0) || (remainder > 470)){
+                Ember.$('#remaining').css({"color" : "red"});
+            }
+            else {
+                Ember.$('#remaining').css({'color' : 'green'});
+            }
+            Ember.$('#remaining').text(remainder);
         }
     } 
 });

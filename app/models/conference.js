@@ -1,8 +1,64 @@
 import attr from 'ember-data/attr';
 import Model from 'ember-data/model';
+<<<<<<< HEAD
 import { hasMany, belongsTo } from 'ember-data/relationships';
+=======
+import { validator, buildValidations } from 'ember-cp-validations';
+import { belongsTo, hasMany } from 'ember-data/relationships';
+>>>>>>> 37ff12bb9c0fc4a812a2a65f3b189f039390b2b9
 
-export default Model.extend({
+var Validations = buildValidations({
+    id: [
+        validator('unique-identifier', {}),
+        validator('length', {
+            max: 10,
+            description: "Conference Identifier",
+            message: "Conference Identifier must be fewer than 10 characters"
+            })
+        ],
+    title: {
+        description: 'Title',
+        validators: [
+            validator('presence', true),
+            validator('length', {
+                min: 4,
+                max: 50
+            })
+        ]
+    },
+    city: {
+        description: 'City',
+        validators: [ validator('presence', true) ]
+    },
+    state: {
+        description: 'State',
+        validators: [ validator('presence', true) ]
+    },
+    description: [
+        validator('presence', {
+            presence: true,
+            message: 'Conference description can\'t be blank'
+        }),
+        validator('length', {
+            min: 30,
+            max: 500,
+            description: 'Conference Description',
+            message: 'Description must be between 30 and 500 characters'
+        }),
+    ],
+    eventStart: validator('presence', true),
+    eventEnd: validator('presence', true),
+    submissionStart: validator('presence', true),
+    submissionEnd: validator('presence', true),
+    //This still needs work on date
+    //
+    //eventStart: validator('presence', true),
+    //eventEnd: validator('presence', true),
+    //submissionStart: validator('presence', true),
+    //submissionEnd: validator('presence', true),
+});
+
+export default Model.extend(Validations, {
     title: attr('string'),
     city: attr('string'),
     state: attr('string'),

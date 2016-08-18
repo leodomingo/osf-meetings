@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-export
-default Ember.Route.extend({
+export default Ember.Route.extend({
     results: true,
     query: null,
     queryParams: {
@@ -65,8 +64,8 @@ default Ember.Route.extend({
 
 
         /*
-        *  Switches main view to tiles
-        */
+         *  Switches main view to tiles
+         */
         tileView() {
             Ember.$('#tileButton').addClass('disabled');
             Ember.$('#listButton').removeClass('disabled');
@@ -81,16 +80,16 @@ default Ember.Route.extend({
             shift.set('tileview', false);
         },
         /*
-        filter(params) {
-            let shift = this.controllerFor('index');
-            shift.set('query', params);
-            this.transitionTo('index', {
-                queryParams: {
-                    q: params
-                }
-            });
-        },
-        */
+           filter(params) {
+           let shift = this.controllerFor('index');
+           shift.set('query', params);
+           this.transitionTo('index', {
+           queryParams: {
+           q: params
+           }
+           });
+           },
+           */
         search(params) {
             this.transitionTo('search', {
                 queryParams: {
@@ -99,7 +98,9 @@ default Ember.Route.extend({
                 }
             });
         },
-         toggleInfo() {
+        toggleInfo() {
+            //this needs fixing
+            //most likely will need to be a component
             let curInfo = this.controllerFor('index').get('info');
             console.log(curInfo);
             if (curInfo === true){
