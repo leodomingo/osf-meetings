@@ -24,11 +24,11 @@ export default Ember.Route.extend({
                         newRecord.get('nodeId') +
                         '/providers/osfstorage/?kind=file&name=' + 
                         drop.getQueuedFiles()[0].name;
-                    var userId = newRecord.get('contributor').then((authUser) =>{
+                    newRecord.get('contributor').then((authUser) =>{
                         var authHeader = 'Bearer ' + authUser.get('token');
                         drop.options.headers = {
                             'Authorization' : authHeader
-                        }
+                        };
                         resolve();
                     });      
                 });                     

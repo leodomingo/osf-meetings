@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import config from 'ember-get-config';
 
 export default Ember.Component.extend({
     toast : Ember.inject.service(),
