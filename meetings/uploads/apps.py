@@ -3,5 +3,5 @@ from __future__ import unicode_literals
 from django.apps import AppConfig
 
 
-class AppConfig(AppConfig):
-    name = 'api'
+class UploadsConfig(AppConfig):
+    name = 'uploads'

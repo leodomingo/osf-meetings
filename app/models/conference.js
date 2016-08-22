@@ -65,7 +65,7 @@ export default Model.extend(Validations, {
     submissionEnd: attr('isodate', { defaultValue : (new Date()).toISOString() }),
     description: attr('string'),
     site: attr('string', { defaultValue : '' }),
-    logo: attr('string', { defaultValue : '' }),
+    logo: belongsTo('upload', { async : true }),
     submissions : hasMany('submission', { async : true }),
     canEdit: attr('boolean', { defaultValue : ''}),
     submissionCount: attr('number'),

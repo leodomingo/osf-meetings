@@ -1,13 +1,6 @@
 import Ember from 'ember';
-import config from '../../config/environment';
+import config from 'ember-get-config';
 
-// Validations are currently disabled for developing. They will likely need to be completely 
-// re-implemented. Currently they are set up using the ember-validations library which only
-// works with model variables. However, we have since changed our implementation so that the 
-// model does not exist while the route is loaded, and the model is only generated after the form
-// has been filled out. Because of this, model variables no longer exist on the page. So unless
-// there is a reason to go back to creating the model when the page is loaded, an alternate 
-// validations library will need to be used.
 
 export default Ember.Route.extend({
 
@@ -31,10 +24,19 @@ export default Ember.Route.extend({
                 newRoute.controller.set('visited', true);
             });
         },
-        saveConference(newConf) {
+        saveConference(newConference, drop, resolve) {
+            newConference.save().then(() => {
+                resolve();
+            });
+        },
+        success(dropZone, file, successData) {
+            var conf = this.currentModel.newConf;
             var router = this;
-            newConf.save().then(function(params) {
-                router.transitionTo('conference.index', params.id);
+            this.store.findRecord('upload', successData.id).then((newUpload) => {
+                conf.set('logo', newUpload);
+                conf.save().then( ()=>{
+                    router.transitionTo('conference.index', conf.get('id'));
+                });
             });
         },
         count(){
@@ -48,6 +50,16 @@ export default Ember.Route.extend({
                 Ember.$('#remaining').css({'color' : 'green'});
             }
             Ember.$('#remaining').text(remainder);
+        },
+        preUpload(drop){
+            drop.on('processing', function() {
+                this.options.url = config.providers.osfMeetings.uploadsUrl;
+                var csrftoken = Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1");
+                this.options.headers = {
+                    'X-CSRFToken': csrftoken,
+                };
+                this.options.withCredentials = true;
+            });
         }
-    }
+    } 
 });

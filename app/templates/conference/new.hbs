@@ -16,7 +16,12 @@
                             {{input type='text' value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
                             <label for="city">Logo</label>
-                            {{input type="file" accept="image/*" id="image"}}
+                            {{upload-widget
+                                success=(route-action "success")
+                                preUpload=(route-action "preUpload")
+                                resolve=resolveUpload
+                                dropZone=drop
+                            }}
 
                             {{!-- Keeping Description as normal textarea to allow for twitter style countdown, may have to change this later--}}
                             <label for="description"  id="descriptionScroll">
@@ -105,7 +110,7 @@
                     <div class="form-group row fade-background" >
                         <div class="col-md-4">
                             <button class="btn btn-danger" {{action "back"}}>Cancel</button>
-                            <button class="btn btn-success" disabled={{v-get model.newConf 'isInvalid'}} {{action "saveConference" model.newConf}}>
+                            <button class="btn btn-success" disabled={{v-get model.newConf 'isInvalid'}} {{action "saveConference" model.newConf drop resolveUpload}}>
                                 Create
                             </button>
                         </div>

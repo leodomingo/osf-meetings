@@ -12,7 +12,10 @@
                     <div class="submission-header"> Upload File(s):
                         {{upload-widget
                             success=(route-action "success")
-                        dropZone=drop resolve=resolveUpload}}
+                            preUpload=(route-action "preUpload")
+                            dropZone=drop 
+                            resolve=resolveUpload
+                        }}
                     </div>
                 </div>
             </div>
