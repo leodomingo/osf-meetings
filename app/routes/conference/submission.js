@@ -20,25 +20,24 @@ export default Ember.Route.extend({
     actions : {
         saveSubmission(newSubmission, drop, resolve) {
                 newSubmission.save().then((newRecord) => {
-                    drop.on('processing', function(file) {
-                        var that = this;
-                        this.options.url = config.providers.osf.uploadsUrl + 
-                            newRecord.get('nodeId') +
-                            '/providers/osfstorage/?kind=file&name=' + 
-                            file.name;
-                        var userId = newRecord.get('contributor').then((authUser) =>{
-                            var authHeader = 'Bearer ' + authUser.get('token');
-                            that.options.headers = {
-                                'Authorization' : authHeader
-                            }
-                        });
-                        this.options.method = 'PUT';
-                    });     
-                    resolve();                    
-                });
+                    drop.options.url = config.providers.osf.uploadsUrl + 
+                        newRecord.get('nodeId') +
+                        '/providers/osfstorage/?kind=file&name=' + 
+                        drop.getQueuedFiles()[0].name;
+                    var userId = newRecord.get('contributor').then((authUser) =>{
+                        var authHeader = 'Bearer ' + authUser.get('token');
+                        drop.options.headers = {
+                            'Authorization' : authHeader
+                        }
+                        resolve();
+                    });      
+                });                     
         },
-
+        preUpload(drop){
+            drop.options.method = 'PUT';
+        },
         success(dropZone, file, successData) {
+            var router = this;
             var nodeId = successData['data']['attributes']['resource']; //osf node's id
             var submissions = this.get('store').peekAll('submission');
             var relatedSubmission = submissions.findBy('nodeId', nodeId);
@@ -50,11 +49,11 @@ export default Ember.Route.extend({
                 fileName : successData['data']['attributes']['name']
             });
 
-            newFile.save().then((metafile) => {
+            newFile.save().then((file) => {
                 //do toast here
-                var submission = metafile.get('submission');
+                var submission = file.get('submission');
                 var conf = submission.get('conference');
-                this.transitionTo('conference.index', conf.get('id'));
+                router.transitionTo('conference.index', conf.get('id'));
             });
         }
     }

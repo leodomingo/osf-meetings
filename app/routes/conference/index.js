@@ -19,6 +19,7 @@ export default Ember.Route.extend({
         return (p1 === p2);
     },
     actions: {
+        //component reusable
         toggleInfo() {
             let curInfo = this.controllerFor('index').get('info');
             console.log(curInfo);

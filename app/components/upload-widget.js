@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import config from 'ember-get-config';
 
 export default Ember.Component.extend({
     toast : Ember.inject.service(),
@@ -6,13 +7,16 @@ export default Ember.Component.extend({
     url: null,
     dropzoneOptions : {
         uploadMultiple : false,
+        xhrFields : { withCredentials : true },
         crossDomain : true
     },
     resolve : null,
     dropZone : null,
     actions : {
         preUpload() {
-            this.set('dropZone', arguments[1]);
+            var drop = arguments[1];
+            this.set('dropZone', drop);
+            this.sendAction('preUpload', drop);
             return new Ember.RSVP.Promise(resolve => {
                 this.set('resolve', resolve);
             });

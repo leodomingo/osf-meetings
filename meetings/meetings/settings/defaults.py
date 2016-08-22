@@ -61,8 +61,9 @@ INSTALLED_APPS = [
     'uploads',
     'mail',
     'autofixture',
+    'rest_framework_swagger',
     'metafiles',
-    'rest_framework_docs'
+    'rest_framework_docs',
 ]
 
 REST_FRAMEWORK = {
