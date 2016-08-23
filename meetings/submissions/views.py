@@ -36,7 +36,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter)
 
-    filter_fields = ('conference', 'contributor')
+    filter_fields = ('title', 'conference', 'contributor')
     queryset = Submission.objects.all()
 
     #  OSF's node url

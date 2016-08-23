@@ -13,7 +13,6 @@ from views import SubmissionViewSet
 
 
 class TestPermissions(TestCase):
-
     def setUp(self):
         self.user1 = UserFactory(
             username='user1'
@@ -47,7 +46,6 @@ class TestPermissions(TestCase):
 
 
 class TestSerializers(TestCase):
-
     def setUp(self):
         self.user = UserFactory(
             username='testUser'
@@ -85,7 +83,6 @@ class TestSerializers(TestCase):
 
 
 class TestSignals(TestCase):
-
     def setUp(self):
         self.user1 = UserFactory(
             username='user1'

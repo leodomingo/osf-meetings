@@ -37,10 +37,10 @@ class TestSerializers(TestCase):
     def setUp(self):
         self.user1 = UserFactory(
             username='Leo'
-            )
+        )
         self.user2 = UserFactory(
             username='LeoLeo'
-            )
+        )
         self.conference = ConferenceFactory(
             id='38',
             admin=self.user1
@@ -65,11 +65,11 @@ class TestSerializers(TestCase):
         self.submission1 = SubmissionFactory(
             conference=self.conference,
             contributor=factory.SubFactory(UserFactory, username='Tom')
-            )
+        )
         self.submission2 = SubmissionFactory(
             conference=self.conference,
             contributor=factory.SubFactory(UserFactory, username='User2')
-            )
+        )
         self.serializer = ConferenceSerializer()
         self.assertEqual(
             self.serializer.get_submission_count(self.conference), 2)
@@ -92,12 +92,12 @@ class TestSignals(TestCase):
     def setUp(self):
         self.user = UserFactory(
             username="Leo"
-            )
+        )
         self.request = RequestFactory().get('./fake_path')
         self.request.user = self.user
         self.conference = ConferenceFactory(
             admin=self.user
-            )
+        )
 
     def test_add_permissions(self):
         self.conference.save()  # This calls add_permission
@@ -113,7 +113,7 @@ class TestViews(TestCase):
     def setUp(self):
         self.user = UserFactory(
             username='testViewsUser'
-            )
+        )
         self.request = RequestFactory().post('./fake_path')
         self.request.user = self.user
         self.request.query_params = {}

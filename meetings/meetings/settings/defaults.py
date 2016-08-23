@@ -15,6 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+MEDIA_URL = '/files/'
+MEDIA_ROOT = 'files/'
+STATIC_ROOT = ''
+STATIC_URL = '/static/'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -53,10 +58,12 @@ INSTALLED_APPS = [
     'approvals',
     'conferences',
     'submissions',
+    'uploads',
+    'mail',
     'autofixture',
     'rest_framework_swagger',
     'metafiles',
-    'mail'
+    'rest_framework_docs',
 ]
 
 REST_FRAMEWORK = {
@@ -73,6 +80,7 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework_json_api.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
     ),
     'DEFAULT_METADATA_CLASS':
         'rest_framework_json_api.metadata.JSONAPIMetadata',
@@ -171,6 +179,16 @@ CORS_ALLOW_HEADERS = (
 )
 CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
+)
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control',
 )
 
 
