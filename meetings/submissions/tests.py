@@ -1,13 +1,15 @@
 from django.test import TestCase, RequestFactory
-from unittest import skip
 from collections import OrderedDict
 import mock
 import factory
 from submissions.models import Submission
 from django.contrib.auth.models import User
-from test_factories import (UserFactory, SubmissionFactory, ConferenceFactory,
-                            SocialAccountFactory, SocialTokenFactory,
-                            SocialAppFactory, ApprovalFactory, ResponseFactory)
+from test_factories import (
+    UserFactory, SubmissionFactory, ConferenceFactory,
+    SocialAccountFactory, SocialTokenFactory,
+    SocialAppFactory, ApprovalFactory, ResponseFactory,
+    setup_view_user
+)
 from serializers import SubmissionSerializer
 from views import SubmissionViewSet
 
@@ -133,10 +135,6 @@ class TestViews(TestCase):
             token='235387023',
             token_secret='24358103981'
             )
-        self.approval = ApprovalFactory(
-            id=1,
-            approved=True
-        )
         self.conference = ConferenceFactory(
             admin=self.user,
             id='conferenceId'
@@ -144,79 +142,27 @@ class TestViews(TestCase):
         self.request = RequestFactory().post('./fake_path')
         self.request.user = self.user
         self.request.query_params = {}
-        self.contributorData = {'type': 'User', 'username': 'testViewsUser', 'id': '428'}
-        self.approvalData = {'type': 'Approval', 'approved': True, 'id': 1}
-        self.conferenceData = {'type': 'conferences', 'id': 'conferenceId'}
-        self.request.data = {'id': 15, 'node_id': '42u2p', 'title': 'Submission65',
-                             'contributor': self.contributorData, 'description':
-                             'This is a submission', 'approval': self.approvalData,
-                             'conference': self.conferenceData}
-        this = {
+        self.request.data = {
             u'category': u'project',
             u'can_edit': False,
             u'node_id': None,
-            u'description': u'With mother',
+            u'description': u'Over subscribed',
             u'title': u'Submission65',
             u'contributor': None,
             u'metafile': None,
             'id': None,
             u'conference': OrderedDict(
-                [(u'type', u'conferences'), (u'id', u'tBest')])
+                [(u'type', u'conferences'), (u'id', u'conferenceId')])
         }
-        print this
         self.views = SubmissionViewSet()
+        self.views = setup_view_user(self.views, self.request, self.user)
 
-        self.submission1 = SubmissionFactory(
-            conference=self.conference,
-            contributor=self.user
-            )
-        self.submission2 = SubmissionFactory(
-            conference=self.conference,
-            contributor=self.user
-            )
-        self.submission3 = SubmissionFactory(
-            conference=self.conference,
-            contributor=self.user
-            )
-
-    @skip('This test still needs work')
-    # test_create is especially complicated because the create method involves interacting
-    # with the socialToken. This data needs to be mocked, but mocking it creates its own
-    # set of issues because of the format of the data.  The following code inside the
-    # create method is where data needs to be mocked:
-    #
-    #
-    #         response = requests.post(
-    #             self.node_url,
-    #             data=json.dumps(node),
-    #             headers={
-    #                 'Authorization': 'Bearer {}'.format(osf_token),
-    #                 'Content-Type': 'application/json; charset=UTF-8'
-    #             }
-    #         )
-    #         response_osf = response.json()
-    #         serializer.save(
-    #             contributor=contributor,
-    #             approval=new_approval,
-    #             node_id=response_osf['data']['id']
-    #         )
-    #
-    #
-    # Right now the test is mocking request.post to return a Response object with the content
-    # hardcoded in, but response.json() still isn't returning the correct data. If I had more
-    # time, I would look into how to format  this fake data so that the test will work, but
-    # my internship is ending right now so someone else has to do it. Sorry :(
-    @mock.patch('requests.post')
+    @mock.patch('submissions.views.requests.post')
     def test_perform_create(self, mock_method):
-        mock_method.return_value(ResponseFactory(
+        mock_method.return_value = ResponseFactory(
             content={'data': {'id': 'qjdfy'}}
-            ))
+            )
         serializer = SubmissionSerializer(data=self.request.data)
         serializer.is_valid()
         self.views.perform_create(serializer)
-
-    def test_get_queryset(self):
-        queryset = self.views.queryset
-        self.assertEqual(queryset[0], Submission.objects.all()[0])
-        self.assertEqual(queryset[1], Submission.objects.all()[1])
-        self.assertEqual(queryset[2], Submission.objects.all()[2])
+        self.assertEqual(1, Submission.objects.count())

@@ -64,8 +64,8 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     'title': serializer.validated_data['title']
                 },
                 'type': 'nodes'
-                    }
-                }
+            }
+        }
         osf_token = SocialToken.objects.get(
             account=SocialAccount.objects.get(uid=self.request.user.username)
         )
