@@ -7,10 +7,10 @@
         </a>
     {{/if}}
 </td>
-<td class="tableCategory" style="color: #000000">{{submission.category}}</td>
-<td class="tableDate" style="color: #000000">{{date-display submission.dateCreated}}</td>
-<td class="tableDownload" style="color: #000000 text-align: center">
-    <button class='btn btn-sm btn-success' {{action "download" submission.metafile.osfUrl}}>
+<td class="tableCategory">{{submission.category}}</td>
+<td class="tableDate">{{date-display submission.dateCreated}}</td>
+<td class="tableDownload">
+    <button class='btn btn-sm btn-success' {{action "download" submission.fileUrl}}>
         <span class="glyphicon glyphicon-download"></span>
     </button>
     {{submission.downloadCount}}
@@ -28,7 +28,7 @@
     {{#modal-dialog close="hideform" targetAttachment="center" translucentOverlay=true}}
         Are you sure you want to delete the submission: <b>{{submission.title}}</b>?
         <br>
-        <button class="btn-danger" {{action "cancelDelete"}}>No</button>
-        <button class="btn-success" {{action "confirmDelete" submission}}>Yes</button>
+        <button class="btn btn-danger" {{action "cancelDelete"}}>Cancel</button>
+        <button class="btn btn-success" {{action "confirmDelete" submission}}>Confirm</button>
     {{/modal-dialog}}
 {{/if}}
