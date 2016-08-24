@@ -27,8 +27,9 @@
                                         Location: {{model.conf.city}},
                                         {{model.conf.state}}, {{model.conf.country}}</h6>
                                     <div class="logo-view" align="center"></div>
-                                    <p class="conference-description"
-                                       style="font-size: 16px">Description: {{model.conf.description}}</p>
+                                    <p class="conference-description">
+                                        Description: {{model.conf.description}}
+                                    </p>
                                 </div>
                             </div>
                             <div class="row">
@@ -117,7 +118,7 @@
                                                         </td>
                                                         <td class="tableCategory" style="color: #000000">{{item.category}}</td>
                                                         <td class="tableDate" style="color: #000000">{{item.dateCreated}}</td>
-                                                        <td class="tableDownload" style="color: #000000 text-align: center">
+                                                        <td class="tableDownload" style="color: #000000; text-align: center">
                                                             <button
                                                                 type='btn-success'
                                                                 {{action "download" metafiles.osfUrl}}>
