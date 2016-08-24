@@ -4,5 +4,6 @@ export default Ember.Component.extend({
     title: '',
     description: '',
     submission: '',
-    classNames: ['tile']
+    classNames: ['tile'],
+    logo: ''
 });

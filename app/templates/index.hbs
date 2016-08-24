@@ -38,7 +38,7 @@
               <div class="col-md-12 hidden-md hidden-lg hidden-xl">
                 {{#each model as |conf key|}}
                   {{#link-to "conference.index" conf.id }}
-                      {{meeting-masonry model=conf}}
+                      {{meeting-masonry model=conf logo=conf.logo.content.file}}
                   {{/link-to}}
                 {{/each}}
                 </div>

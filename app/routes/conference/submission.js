@@ -14,8 +14,9 @@ export default Ember.Route.extend({
                 newSubmission.save().then((newRecord) => {
                     drop.options.url = config.providers.osf.uploadsUrl + 
                         newRecord.get('nodeId') +
-                        '/providers/osfstorage/?kind=file&name=' + 
+                        '/providers/osfstorage/?name=' + 
                         drop.getQueuedFiles()[0].name;
+                        console.log(drop.options.url);
                     newRecord.get('contributor').then((authUser) =>{
                         var authHeader = 'Bearer ' + authUser.get('token');
                         drop.options.headers = {
@@ -33,7 +34,7 @@ export default Ember.Route.extend({
             var nodeId = successData['data']['attributes']['resource']; //osf node's id
             var submissions = this.get('store').peekAll('submission');
             var relatedSubmission = submissions.findBy('nodeId', nodeId);
-
+            console.log(successData);
             var newFile = this.get('store').createRecord('metafile', {
                 submission : relatedSubmission,
                 osfId : successData['data']['id'],
