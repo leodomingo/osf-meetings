@@ -5,5 +5,4 @@ export default Ember.Component.extend({
     description: '',
     submission: '',
     classNames: ['tile'],
-    logo: ''
 });
