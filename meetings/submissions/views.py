@@ -61,7 +61,8 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                 'attributes': {
                     'category': 'project',
                     'description': serializer.validated_data['description'],
-                    'title': serializer.validated_data['title']
+                    'title': serializer.validated_data['title'],
+                    'public': True
                 },
                 'type': 'nodes'
             }
