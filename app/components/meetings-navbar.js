@@ -32,7 +32,7 @@ export default Ember.Component.extend({
         }).then(function(loggedIn) {
             if (!(loggedIn.errors)) {
                 self.set('authenticated', true);
-                self.set('i', loggedIn.data);
+                self.set('user', loggedIn);
                 self.get('store').pushPayload('user', loggedIn);
             }
             else {

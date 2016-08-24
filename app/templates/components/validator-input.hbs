@@ -1,0 +1,26 @@
+{{#if (eq tagType 'input')}}
+    {{input type=type value=value placeholder=placeholder class="form-control"
+        name=valuePath}}
+{{/if}}
+
+{{#if (eq tagType 'textarea')}}
+    {{textarea value=value class='form-control resize' name=valuePath}}
+{{/if}}
+
+{{#if isValid}}
+    <div class="valid-input">
+        <span class="fa fa-check"></span>
+    </div>
+{{/if}}
+<div class="error-message">
+    {{#if showErrorMessage}}
+        <div class="error">
+            {{v-get model valuePath 'message'}}
+        </div>
+    {{/if}}
+    {{#if showWarningMessage}}
+        <div class="warning">
+            {{v-get model field 'warningMessage'}}
+        </div>
+    {{/if}}
+</div>

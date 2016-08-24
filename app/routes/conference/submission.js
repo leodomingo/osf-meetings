@@ -1,12 +1,5 @@
 import Ember from 'ember';
-
-// Validations are currently disabled for developing. They will likely need to be completely 
-// re-implemented. Currently they are set up using the ember-validations library which only
-// works with model variables. However, we have since changed our implementation so that the 
-// model does not exist while the route is loaded, and the model is only generated after the form
-// has been filled out. Because of this, model variables no longer exist on the page. So unless
-// there is a reason to go back to creating the model when the page is loaded, an alternate 
-// validations library will need to be used.
+import config from 'ember-get-config';
 
 export default Ember.Route.extend({
     model(params) {
@@ -18,28 +11,47 @@ export default Ember.Route.extend({
 
     actions : {
         saveSubmission(newSubmission, drop, resolve) {
-            if(resolve) {
                 newSubmission.save().then((newRecord) => {
-                    resolve();
-                    drop.on('processing', function(file) {
-                        this.options.url = this.options.url() + newRecord.get('nodeId') +
-                            '/providers/osfstorage/?kind=file&name=' + file.name;
-                        var authUser = newRecord.get('contributor');
-                        this.options.headers = {
-                            'Authorization' : 'Bearer ' + authUser.get('token')
+                    drop.options.url = config.providers.osf.uploadsUrl + 
+                        newRecord.get('nodeId') +
+                        '/providers/osfstorage/?name=' + 
+                        drop.getQueuedFiles()[0].name;
+                    newRecord.get('contributor').then((authUser) =>{
+                        var authHeader = 'Bearer ' + authUser.get('token');
+                        drop.options.headers = {
+                            'Authorization' : authHeader
                         };
-                    });
-                });
-
-            } else {
-                console.log("Upload Error");
-            }
+                        resolve();
+                    });      
+                });                     
         },
-
-        success(metafile) {
-            var submission = metafile.get('submission');
-            var conf = submission.get('conference');
+        cancelSubmission() {
+            var sub_to_cancel = this.currentModel;
+            var conf = sub_to_cancel.get('conference');
+            sub_to_cancel.unloadRecord();
             this.transitionTo('conference.index', conf.get('id'));
+        },
+        preUpload(drop){
+            drop.options.method = 'PUT';
+        },
+        success(dropZone, file, successData) {
+            var router = this;
+            var nodeId = successData['data']['attributes']['resource']; //osf node's id
+            var submissions = this.get('store').peekAll('submission');
+            var relatedSubmission = submissions.findBy('nodeId', nodeId);
+            var newFile = this.get('store').createRecord('metafile', {
+                submission : relatedSubmission,
+                osfId : successData['data']['id'],
+                osfUrl : successData['data']['links']['download'],
+                fileName : successData['data']['attributes']['name']
+            });
+
+            newFile.save().then((file) => {
+                //do toast here
+                var submission = file.get('submission');
+                var conf = submission.get('conference');
+                router.transitionTo('conference.index', conf.get('id'));
+            });
         }
     }
 });

@@ -10,3 +10,6 @@ class Approval(models.Model):
         permissions = (
             ('view_approval', 'Can view approval'),
         )
+
+    class JSONAPIMeta:
+        resource_name = "approvals"

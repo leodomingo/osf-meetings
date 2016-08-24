@@ -3,6 +3,7 @@ from unittest import skip
 
 
 class TestApprovals(TestCase):
+
     @skip('Make sure a signal actually saves the object')
     def test_signal(self):
         pass

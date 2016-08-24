@@ -36,14 +36,11 @@ class SubmissionViewSet(viewsets.ModelViewSet):
     filter_backends = (
         filters.DjangoFilterBackend, filters.DjangoObjectPermissionsFilter)
 
-    filter_fields = ('conference', 'contributor')
+    filter_fields = ('title', 'conference', 'contributor')
     queryset = Submission.objects.all()
 
     #  OSF's node url
     node_url = '{}v2/nodes/'.format(settings.OSF_API_URL)
-
-    def list(self, request):
-        return super(SubmissionViewSet, self).list(self, request)
 
     def retrieve(self, request, pk=None):
         """Returns a single Submission item"""
@@ -58,50 +55,40 @@ class SubmissionViewSet(viewsets.ModelViewSet):
         """Delete a Submission"""
         return super(SubmissionViewSet, self).destroy(request, pk)
 
+    def perform_create(self, serializer):
+        node = {
+            'data': {
+                'attributes': {
+                    'category': 'project',
+                    'description': serializer.validated_data['description'],
+                    'title': serializer.validated_data['title'],
+                    'public': True
+                },
+                'type': 'nodes'
+            }
+        }
+        osf_token = SocialToken.objects.get(
+            account=SocialAccount.objects.get(uid=self.request.user.username)
+        )
+        response = requests.post(
+            self.node_url,
+            data=json.dumps(node),
+            headers={
+                'Authorization': 'Bearer {}'.format(osf_token),
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        )
+        osf_response = response.json()
+        serializer.save(
+            contributor=self.request.user,
+            approval=Approval.objects.create(),
+            node_id=osf_response['data']['id']
+        )
+
     @method_decorator(login_required)
     def create(self, request, *args, **kwargs):
-        """ Create a Submission """
-        if request.user.is_authenticated():
-            serializer = SubmissionSerializer(
-                data=request.data,
-                context={'request': request}
-            )
-            new_approval = Approval.objects.create()
-            contributor = request.user
-
-            account = SocialAccount.objects.get(uid=request.user.username)
-            osf_token = SocialToken.objects.get(account=account)
-
-        if serializer.is_valid():
-            # Creates a OSF's node
-            node = {
-                'data': {
-                    'attributes': {
-                        'category': 'project',
-                        'description': request.data['description'],
-                        'title': request.data['title']
-                    },
-                    'type': 'nodes'
-                }
-            }
-
-            response = requests.post(
-                self.node_url,
-                data=json.dumps(node),
-                headers={
-                    'Authorization': 'Bearer {}'.format(osf_token),
-                    'Content-Type': 'application/json; charset=UTF-8'
-                }
-            )
-
-            response_osf = response.json()
-            serializer.save(
-                contributor=contributor,
-                approval=new_approval,
-                node_id=response_osf['data']['id']
-            )
-            return Response(serializer.data)
-        return Response(serializer.errors)
+        """Create a submission"""
+        return super(SubmissionViewSet, self).create(request, *args, **kwargs)
 
     @method_decorator(login_required)
     def update(self, request, *args, **kwargs):
