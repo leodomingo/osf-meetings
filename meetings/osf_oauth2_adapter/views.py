@@ -23,7 +23,6 @@ class OSFOAuth2Adapter(OAuth2Adapter):
         })
 
         jsonData = extra_data.json()
-
         response = self.get_provider().sociallogin_from_response(
             request,
             jsonData
