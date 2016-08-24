@@ -76,7 +76,8 @@ class SubmissionViewSet(viewsets.ModelViewSet):
                     'attributes': {
                         'category': 'project',
                         'description': request.data['description'],
-                        'title': request.data['title']
+                        'title': request.data['title'],
+                        'public': True
                     },
                     'type': 'nodes'
                 }
