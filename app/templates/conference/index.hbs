@@ -13,6 +13,11 @@
                                 </div>
                             </div>
                             <div class="row">
+                                <div class="col-md-6">
+                                    <img src={{model.conf.logo.file}}>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-md-12 ">
                                     <h6 style="margin:15px 0 0 0">
                                         Date: {{this.conferenceDates}}
@@ -29,30 +34,34 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="btn-group" role="group" aria-label="...">
-
-                                        {{#link-to "conference.submission" model.conf.id}}
-                                            <button type="button" class="btn btn-default" style="margin: 0 0 5px 0; width: 200px;">  Submit to This Conference</button>
-                                        {{/link-to}}
+                                            <button type="button" class="btn btn-default"
+                                            style="margin: 0 0 5px 0; width: 200px;"
+                                            {{action "toggleInfo"}}>Submit to This Conference</button>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- This is the basic code for a list with images -->
-                            <!--                                   <div id="table" class="row">
-                                <div class="col-md-12">
-                                {{!-- models-table data=model columns=columns useFilteringByColumns=false rowTemplate="row" --}}
-                                <table class="table  table-hover table-condensed table-bordered">
-                                <tbody>
-                                {{#each model.submissions as |item|}}
-                                    <a target="_blank" style="color: black;" href= {{link-to-osf item.id}}>
-                                    {{node-component title=item.title contributors=item.contributors description=item.description}}
-                                    </a>
-                                {{/each}}
-                                </tbody>
-                                </table>
+                            
+                            <div class="row" id="submission-instructions">
+                                <div class="col-md-6">
+                                    <div class="submission-modal">
+                                    <strong>Submit through email</strong>
+                                    <h6>Send an email to your conference identifier with the files you'd like to submit attached to it.</h6>
+                                    <h6>We’ll create an OSF project for you. You'll get a permanent link to your presentation, plus analytics about who has viewed and downloaded your work.</h6>
+                                    </div>
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="btn-group submission-modal" role="group" aria-label="...">
+                                        <strong>Upload Here:</strong>
+                                        <br>
+                                        <h6>You can also use our upload form to submit files</h6>
+                                        {{#link-to "conference.submission" model.conf.id}}
+                                            <button type="button" class="btn btn-success" style="margin: 0 0 5px 0; width: 200px;"><span class="glyphicon glyphicon-plus"></span>  Upload a File</button>
+                                        {{/link-to}}
+                                    </div>
                                 </div>
-                            -->
+                                
+                            </div>
+                            
 
                             <!-- This is the basic code for a table of submissions without images -->
                             {{#if model.conf.submissionCount}}
@@ -71,7 +80,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{#each model.mySubmissions as |item|}}
+                                            {{#each model.allSubmissions as |item|}}
                                                 {{#if item.canEdit}}
                                                     {{my-submissions submission=item}}
                                                 {{/if}}
@@ -109,7 +118,9 @@
                                                         <td class="tableCategory" style="color: #000000">{{item.category}}</td>
                                                         <td class="tableDate" style="color: #000000">{{item.dateCreated}}</td>
                                                         <td class="tableDownload" style="color: #000000 text-align: center">
-                                                            <button type='btn-success' {{action "download" item.downloadLink}}>
+                                                            <button
+                                                                type='btn-success'
+                                                                {{action "download" metafiles.osfUrl}}>
                                                                 ↓
                                                             </button>
                                                         </td>

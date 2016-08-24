@@ -40,10 +40,13 @@ class ConferenceSerializer(serializers.ModelSerializer):
         if (user == obj.admin):
             count = len(Submission.objects.filter(conference=obj))
         else:
-            count = len(Submission.objects.filter(conference=obj, contributor=user))
+            count = len(Submission.objects.filter(
+                conference=obj,
+                contributor=user
+            ))
         return count
 
     def get_can_edit(self, obj):
         request = self.context.get('request')
         user = User.objects.get(username=request.user)
-        return user == obj.admin
+        return user.username == obj.admin.username

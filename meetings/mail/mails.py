@@ -1,6 +1,26 @@
 from django.core.mail.message import EmailMultiAlternatives
 from django.template import Context
 from django.template.loader import get_template
+from django.conf import settings
+from django.core.urlresolvers import reverse
+import requests
+
+
+def create_mailgun_conference_route(conference_id, sub_type):
+    route_address = "match_recipient('{}-{}@{}')".format(
+        conference_id,
+        sub_type,
+        settings.EMAIL_DOMAIN
+    )
+    forward_url = "forward('{}{}')".format(settings.OSF_MEETINGS_API_URL,
+                                           reverse('incoming_message'))
+    return requests.post(
+        "https://api.mailgun.net/v3/routes",
+        auth=("api", settings.MAILGUN_API_KEY),
+        data={"priority": 0,
+              "description": "Conference submission by email",
+              "expression": route_address,
+              "action": [forward_url, "stop()"]})
 
 
 class SubmissionSuccessEmail(EmailMultiAlternatives):
@@ -38,7 +58,8 @@ class SubmissionConfDNE(EmailMultiAlternatives):
 
     def __init__(self, to=None, from_email=None, user=None):
         super(SubmissionConfDNE, self).__init__()
-        self.subject = "There was an error with your submission to OSF for Meetings"
+        self.subject = "There was an error with your submission"
+        + "to OSF for Meetings"
         fullname = 'joe smith'  # get from user when implemented
         dne_template = get_template('conference_does_not_exist.html')
         dne_context = Context({'fullname': fullname, })
@@ -50,7 +71,8 @@ class SubmissionWithoutFiles(EmailMultiAlternatives):
 
     def __init__(self, to=None, from_email=None, user=None):
         super(SubmissionWithoutFiles, self).__init__()
-        self.subject = "There was an error with your submission to OSF for Meetings"
+        self.subject = "There was an error with your submission"
+        + "to OSF for Meetings"
         fullname = 'joe smith'  # get from user when implemented
         template = get_template('conference_without_files.html')
         context = Context({'fullname': fullname, })

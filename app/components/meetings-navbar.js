@@ -3,8 +3,9 @@ import Ember from 'ember';
 import config from '../config/environment';
 
 export default Ember.Component.extend({
+    store: Ember.inject.service('store'),
     fixed: true, /* holds status of navbar -> fixed or unfixed <- depending on mobile view or not */
-    host: config.osfUrl, /* root URL for Osf redirection */
+    host: config.providers.osf.host, /* root URL for Osf redirection */
     authenticated: false, /* authentication status */
     user: null, /* current user metadata, initially empty */
     showSearch: false, /* holds current view status of search dropdown */
@@ -22,7 +23,7 @@ export default Ember.Component.extend({
         this._super(...arguments);
         var self = this;
         Ember.$.ajax({
-            url: config.currentUser,
+            url: config.providers.osfMeetings.currentUser,
             dataType: 'json',
             contentType: 'text/plain',
             xhrFields: {
@@ -31,7 +32,8 @@ export default Ember.Component.extend({
         }).then(function(loggedIn) {
             if (!(loggedIn.errors)) {
                 self.set('authenticated', true);
-                self.set('user', loggedIn.data);
+                self.set('user', loggedIn);
+                self.get('store').pushPayload('user', loggedIn);
             }
             else {
                 self.set('authenticated', false);

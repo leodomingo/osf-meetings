@@ -1,30 +1,28 @@
 <td class="tableEdit" scope="row">
-	{{#if this.isRenaming}}
-		<button class='btn-success' {{action "confirmRename" submission}}>Confirm</button>
-		<button class='btn-danger' {{action "cancelRename" submission}}>Cancel</button>
-	{{else}}
-		<button class='btn-warning' {{action "clickRename"}} >Rename</button><br>
-		<button class='btn-danger' {{action "clickDelete"}} >Delete</button>
-	{{/if}}
+    {{#if this.isRenaming}}
+        <button class='btn-success' {{action "confirmRename" submission}}>Confirm</button>
+        <button class='btn-danger' {{action "cancelRename" submission}}>Cancel</button>
+    {{else}}
+        <button class='btn-warning' {{action "clickRename"}} >Rename</button><br>
+        <button class='btn-danger' {{action "clickDelete"}} >Delete</button>
+    {{/if}}
 </td>
 <td class="tableTitle">
-	{{#if this.isRenaming}}
-		{{input value=submission.title}}
-	{{else}}
-	    <a target="_blank" style="color: #0080ff;" href={{link-to-osf submission.id}}>
-	        {{submission.title}}
-	    </a>
+    {{#if this.isRenaming}}
+        {{input value=submission.title}}
+    {{else}}
+        <a target="_blank" style="color: #0080ff;" href={{link-to-osf submission.nodeId}}>
+            {{submission.title}}
+        </a>
     {{/if}}
 </td>
 <td style="color: black;">
-    {{#each submission.contributors as |contributor|}}
-        {{contributor.users.fullName}}
-    {{/each}}
+    {{submission.contributor.fullName}}
 </td>
 <td class="tableCategory" style="color: #000000">{{submission.category}}</td>
-<td class="tableDate" style="color: #000000">{{submission.dateCreated}}</td>
+<td class="tableDate" style="color: #000000">{{date-display submission.dateCreated}}</td>
 <td class="tableDownload" style="color: #000000 text-align: center">
-    <button type='btn-success' {{action "download" submission.downloadLink}}>
+    <button type='btn-success' {{action "download" submission.metafile.osfUrl}}>
         ↓
     </button>
 </td>

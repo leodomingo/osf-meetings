@@ -1,4 +1,4 @@
-<div class="container-fluid osf-light-background">
+<div class="container-fluid">
     <div class="col-md-12">
         <div class="row">
             <div class="col-md-6 col-md-offset-3">
@@ -7,42 +7,43 @@
                     <div class="form-group row fade-background">
                         <div class="section-header">IDENTIFY</div>
                         <hr>
-                        <div class="col-lg-6">
-                            <label for="city" >Conference Identifier</label>
-                            {{input value=model.newConf.id class="form-control form-spacing" placeholder="Conference Indentifier"}}
-                        </div>
-                        <div class="col-lg-6 {{"has-success"}}" id="titleScroll">
+                        <div class="col-lg-6" id="titleScroll">
                             <label for="title">Title</label>
-                            {{input value=model.newConf.title class="form-control" placeholder="Conference Title" id="title"}}
+                            {{validator-input tagType='input' type='text'
+                                 model=model.newConf valuePath='title' placeholder='Title'}}
                             <br>
-                            {{#if this.displayErrors}}
-                                {{#each errors.model.newConf.title as |error|}}
-                                    <div class="alert alert-danger" role="alert">{{error}}</div>
-                                {{/each}}
-                            {{/if}}
                             <label for="website">Website</label>
-                            {{input value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
+                            {{input type='text' value=model.newConf.site class="form-control form-spacing" placeholder="Conference Website" id="website"}}
 
                             <label for="city">Logo</label>
-                            {{input type="file" accept="image/*" id="image"}}
+                            {{upload-widget
+                                success=(route-action "success")
+                                preUpload=(route-action "preUpload")
+                                resolve=resolveUpload
+                                dropZone=drop
+                            }}
 
+                            {{!-- Keeping Description as normal textarea to allow for twitter style countdown, may have to change this later--}}
                             <label for="description"  id="descriptionScroll">
                                 Description:</label>
-                            {{textarea value=model.newConf.description class="form-control resize" id="description"}}
-                            <!-- {{#if this.displayErrors}}
-                                    {{#each errors.model.newConf.description as |error|}}
-                                        <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                    {{/each}}
-                                {{/if}} -->
+
+                            <div id="remaining"></div>
+                            {{textarea value=model.newConf.description class="form-control resize" id="description" key-up="count" }}
+                            {{#if model.newConf.description}}
+                                {{error-message model=model.newConf field='description'}}
+                            {{/if}}
+                        </div>
+                        <div class="col-lg-6">
+                            <label for="city" >Conference Identifier</label>
+                            {{validator-input tagType='input' type='text'
+                                 model=model.newConf valuePath='id' placeholder='Conference Identifier'}}
                         </div>
                     </div>
-
-
                     <div class="form-group row fade-background">
                         <div class="section-header">LOCATE</div>
                         <hr>
                         <div class="col-lg-6">
-                            <div class ="{{"has-success"}}">
+                            <div>
                                 <label for="country" id="countryScroll">
                                     Country
                                 </label>
@@ -56,35 +57,19 @@
                                         </option>
                                     {{/each}}
                                 </select>
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.country as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
                             </div>
-
-                            <div class="{{"has-success"}}">
+                            <div>
                                 <label for="state" id="stateScroll">
                                     State
                                 </label>
-                                {{input value=model.newConf.state class="form-control" id="state" placeholder="State"}}
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.state as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
+                                {{validator-input tagType='input' model=model.newConf
+                                    valuePath='state' placeholder='State'}}
                             </div>
-                            <div class="{{"has-success"}}">
+                            <div>
                                 <label for="city" id="cityScroll">City</label>
-                                {{input value=model.newConf.city class="form-control" id="city" placeholder="City"}}
-                                <!-- {{#if this.displayErrors}}
-                                        {{#each errors.model.newConf.city as |error|}}
-                                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                        {{/each}}
-                                    {{/if}} -->
+                                {{validator-input tagType='input' model=model.newConf
+                                    valuePath='city' placeholder='City'}}
                             </div>
-
-
                         </div>
 
                     </div>
@@ -98,12 +83,7 @@
                         <div class="col-lg-6">
                             <label for="city">End</label>
                             {{bs-datetimepicker date=model.newConf.eventEnd class="form-control" id='endDate'}}
-                            {{#if this.displayErrors}}
-                                {{#each errors.model.newConf.eventStart as |error|}}
-                                    <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                {{/each}}
-                            {{/if}}
-
+                            {{model.newConf.eventEnd}}
                         </div>
                     </div>
 
@@ -130,7 +110,7 @@
                     <div class="form-group row fade-background" >
                         <div class="col-md-4">
                             <button class="btn btn-danger" {{action "back"}}>Cancel</button>
-                            <button class="btn btn-success" {{action "saveConference" model.newConf}}>
+                            <button class="btn btn-success" disabled={{v-get model.newConf 'isInvalid'}} {{action "saveConference" model.newConf drop resolveUpload}}>
                                 Create
                             </button>
                         </div>
@@ -171,7 +151,7 @@
                                             </div>
                                             <button class="btn btn-danger" {{action "previewOff"}}>Close
                                             </button>
-                                            <button class="btn btn-success" {{action
+                                            <button class="btn btn-success" disabled={{v-get model.newConf 'isInvalid'}} {{action
                                                     "createConference" model.newConf}}>Submit
                                             </button>
                                         </div>

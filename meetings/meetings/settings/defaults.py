@@ -15,6 +15,11 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+MEDIA_URL = '/files/'
+MEDIA_ROOT = 'files/'
+STATIC_ROOT = ''
+STATIC_URL = '/static/'
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
@@ -53,13 +58,18 @@ INSTALLED_APPS = [
     'approvals',
     'conferences',
     'submissions',
+    'uploads',
     'mail',
     'autofixture',
+    'rest_framework_swagger',
+    'metafiles',
+    'rest_framework_docs',
 ]
 
 REST_FRAMEWORK = {
     'PAGE_SIZE': 25,
-    'EXCEPTION_HANDLER': 'rest_framework_json_api.exceptions.exception_handler',
+    'EXCEPTION_HANDLER':
+        'rest_framework_json_api.exceptions.exception_handler',
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework_json_api.pagination.PageNumberPagination',
     'DEFAULT_PARSER_CLASSES': (
@@ -70,11 +80,14 @@ REST_FRAMEWORK = {
     'DEFAULT_RENDERER_CLASSES': (
         'rest_framework_json_api.renderers.JSONRenderer',
         'rest_framework.renderers.BrowsableAPIRenderer',
+        'rest_framework.renderers.JSONRenderer',
     ),
-    'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
+    'DEFAULT_METADATA_CLASS':
+        'rest_framework_json_api.metadata.JSONAPIMetadata',
 }
 
 JSON_API_FORMAT_KEYS = 'dasherize'
+JSON_API_PLURALIZE_TYPES = True
 
 MIDDLEWARE_CLASSES = [
     'django.middleware.security.SecurityMiddleware',
@@ -124,16 +137,21 @@ DATABASES = {
 
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.' +
+            'UserAttributeSimilarityValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.MinimumLengthValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.CommonPasswordValidator',
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME':
+            'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
 
@@ -150,9 +168,27 @@ AUTHENTICATION_BACKENDS = (
 # http://blog.hugethoughts.com/allow-cors-specific-domain-django/
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
-
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control'
+)
 CORS_ORIGIN_WHITELIST = (
     'localhost:4200',
+)
+
+CORS_ALLOW_HEADERS = (
+    'x-requested-with',
+    'content-type',
+    'accept',
+    'origin',
+    'authorization',
+    'x-csrftoken',
+    'cache-control',
 )
 
 
@@ -178,9 +214,17 @@ SITE_ID = 1
 
 OSF_API_URL = ('https://staging-api.osf.io').rstrip('/') + '/'
 OSF_ACCOUNTS_URL = ('https://staging-accounts.osf.io').rstrip('/') + '/'
+OSF_FILES_URL = ('https://staging-files.osf.io').rstrip('/') + '/'
+OSF_STAGING_URL = ('https://staging.osf.io').rstrip('/') + '/'
+
+#  base_url
+PROFILE_URL = '{}v2/users/me/'.format(OSF_API_URL)
+WATERBUTLER_URL = '{}v1/resources/'.format(OSF_FILES_URL)
+PROJECTS_URL = '{}project/'.format(OSF_STAGING_URL)
+
+OSF_MEETINGS_API_URL = 'http://localhost:8000'
 DEFAULT_SCOPES = ['osf.full_write', ]
 HUMANS_GROUP_NAME = 'OSF_USERS'
-OSF_MEETINGS_API_URL = 'http://localhost:8000'
 
 # Where users are redirected after login
 LOGIN_REDIRECT_URL = 'http://localhost:4200'
@@ -196,3 +240,5 @@ MAILGUN_API_KEY = ''
 ANYMAIL = {
     "MAILGUN_API_KEY": MAILGUN_API_KEY,
 }
+
+EMAIL_DOMAIN = 'osf.io'

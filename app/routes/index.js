@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
-export
-default Ember.Route.extend({
+export default Ember.Route.extend({
     results: true,
     query: null,
     queryParams: {
@@ -25,6 +24,10 @@ default Ember.Route.extend({
         });
         return foundConferences;
     },
+
+    //The beforeModel function here checks if the redirectURL is equal to something besides the index (current) route
+    //If it is equal to something else, it resets the redirectURL to the index route and transitions to the redirect URL
+
     beforeModel: function() {
         var redirectURL = this.getCookie('redirectURL');
         if (redirectURL !== window.location.href) {
@@ -61,8 +64,8 @@ default Ember.Route.extend({
 
 
         /*
-        *  Switches main view to tiles
-        */
+         *  Switches main view to tiles
+         */
         tileView() {
             Ember.$('#tileButton').addClass('disabled');
             Ember.$('#listButton').removeClass('disabled');
@@ -77,16 +80,16 @@ default Ember.Route.extend({
             shift.set('tileview', false);
         },
         /*
-        filter(params) {
-            let shift = this.controllerFor('index');
-            shift.set('query', params);
-            this.transitionTo('index', {
-                queryParams: {
-                    q: params
-                }
-            });
-        },
-        */
+           filter(params) {
+           let shift = this.controllerFor('index');
+           shift.set('query', params);
+           this.transitionTo('index', {
+           queryParams: {
+           q: params
+           }
+           });
+           },
+           */
         search(params) {
             this.transitionTo('search', {
                 queryParams: {
@@ -94,6 +97,19 @@ default Ember.Route.extend({
                     p: 1
                 }
             });
+        },
+        toggleInfo() {
+            //this needs fixing
+            //most likely will need to be a component
+            let curInfo = this.controllerFor('index').get('info');
+            console.log(curInfo);
+            if (curInfo === true){
+                Ember.$('#submission-instructions').hide(400);
+            }
+            else {
+                Ember.$('#submission-instructions').show(400);
+            }
+            this.controllerFor('index').set('info', !curInfo);
         }
     }
 });

@@ -1,4 +1,4 @@
-<div class="container-fluid osf-light-background">
+<div class="container-fluid">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 no-pad">
             <h3>Submit to:</h3>
@@ -7,56 +7,59 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-md-offset-3 fade-background">
-            <form id="fileSubmission" method="post">
-                <div class="form-group row">
-                    <div class="col-md-6" style="height: 100%;">
-                        <div class="submission-header"> Upload File(s):
-                            {{dropzone-widget preUpload=(action 'preUpload')
-                                success=(action 'success') error=(action 'error')
-                                buildUrl=(action 'buildUrl')
-                                options=dropzoneOptions}}
-                        </div>
+            <div class="form-group row">
+                <div class="col-md-5" style="height: 100%;">
+                    <div class="submission-header"> Upload File(s):
+                        {{upload-widget
+                            success=(route-action "success")
+                            preUpload=(route-action "preUpload")
+                            dropZone=drop 
+                            resolve=resolveUpload
+                        }}
                     </div>
                 </div>
-                <hr>
+            </div>
+            <hr>
+            <div class="form-group row has-success">
+                <div class="col-md-6">
+                    <label> Title:</label>
+                    {{validator-input tagType='input' type='text' model=model
+                        valuePath='title' placeholder='Title'}}
+                    {{#if this.displayErrors}}
+                        {{#each errors.model.title as |error|}}
+                            <br><div class="alert alert-danger" role="alert">{{error}}</div>
+                        {{/each}}
+                    {{/if}}
+                </div>
+            </div>
+            <!--<div class="form-group row has-success">
+                <div class="col-md-6">
+                <label>Contributors:</label>
+                {{!-- TODO: Make contributors an actual thing --}}
+                {{input id="contributors" class="form-control"}}
+                </div>
+                </div> -->
                 <div class="form-group row has-success">
                     <div class="col-md-6">
-                        <label> Title:</label>
-                        {{input id="title" value=model.title class="form-control"}}
+                        <label>Description:</label>
+                        {{validator-input tagType='textarea' model=model
+                            valuePath='description' placeholder='Description'}}
                         {{#if this.displayErrors}}
-                            {{#each errors.model.title as |error|}}
+                            {{#each errors.model.description as |error|}}
                                 <br><div class="alert alert-danger" role="alert">{{error}}</div>
                             {{/each}}
                         {{/if}}
                     </div>
                 </div>
-                <!--<div class="form-group row has-success">
-                    <div class="col-md-6">
-                    <label>Contributors:</label>
-                    {{!-- TODO: Make contributors an actual thing --}}
-                    {{input id="contributors" class="form-control"}}
+                <div class="form-group row">
+                    <div class="col-md-4">
+                        <button class="btn btn-success" {{action
+                                "saveSubmission" model drop resolveUpload}}>
+                            Submit
+                        </button>
+                        <button class=" btn btn-danger" {{action "cancelSubmission"}}>Cancel</button>
                     </div>
-                    </div> -->
-                    <div class="form-group row has-success">
-                        <div class="col-md-6">
-                            <label>Description:</label>
-                            {{textarea id="description" value=model.description class="form-control"}}
-                            {{#if this.displayErrors}}
-                                {{#each errors.model.description as |error|}}
-                                    <br><div class="alert alert-danger" role="alert">{{error}}</div>
-                                {{/each}}
-                            {{/if}}
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-md-4">
-                            <button class="btn btn-success" {{action "saveSubmission" model}}>
-                                Submit
-                            </button>
-                            <button class=" btn btn-danger" {{action "cancelSubmission"}}>Cancel</button>
-                        </div>
-                    </div>
-            </form>
+                </div>
         </div>
     </div>
 </div>

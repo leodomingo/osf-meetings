@@ -1,12 +1,13 @@
 import Ember from 'ember';
-import CheckLoginMixin from 'osf-meetings/mixins/check-login-mixin';
-import config from '../../config/environment';
+import config from 'ember-get-config';
 
-export default Ember.Route.extend(CheckLoginMixin, {
+
+export default Ember.Route.extend({
+
     model() {
         return Ember.RSVP.hash({
-            meta : Ember.$.ajax({
-                url : config.meetingsUrl + "/conferences/",
+                meta : Ember.$.ajax({
+                url : config.providers.osfMeetings.apiUrl + "conferences/",
                 type : "OPTIONS",
                 xhrFields : {
                     withCredentials : true
@@ -23,11 +24,47 @@ export default Ember.Route.extend(CheckLoginMixin, {
                 newRoute.controller.set('visited', true);
             });
         },
-        saveConference(newConf) {
+        saveConference(newConference, drop, resolve) {
             var router = this;
-            newConf.save().then(function(params) {
-                router.transitionTo('conference.index', params.id);
+            newConference.save().then((conf) => {
+                if(resolve){
+                    resolve();
+                } else{
+                    router.transitionTo('conference.index', conf.get('id'));
+                }
+            });
+        },
+        success(dropZone, file, successData) {
+            var conf = this.currentModel.newConf;
+            var router = this;
+            this.store.findRecord('upload', successData.id).then((newUpload) => {
+                conf.set('logo', newUpload);
+                conf.save().then( ()=>{
+                    router.transitionTo('conference.index', conf.get('id'));
+                });
+            });
+        },
+        count(){
+            //console.log('Got one');
+            let maxLength = 500;
+            let remainder = maxLength -Ember.$('#description').val().length;
+            if ((remainder < 0) || (remainder > 470)){
+                Ember.$('#remaining').css({"color" : "red"});
+            }
+            else {
+                Ember.$('#remaining').css({'color' : 'green'});
+            }
+            Ember.$('#remaining').text(remainder);
+        },
+        preUpload(drop){
+            drop.on('processing', function() {
+                this.options.url = config.providers.osfMeetings.uploadsUrl;
+                var csrftoken = Ember.get(document.cookie.match(/csrftoken\=([^;]*)/), "1");
+                this.options.headers = {
+                    'X-CSRFToken': csrftoken,
+                };
+                this.options.withCredentials = true;
             });
         }
-    }
+    } 
 });

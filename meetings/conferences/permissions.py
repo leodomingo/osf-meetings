@@ -1,7 +1,7 @@
 from rest_framework import permissions
 from guardian.shortcuts import assign_perm, remove_perm
 from django.contrib.auth.models import User, Group
-from osf_oauth2_adapter.apps import OsfOauth2AdapterConfig
+from django.conf import settings
 
 
 class ConferencePermissions(permissions.DjangoObjectPermissions):
@@ -28,11 +28,12 @@ class ConferencePermissions(permissions.DjangoObjectPermissions):
         # This method gets called on list view and normally fails due to
         # the commented out line in the return statement.
         #
-        # DjangoObjectPermissionsFilter ensures users can only see what they are supposed
-        # to be able to see
+        # DjangoObjectPermissionsFilter ensures users can only see what they
+        # are supposed to be able to see
         #
-        # has_object_permission() in DjangoObjectPermissions ensures users can only
-        # GET, POST, PATCH etc. on objects they have the required permissions for
+        # has_object_permission() in DjangoObjectPermissions ensures users
+        # can only GET, POST, PATCH etc. on objects they have the required
+        # permissions for
         #
         # -----------------------------------------------------------
         # Workaround to ensure DjangoModelPermissions are not applied
@@ -72,17 +73,18 @@ def remove_conference_permissions_from_public(conference):
 
 def add_conference_permissions_to_current_osf_user(conference):
     current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+        name=settings.HUMANS_GROUP_NAME)
     assign_perm("conferences.view_conference", current_osf_users, conference)
 
 
 def remove_conference_permissions_from_current_osf_user(conference):
     current_osf_users = Group.objects.get(
-        name=OsfOauth2AdapterConfig.osf_users_group)
+        name=settings.HUMANS_GROUP_NAME)
     remove_perm("conferences.view_conference", current_osf_users, conference)
 
 
-def add_conference_permissions_to_conference_admin(conference, conference_admin):
+def add_conference_permissions_to_conference_admin(
+        conference, conference_admin):
     assign_perm(
         "conferences.change_conference", conference_admin, conference)
     assign_perm(
@@ -91,7 +93,8 @@ def add_conference_permissions_to_conference_admin(conference, conference_admin)
         "conferences.view_conference", conference_admin, conference)
 
 
-def remove_conference_permissions_from_conference_admin(conference, conference_admin):
+def remove_conference_permissions_from_conference_admin(
+        conference, conference_admin):
     remove_perm(
         "conferences.change_conference", conference_admin, conference)
     remove_perm(

@@ -1,8 +1,8 @@
-
 <div  style="background-image: linear-gradient( rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) ), url({{logo}}); height: inherit; padding: 5px; margin: 5px;">
-    <h4 class="tile-title">{{title}}</h4>
-    <h6 class="tile-submission-count"> Location: {{location}} </h6>
-    <h6 class="tile-submission-count"> Date: {{date}} </h6>
-    <h6 class="tile-submission-count"> Submissions: {{submissions}} </h6>
-    <h5 class="tile-description">{{truncate description limit=200}}</h5>
+    <h4 class="tile-title">{{model.title}}</h4>
+    <h6 class="tile-submission-count"> Location: {{location-display model.city
+        model.state model.country}} </h6>
+    <h6 class="tile-submission-count"> Date: {{date-display model.eventStart}} </h6>
+    <h6 class="tile-submission-count"> Submissions: {{model.submissionCount}} </h6>
+    <h5 class="tile-description">{{truncate model.description limit=200}}</h5>
 </div>

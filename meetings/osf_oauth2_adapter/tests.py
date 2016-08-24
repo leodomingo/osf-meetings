@@ -3,6 +3,7 @@ from unittest import skip
 
 
 class TestProvider(TestCase):
+
     @skip('Test OSF account to string')
     def test_to_string(self):
         pass

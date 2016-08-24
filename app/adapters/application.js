@@ -7,6 +7,8 @@ export default DS.JSONAPIAdapter.extend({
     namespace : '',
     host: config.OSF.apiUrl,
 
+
+    //this function exists to deal with the trailing /, See ember-osf adapter
     buildURL(){
         var url = this._super(...arguments);
         if (url.lastIndexOf('/') !== url.length - 1) {
