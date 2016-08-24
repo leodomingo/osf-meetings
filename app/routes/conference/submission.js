@@ -25,6 +25,12 @@ export default Ember.Route.extend({
                     });      
                 });                     
         },
+        cancelSubmission() {
+            var sub_to_cancel = this.currentModel;
+            var conf = sub_to_cancel.get('conference');
+            sub_to_cancel.unloadRecord();
+            this.transitionTo('conference.index', conf.get('id'));
+        },
         preUpload(drop){
             drop.options.method = 'PUT';
         },
