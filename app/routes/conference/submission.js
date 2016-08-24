@@ -11,6 +11,7 @@ export default Ember.Route.extend({
 
     actions : {
         saveSubmission(newSubmission, drop, resolve) {
+            if(resolve){
                 newSubmission.save().then((newRecord) => {
                     drop.options.url = config.providers.osf.uploadsUrl + 
                         newRecord.get('nodeId') +
@@ -23,7 +24,10 @@ export default Ember.Route.extend({
                         };
                         resolve();
                     });      
-                });                     
+                });  
+            } else{
+                this.toast.error('Please attach a file to your submission');
+            }                 
         },
         preUpload(drop){
             drop.options.method = 'PUT';
