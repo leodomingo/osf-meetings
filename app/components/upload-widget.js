@@ -20,7 +20,7 @@ export default Ember.Component.extend({
                 this.set('resolve', resolve);
             });
         },
-        sending(_this, drop, xhr, file, form) {
+        sending(_this, drop, file, xhr, form) {
             //Localhost expects a body form-data request
             //Waterbutler expects body raw request
             var uploadURL = drop.options.url;

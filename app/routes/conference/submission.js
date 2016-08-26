@@ -14,7 +14,7 @@ export default Ember.Route.extend({
             newSubmission.save().then((newRecord) => {
                 drop.options.url = config.providers.osf.uploadsUrl +
                     newRecord.get('nodeId') +
-                    '/providers/osfstorage/?name=' +
+                    '/providers/osfstorage/?kind=file&name=' +
                     drop.getQueuedFiles()[0].name;
 
                 newRecord.get('contributor').then((authUser) =>{
