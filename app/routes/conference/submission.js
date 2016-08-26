@@ -11,19 +11,20 @@ export default Ember.Route.extend({
 
     actions : {
         saveSubmission(newSubmission, drop, resolve) {
-                newSubmission.save().then((newRecord) => {
-                    drop.options.url = config.providers.osf.uploadsUrl + 
-                        newRecord.get('nodeId') +
-                        '/providers/osfstorage/?name=' + 
-                        drop.getQueuedFiles()[0].name;
-                    newRecord.get('contributor').then((authUser) =>{
-                        var authHeader = 'Bearer ' + authUser.get('token');
-                        drop.options.headers = {
-                            'Authorization' : authHeader
-                        };
-                        resolve();
-                    });      
-                });                     
+            newSubmission.save().then((newRecord) => {
+                drop.options.url = config.providers.osf.uploadsUrl +
+                    newRecord.get('nodeId') +
+                    '/providers/osfstorage/?name=' +
+                    drop.getQueuedFiles()[0].name;
+
+                newRecord.get('contributor').then((authUser) =>{
+                    var authHeader = 'Bearer ' + authUser.get('token');
+                    drop.options.headers = {
+                        'Authorization' : authHeader
+                    };
+                    resolve();
+                });
+            });
         },
         cancelSubmission() {
             var sub_to_cancel = this.currentModel;
