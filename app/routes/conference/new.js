@@ -25,8 +25,13 @@ export default Ember.Route.extend({
             });
         },
         saveConference(newConference, drop, resolve) {
-            newConference.save().then(() => {
-                resolve();
+            var router = this;
+            newConference.save().then((conf) => {
+                if(resolve){
+                    resolve();
+                } else{
+                    router.transitionTo('conference.index', conf.get('id'));
+                }
             });
         },
         success(dropZone, file, successData) {
