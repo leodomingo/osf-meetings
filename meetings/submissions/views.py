@@ -44,7 +44,7 @@ class SubmissionViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         """Returns a single Submission item"""
-        return super(SubmissionViewSet, self).retrieve(request, args, **kwargs)
+        return super(SubmissionViewSet, self).retrieve(request, *args, **kwargs)
 
     def partial_update(self, request, *args, **kwargs):
         """Partial update a Submission """
