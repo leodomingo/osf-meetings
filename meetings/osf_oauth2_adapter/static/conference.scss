@@ -1,0 +1,59 @@
+/*
+*	style for conference landing page
+*/
+
+.conference-info h1
+{
+  margin-top: 0;
+  color: white;
+}
+.conference-info h4
+{
+  margin: 0 0 1px 30px;
+}
+.conference-description 
+{
+  padding: 15px 15px 15px 0;
+  font-size: 16px;
+}
+.conference-photo img
+{
+  max-width: 100%;
+}
+.node-title 
+{
+    line-height: 44px;
+    border-bottom: none;
+    margin-top: .3em;
+    font-size: 36px;
+}
+.error-message
+{
+  font-size: 14px;
+  padding-bottom: 5px;
+}
+.error-message .ok
+{
+  color: green;
+}
+.error-message .error
+{
+  color: red;
+}
+.submission-modal
+{
+	background-color: rgba(0,0,0,0.1);
+	padding: 15px;
+	margin-top: 15px;
+}
+#submission-instructions
+{
+  margin: 15px -15px 30px -15px;
+  padding-left: 0;
+  display: none;
+}
+.valid-input 
+{
+  color: green;
+  font-size: 18px;
+}

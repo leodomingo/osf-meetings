@@ -1,0 +1,64 @@
+/*
+* importing individual stylesheets
+*/
+@import "osf-navbar";
+@import "index";
+@import "register";
+@import "conference";
+/*
+* Header Sizes 
+*/
+h1
+{
+  font-size: 11.089em;
+}
+h2
+{
+  font-size: 6.854em;
+}
+h3
+{
+  font-size: 4.246em;
+}
+h4
+{
+  font-size: 2.618em;
+}
+h5
+{
+  font-size: 1.618em;
+}
+h6
+{
+  font-size: 1em;
+}
+p
+{
+  font-size: 0.618em;
+}
+.tile-view a, a:link, a:visited , a:hover, a:active
+{
+    color: black;
+    text-decoration: none;
+}
+
+.no-pad
+{
+  padding: 0;
+}
+
+.osf-light-background /* standard background */
+{
+  padding: 0;
+  background-image: url("/assets/bg6.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: repeat-y;
+  background-position-x: center;
+  background-position-y: top;
+  min-height: 100%;
+  margin-top: 50px;
+}
+
+
+
